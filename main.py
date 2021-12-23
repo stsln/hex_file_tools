@@ -11,7 +11,7 @@ TYPE_STARTING_LINEAR_ADDRESS = 5
 
 class ProcessingHexLine:
     """
-    Class processing accepted line hex
+    Class processing accepted hex line
     """
     def __init__(self, line_hex):
         self.line_hex_file = line_hex
@@ -19,8 +19,8 @@ class ProcessingHexLine:
     def get_crc_and_amount_data(self):
         """
         Function calculating and returning CRC hex line and amounts of data
-        :return: number_calc_checksum: calculated CRC line hex
-                 amount_data: amount data line hex
+        :return: number_calc_checksum: calculated CRC hex line
+                 amount_data: amount data hex line
         """
         number_calc_checksum = 0x0100  # Number calculate CRC
         sum_line = 0
@@ -38,12 +38,12 @@ class ProcessingHexLine:
     def processing_line(self):
         """
         Function hex line processing
-        :return: flag_return: True - successful processing line hex,
-                              False - corrupted line hex
+        :return: flag_return: True - successful processing hex line,
+                              False - corrupted hex line
                  type: type record
                  address: offset address
-                 data: data line hex
-                 amount_data: amount data line hex
+                 data: data hex line
+                 amount_data: amount data hex line
         """
         flag_return = True
         rec_len = int(self.line_hex_file[:2], 16)
@@ -145,15 +145,15 @@ class SectionMem:
 
     def is_load(self):
         """
-        Функция проверки создания памяти
-        :return: True - память создана,
-                 False - память не создана
+        Function check creating memory
+        :return: True - memory created,
+                 False - memory not created
         """
         return self.flag_load
 
     def complete(self):
         """
-        Функция завершения текущей памяти, подсчёт размера данных
+        Termination current memory and calculation data size
         :return:
         """
         if self.is_load():
@@ -161,7 +161,7 @@ class SectionMem:
 
     def add_data(self, address, data):
         """
-        Функция добавления данных в текущую память
+        Adding data to current memory
         :param address:
         :param data:
         :return:
@@ -174,79 +174,86 @@ class SectionMem:
         self.end_rec_address = int(address, 16)
 
 
-def processing_file(regions_hex_file, data_file):
-    """
-    Функция обработки hex файла построчно
-    :param regions_hex_file: сегмент регионов hex файла
-    :param data_file: данные hex файла
-    :return: True - успешная обработка файла,
-             False - файл поврежден
-    """
-    current_seg = None
-
-    for line_hex in data_file:
-        is_good, type_rec, address, data, amount_data = ProcessingHexLine(line_hex[1:]).processing_line()
-        if is_good:
-            if TYPE_EXTENDED_LINEAR_ADDRESS == type_rec:
-                if current_seg:
-                    current_seg.current_sec.current_mem.complete()
-                current_seg = regions_hex_file.create_new_region(data)
-            elif TYPE_DATA == type_rec:
-                current_seg.add_data(address, data, amount_data)
-            elif TYPE_STARTING_LINEAR_ADDRESS == type_rec:
-                continue
-            elif TYPE_END_OF_FILE == type_rec:
-                if current_seg:
-                    current_seg.current_sec.current_mem.complete()
-                return True
-        else:
-            return False
-
-
-hex_files = ['name_hex_file_1', 'name_hex_file_2', 'name_hex_file_3']
-
-print('Объединение hex файлов в один\n')
-
-data_hex_files = []
-
-for name_hex_file in hex_files:
-    print('Обработка файла ' + name_hex_file + '.hex')
-    try:
-        data_hex_file = open(name_hex_file + '.hex', 'r')
-        print('Файл успешно открыт для обработки')
-        regions_hex = RegionsList()
-        if processing_file(regions_hex, data_hex_file):
-            print('Файл успешно обработан\n')
-            data_hex_files.append(regions_hex)
-        else:
-            print('Дальнейшая обработка файла невозможна - файл поврежден!')
-        data_hex_file.close()
-    except FileNotFoundError:
-        print('Файл не найден\n')
-        continue
-
-
 class ParserHex:
-    """
-    Дописать функциональность класса
-    """
-    # hexes = parseHex("b2191.hex", "b2195.hex")
-    # hexes.getRegionsCount(number_hex)
-    # hexes.genCommonHexFile(number_file, 0xFF)
-    # hexes.getRegion(1).genRegionHexFile() or hexes.gen_region_hex_file(hexes.get_region(1))
+    hexFilesList = []
+    dataHexFiles = []
 
     def __init__(self, list_hex_files):
-        self.list_hex_files = list_hex_files
+        self.hexFilesList = list_hex_files
+        self.dataHexFiles = []
+
+    def processing_files(self):
+        for name_hex_file in self.hexFilesList:
+            print('Processing file ' + name_hex_file + '.hex')
+            try:
+                data_hex_file = open(name_hex_file + '.hex', 'r')
+                print('File has been successfully opened for processing')
+                regions_hex = RegionsList()
+                if self.processing_file_line_by_line(regions_hex, data_hex_file):
+                    print('File has been processed successfully\n')
+                    self.dataHexFiles.append(regions_hex)
+                else:
+                    print('Further processing of the file is impossible - the file is damaged!')
+                data_hex_file.close()
+            except FileNotFoundError:
+                print('File not found\n')
+                continue
+
+    def processing_file_line_by_line(self, regions_hex_file, data_file):
+        """
+        Function hex file processing line by line
+        :param regions_hex_file: list regions hex file
+        :param data_file: data hex file
+        :return: True - successful file processing,
+                 False - file corrupted
+        """
+        current_seg = None
+
+        for line_hex in data_file:
+            is_good, type_rec, address, data, amount_data = ProcessingHexLine(line_hex[1:]).processing_line()
+            if is_good:
+                if TYPE_EXTENDED_LINEAR_ADDRESS == type_rec:
+                    if current_seg:
+                        current_seg.current_sec.current_mem.complete()
+                    current_seg = regions_hex_file.create_new_region(data)
+                elif TYPE_DATA == type_rec:
+                    current_seg.add_data(address, data, amount_data)
+                elif TYPE_STARTING_LINEAR_ADDRESS == type_rec:
+                    continue
+                elif TYPE_END_OF_FILE == type_rec:
+                    if current_seg:
+                        current_seg.current_sec.current_mem.complete()
+                    return True
+            else:
+                return False
+
+    def get_count_regions(self, number_hex_file):
         pass
 
-    def get_regions_count(self, number_hex):
+    def get_region(self, number_hex_file, number_region):
         pass
 
-    def get_region(self, number_region):
-        pass
-
-    def gen_common_hex_file(self, number_file, empty=0xFF):
+    def gen_common_hex_file(self, number_hex_file, empty=0xFF):
         pass
 
     def gen_region_hex_file(self, data_region):
         pass
+
+    def gen_hex_file(self, number_hex_file, empty=0xFF):
+        pass
+
+
+def main():
+    print('Combining hex files into one\n')
+
+    hexes = ParserHex(['name_hex_file_1', 'name_hex_file_2', 'name_hex_file_3'])
+
+    hexes.processing_files()
+    hexes.get_count_regions(number_hex_file=1)
+    hexes.gen_common_hex_file(number_hex_file=2, empty=0xF0)
+    hexes.gen_region_hex_file(hexes.get_region(number_hex_file=0, number_region=5))
+    hexes.gen_hex_file(number_hex_file=2)
+
+
+if __name__ == "__main__":
+    main()
