@@ -29,10 +29,8 @@ class ParserHex:
             try:
                 data_hex_file = open(name_hex_file + '.hex', 'r')
                 print('File has been successfully opened for processing')
-                regions_hex = parser_data_hex_line.RegionsList()
-                if self.processing_file_line_by_line(regions_hex, data_hex_file):
+                if self.processing_file_line_by_line(data_hex_file):
                     print('File has been processed successfully\n')
-                    self.dataHexFiles.append(regions_hex)
                 else:
                     print('Further processing of the file is impossible - the file is damaged!')
                 data_hex_file.close()
@@ -40,15 +38,15 @@ class ParserHex:
                 print('File not found\n')
                 continue
 
-    def processing_file_line_by_line(self, regions_hex_file, data_file):
+    def processing_file_line_by_line(self, data_file):
         """
         Function hex file processing line by line
-        :param regions_hex_file: list regions hex file
         :param data_file: data hex file
         :return: True - successful file processing,
                  False - file corrupted
         """
         current_seg = None
+        regions_hex_file = parser_data_hex_line.RegionsList()
 
         for line_hex in data_file:
             is_good, type_rec, address, \
@@ -65,21 +63,24 @@ class ParserHex:
                 elif TYPE_END_OF_FILE == type_rec:
                     if current_seg:
                         current_seg.current_sec.current_mem.complete()
+                    self.dataHexFiles.append(regions_hex_file)
                     return True
             else:
                 return False
 
     def get_count_regions(self, number_hex_file):
-        pass
+        """
+        Function returns the number of regions in the hex file
+        :param number_hex_file: number hex file
+        :return: count regions hex file
+        """
+        return len(self.dataHexFiles[number_hex_file].regList)
 
-    def gen_region(self, number_hex_file, number_region):
-        pass
-
-    def gen_common_hex_file(self, number_hex_file, empty=0xFF):
-        pass
-
-    def gen_region_hex_file(self, data_region):
+    def gen_region_hex_file(self, number_hex_file, number_region):
         pass
 
     def gen_hex_file(self, number_hex_file, empty=0xFF):
+        pass
+
+    def gen_common_hex_file(self, number_hex_file, empty=0xFF):
         pass
