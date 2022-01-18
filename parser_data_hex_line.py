@@ -1,3 +1,6 @@
+import binascii
+
+
 class ProcessingHexLine:
     """
     Class processing accepted hex line
@@ -127,6 +130,7 @@ class SectionMem:
     end_rec_address = None
     bytes_data = None
     size_mem = None
+    size_data = None
     flag_load = False
 
     def __init__(self):
@@ -146,7 +150,7 @@ class SectionMem:
         :return:
         """
         if self.is_load():
-            self.size_mem = self.bytes_data.__sizeof__()
+            self.size_mem = len(self.bytes_data)
 
     def add_data(self, address, data):
         """
@@ -157,7 +161,22 @@ class SectionMem:
         """
         if not self.is_load():
             self.start_rec_address = int(address, 16)
+            self.size_data = int(len(data) / 2)
             self.flag_load = True
         for i in range(0, len(data), 2):
             self.bytes_data.append(int(data[i:i+2], 16) & 0xFF)
         self.end_rec_address = int(address, 16)
+
+    def gen_hex_line(self):
+        """
+        Function generates hex line from memory
+        :return: hex lines memory
+        """
+        hex_lines = ""
+        data = str(binascii.b2a_hex(self.bytes_data))[2:]
+        for i in range(int(self.size_mem / self.size_data)):
+            hex_lines += ":" + str(hex(self.size_data)[2:]).rjust(2, '0') + \
+                         hex(self.start_rec_address + i * self.size_data)[2:].rjust(4, '0') + "00" + \
+                         data[i * 32:(i + 1) * 32] + "\n"
+        hex_lines = hex_lines.upper()
+        return hex_lines
