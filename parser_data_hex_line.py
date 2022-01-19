@@ -18,8 +18,8 @@ class ProcessingHexLine:
         sum_line = 0
         amount_data = 0
 
-        for i in range(0, len(self.line_hex_file[:-3]), 2):
-            sum_line = 0xFF & (sum_line + int(self.line_hex_file[:-3][i:i + 2], 16))
+        for i in range(0, len(self.line_hex_file), 2):
+            sum_line = 0xFF & (sum_line + int(self.line_hex_file[i:i + 2], 16))
             amount_data += 1
 
         number_calc_checksum = 0xFF & (number_calc_checksum - sum_line)
@@ -42,8 +42,9 @@ class ProcessingHexLine:
         load_offset = self.line_hex_file[2:6]
         rec_typ = int(self.line_hex_file[6:8], 16)
         check_sum = int(self.line_hex_file[-3:], 16)
+        self.line_hex_file = self.line_hex_file[:-3]
         check_sum_calc, amount_data = self.get_crc_and_amount_data()
-        data = self.line_hex_file[8:8+amount_data*2]
+        data = self.line_hex_file[8:]
 
         if check_sum_calc != check_sum or amount_data != rec_len:
             return not flag_return, 0, 0, 0, 0
@@ -138,23 +139,22 @@ class SectionMem:
 
     def is_load(self):
         """
-        Function check creating memory
-        :return: True - memory created,
-                 False - memory not created
+        Function check creating memory section
+        :return: True - memory section created,
+                 False - memory section not created
         """
         return self.flag_load
 
     def complete(self):
         """
-        Termination current memory and calculation data size
-        :return:
+        Termination current memory section and calculation data size
         """
         if self.is_load():
             self.size_mem = len(self.bytes_data)
 
     def add_data(self, address, data):
         """
-        Adding data to current memory
+        Function adding data to current memory section
         :param address:
         :param data:
         :return:
@@ -167,16 +167,29 @@ class SectionMem:
             self.bytes_data.append(int(data[i:i+2], 16) & 0xFF)
         self.end_rec_address = int(address, 16)
 
-    def gen_hex_line(self):
+    def gen_hex_lines(self, start_load_offset=0, end_load_offset=65535):
         """
-        Function generates hex line from memory
-        :return: hex lines memory
+        Function generates hex lines from memory section
+        :param start_load_offset: address start hex lines
+        :param end_load_offset: address end hex lines
+        :return: data of memory section in hex lines
         """
         hex_lines = ""
-        data = str(binascii.b2a_hex(self.bytes_data))[2:]
+        memory_section_data = str(binascii.b2a_hex(self.bytes_data))[2:-1]
+
         for i in range(int(self.size_mem / self.size_data)):
-            hex_lines += ":" + str(hex(self.size_data)[2:]).rjust(2, '0') + \
-                         hex(self.start_rec_address + i * self.size_data)[2:].rjust(4, '0') + "00" + \
-                         data[i * 32:(i + 1) * 32] + "\n"
+            rec_mark = ":"
+            rec_len = str(hex(self.size_data)[2:]).rjust(2, '0')
+            load_offset = hex(self.start_rec_address + i * self.size_data)[2:].rjust(4, '0')
+            if start_load_offset > int(load_offset, 16):
+                continue
+            elif end_load_offset < int(load_offset, 16):
+                break
+            rec_typ = "00"
+            data = memory_section_data[i * 32:(i + 1) * 32]
+            hex_line = rec_len + load_offset + rec_typ + data
+            chk_sum = str(hex(ProcessingHexLine(hex_line).get_crc_and_amount_data()[0])[2:]).rjust(2, '0')
+            hex_lines += rec_mark + hex_line + chk_sum + "\n"
         hex_lines = hex_lines.upper()
+
         return hex_lines
