@@ -1,4 +1,4 @@
 *.hex
-.garbage/
 .idea/
+garbage/
 __pycache__/
