@@ -1,0 +1,4 @@
+*.hex
+.garbage/
+.idea/
+__pycache__/
