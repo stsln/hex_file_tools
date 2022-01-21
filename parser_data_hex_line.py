@@ -54,6 +54,7 @@ class ProcessingHexLine:
 
 class RegionsList:
     regList = None
+    data_starting_liner_address = None
 
     def __init__(self):
         self.regList = []
@@ -61,9 +62,14 @@ class RegionsList:
     def create_new_region(self, address):
         tmp_reg = SegmentList(address)
         tmp_reg.create_new_seg()
-        tmp_reg.current_sec.create_new_mem()
+        tmp_reg.current_sec.create_new_sec_mem()
         self.regList.append(tmp_reg)
         return tmp_reg
+
+    def create_data_starting_liner_address(self, data):
+        self.data_starting_liner_address = bytearray()
+        for i in range(0, len(data), 2):
+            self.data_starting_liner_address.append(int(data[i:i+2], 16) & 0xFF)
 
     def get_binary(self, start_adr, end_adr):
         pass
@@ -102,13 +108,13 @@ class SegmentList:
         if self.is_need_new_seg(current_amount_data):
             self.current_sec.current_mem.complete()
             self.create_new_seg()
-            self.current_sec.create_new_mem()
+            self.current_sec.create_new_sec_mem()
             self.current_sec.current_mem.add_data(address, data)
         else:
             if self.current_sec.current_mem.end_rec_address and \
                     self.current_sec.current_mem.end_rec_address != int(address, 16) - current_amount_data:
                 self.current_sec.current_mem.complete()
-                self.current_sec.create_new_mem()
+                self.current_sec.create_new_sec_mem()
             self.current_sec.current_mem.add_data(address, data)
         self.last_amount_data = current_amount_data
 
@@ -121,7 +127,10 @@ class SectionList:
         self.secList = []
         self.current_mem = None
 
-    def create_new_mem(self):
+    def create_new_sec_mem(self):
+        """
+        Function creating a new memory section
+        """
         self.current_mem = SectionMem()
         self.secList.append(self.current_mem)
 
@@ -135,9 +144,12 @@ class SectionMem:
     flag_load = False
 
     def __init__(self):
+        """
+        Function initializing a new memory section, with the creation of an empty data bytearray
+        """
         self.bytes_data = bytearray()
 
-    def is_load(self):
+    def is_load(self) -> bool:
         """
         Function check creating memory section
         :return: True - memory section created,
@@ -147,12 +159,12 @@ class SectionMem:
 
     def complete(self):
         """
-        Termination current memory section and calculation data size
+        Function completion of the current memory section and calculation of data length
         """
         if self.is_load():
             self.size_mem = len(self.bytes_data)
 
-    def add_data(self, address, data):
+    def add_data(self, address: str, data: str):
         """
         Function adding data to current memory section
         :param address:
@@ -167,7 +179,7 @@ class SectionMem:
             self.bytes_data.append(int(data[i:i+2], 16) & 0xFF)
         self.end_rec_address = int(address, 16)
 
-    def gen_hex_lines(self, start_load_offset=0, end_load_offset=65535):
+    def gen_hex_lines(self, start_load_offset: str = '0x0000', end_load_offset: str = '0xFFFF') -> str:
         """
         Function generates hex lines from memory section
         :param start_load_offset: address start hex lines
@@ -177,19 +189,18 @@ class SectionMem:
         hex_lines = ""
         memory_section_data = str(binascii.b2a_hex(self.bytes_data))[2:-1]
 
-        for i in range(int(self.size_mem / self.size_data)):
+        for line_number in range(int(self.size_mem / self.size_data)):
             rec_mark = ":"
             rec_len = str(hex(self.size_data)[2:]).rjust(2, '0')
-            load_offset = hex(self.start_rec_address + i * self.size_data)[2:].rjust(4, '0')
-            if start_load_offset > int(load_offset, 16):
+            load_offset = hex(self.start_rec_address + line_number * self.size_data)[2:].rjust(4, '0')
+            if int(start_load_offset, 16) > int(load_offset, 16):
                 continue
-            elif end_load_offset < int(load_offset, 16):
+            elif int(end_load_offset, 16) < int(load_offset, 16):
                 break
             rec_typ = "00"
-            data = memory_section_data[i * 32:(i + 1) * 32]
+            data = memory_section_data[line_number * 32:(line_number + 1) * 32]
             hex_line = rec_len + load_offset + rec_typ + data
             chk_sum = str(hex(ProcessingHexLine(hex_line).get_crc_and_amount_data()[0])[2:]).rjust(2, '0')
             hex_lines += rec_mark + hex_line + chk_sum + "\n"
-        hex_lines = hex_lines.upper()
-
+        hex_lines = hex_lines.upper()[:-1]
         return hex_lines

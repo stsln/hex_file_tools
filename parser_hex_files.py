@@ -59,7 +59,7 @@ class ParserHex:
                 elif TYPE_DATA == type_rec:
                     current_seg.add_data(address, data, amount_data)
                 elif TYPE_STARTING_LINEAR_ADDRESS == type_rec:
-                    continue
+                    regions_hex_file.create_data_starting_liner_address(data)
                 elif TYPE_END_OF_FILE == type_rec:
                     if current_seg:
                         current_seg.current_sec.current_mem.complete()
@@ -68,7 +68,7 @@ class ParserHex:
             else:
                 return False
 
-    def get_count_regions(self, number_hex_file):
+    def get_count_regions(self, number_hex_file: int) -> int:
         """
         Function returns the number of regions in the hex file
         :param number_hex_file: number hex file
