@@ -61,8 +61,8 @@ class RegionsList:
 
     def create_new_region(self, address):
         tmp_reg = SegmentList(address)
-        tmp_reg.create_new_seg()
-        tmp_reg.current_sec.create_new_sec_mem()
+        tmp_reg.create_new_sec_list()
+        tmp_reg.current_sec.create_new_mem_sec()
         self.regList.append(tmp_reg)
         return tmp_reg
 
@@ -94,27 +94,36 @@ class SegmentList:
         self.current_sec = None
         self.last_amount_data = None
 
-    def create_new_seg(self):
+    def create_new_sec_list(self):
+        """
+        Creating a new section list and adding to segment list
+        """
         self.current_sec = SectionList()
         self.segList.append(self.current_sec)
 
-    def is_need_new_seg(self, current_amount_data):
+    def is_need_new_sec_list(self, current_amount_data: int) -> bool:
+        """
+        Function checks whether there is a need to create a new list of memory section
+        :param current_amount_data: current data size
+        :return: True - data size is not the same (need a new memory section list),
+                 False - data size is the same (don't need a new memory section list)
+        """
         if self.last_amount_data != current_amount_data and self.last_amount_data is not None:
             return True
         else:
             return False
 
     def add_data(self, address, data, current_amount_data):
-        if self.is_need_new_seg(current_amount_data):
+        if self.is_need_new_sec_list(current_amount_data):
             self.current_sec.current_mem.complete()
-            self.create_new_seg()
-            self.current_sec.create_new_sec_mem()
+            self.create_new_sec_list()
+            self.current_sec.create_new_mem_sec()
             self.current_sec.current_mem.add_data(address, data)
         else:
             if self.current_sec.current_mem.end_rec_address and \
                     self.current_sec.current_mem.end_rec_address != int(address, 16) - current_amount_data:
                 self.current_sec.current_mem.complete()
-                self.current_sec.create_new_sec_mem()
+                self.current_sec.create_new_mem_sec()
             self.current_sec.current_mem.add_data(address, data)
         self.last_amount_data = current_amount_data
 
@@ -124,12 +133,15 @@ class SectionList:
     current_mem = None
 
     def __init__(self):
+        """
+        Function initializing an empty sections list
+        """
         self.secList = []
         self.current_mem = None
 
-    def create_new_sec_mem(self):
+    def create_new_mem_sec(self):
         """
-        Function creating a new memory section
+        Function creating a new memory section and adding to section list
         """
         self.current_mem = SectionMem()
         self.secList.append(self.current_mem)
