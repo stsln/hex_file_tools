@@ -54,15 +54,15 @@ class ParserHex:
             if is_good:
                 if TYPE_EXTENDED_LINEAR_ADDRESS == type_rec:
                     if current_seg:
-                        current_seg.current_sec.current_mem.complete()
-                    current_seg = regions_hex_file.create_new_region(data)
+                        current_seg.current_mem_list.current_mem.complete()
+                    current_seg = regions_hex_file.create_new_seg(data)
                 elif TYPE_DATA == type_rec:
                     current_seg.add_data(address, data, amount_data)
                 elif TYPE_STARTING_LINEAR_ADDRESS == type_rec:
                     regions_hex_file.create_data_starting_liner_address(data)
                 elif TYPE_END_OF_FILE == type_rec:
                     if current_seg:
-                        current_seg.current_sec.current_mem.complete()
+                        current_seg.current_mem_list.current_mem.complete()
                     self.dataHexFiles.append(regions_hex_file)
                     return True
             else:
