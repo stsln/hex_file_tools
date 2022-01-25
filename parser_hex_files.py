@@ -1,6 +1,6 @@
 import parser_data_hex_line
 
-# Type record hex line
+# Record type hex line
 TYPE_DATA = 0
 TYPE_END_OF_FILE = 1
 TYPE_EXTENDED_SEGMENT_ADDRESS = 2
@@ -22,7 +22,7 @@ class ParserHex:
 
     def processing_files(self):
         """
-        Function processing of hex files for availability and corruption or upon successful opening of data parsing
+        Function processing of hex files for availability and corruption or upon successful opening parsing data
         """
         for name_hex_file in self.hexFilesList:
             print('Processing file ' + name_hex_file + '.hex')
@@ -59,7 +59,7 @@ class ParserHex:
                 elif TYPE_DATA == type_rec:
                     current_seg.add_data(address, data, amount_data)
                 elif TYPE_STARTING_LINEAR_ADDRESS == type_rec:
-                    regions_hex_file.create_data_starting_liner_address(data)
+                    regions_hex_file.create_starting_liner_address_data(data)
                 elif TYPE_END_OF_FILE == type_rec:
                     if current_seg:
                         current_seg.current_mem_list.current_mem.complete()
