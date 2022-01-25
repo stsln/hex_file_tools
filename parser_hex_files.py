@@ -13,10 +13,11 @@ class ParserHex:
     """
     Class processing accepted hex files and type record hex line
     """
+
     hexFilesList = []  # List of accepted names hex files
     dataHexFiles = []  # Data processed hex files
 
-    def __init__(self, list_hex_files):
+    def __init__(self, list_hex_files: list):
         self.hexFilesList = list_hex_files
         self.dataHexFiles = []
 
@@ -38,7 +39,7 @@ class ParserHex:
                 print('File not found\n')
                 continue
 
-    def processing_file_line_by_line(self, data_file):
+    def processing_file_line_by_line(self, data_file) -> bool:
         """
         Function hex file processing line by line
         :param data_file: data hex file
