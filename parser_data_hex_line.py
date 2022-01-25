@@ -187,7 +187,13 @@ class MemList:
         self.memList.append(self.current_mem)
 
     def gen_hex_lines(self):
-        pass
+        """
+        Function generates hex lines of all memory list items
+        """
+        hex_lines_mem_list = ""
+        for mem_item in self.memList:
+            hex_lines_mem_list += mem_item.gen_hex_lines() + "\n"
+        return hex_lines_mem_list
 
 
 class Mem:
@@ -245,7 +251,7 @@ class Mem:
         :param end_load_offset: hex lines end address
         :return: data of memory in hex lines
         """
-        hex_lines = ""
+        hex_lines_mem = ""
         memory_section_data = str(binascii.b2a_hex(self.bytes_data))[2:-1]
 
         for line_number in range(int(self.total_amount_data / self.amount_hex_line_data)):
@@ -255,10 +261,10 @@ class Mem:
             elif int(end_load_offset, 16) < int(load_offset, 16):
                 break
             data = memory_section_data[line_number * 32:(line_number + 1) * 32]
-            hex_lines += create_hex_line(self.amount_hex_line_data, load_offset, "00", data)
-        hex_lines = hex_lines[:-1]
+            hex_lines_mem += create_hex_line(self.amount_hex_line_data, load_offset, "00", data)
+        hex_lines_mem = hex_lines_mem[:-1]
 
-        return hex_lines
+        return hex_lines_mem
 
 
 def create_hex_line(record_len: int, load_offset: str, rec_typ: str, data: str) -> str:
