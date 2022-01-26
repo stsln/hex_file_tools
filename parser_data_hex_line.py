@@ -1,5 +1,16 @@
 import binascii
 
+RECORD_MARK = ":"
+NO_LOAD_OFFSET = "0000"
+
+# Record type hex line
+TYPE_DATA = "00"
+TYPE_END_OF_FILE = "01"
+TYPE_EXTENDED_SEGMENT_ADDRESS = "02"
+TYPE_START_SEGMENT_ADDRESS = "03"
+TYPE_EXTENDED_LINEAR_ADDRESS = "04"
+TYPE_STARTING_LINEAR_ADDRESS = "05"
+
 
 class ProcessingHexLine:
     """
@@ -164,7 +175,7 @@ class SegmentList:
         :return: generated hex lines
         """
         hex_lines_mem_list = ""
-        start_ofs_address = self.start_ofs_address
+        hex_lines_mem_list += create_hex_line(2, NO_LOAD_OFFSET, TYPE_EXTENDED_LINEAR_ADDRESS, self.start_ofs_address)
         for mem_list_item in self.segList:
             hex_lines_mem_list += mem_list_item.gen_hex_lines() + "\n"
         return hex_lines_mem_list[:-1]
@@ -269,26 +280,28 @@ class Mem:
                 continue
             elif int(end_load_offset, 16) < int(load_offset, 16):
                 break
-            data = memory_section_data[line_number * 32:(line_number + 1) * 32]
-            hex_lines_mem += create_hex_line(self.amount_hex_line_data, load_offset, "00", data)
+            data = memory_section_data[line_number * self.amount_hex_line_data * 2:
+                                       (line_number + 1) * self.amount_hex_line_data * 2]
+            hex_lines_mem += create_hex_line(self.amount_hex_line_data, load_offset, TYPE_DATA, data)
         hex_lines_mem = hex_lines_mem[:-1]
 
         return hex_lines_mem
 
 
-def create_hex_line(record_len: int, load_offset: str, rec_typ: str, data: str) -> str:
+def create_hex_line(record_len: int, load_offset: str, rec_typ: str, data) -> str:
     """
     Function of creating a hex line from the received data
     :param record_len: number of bytes of data in the record
     :param load_offset: offset that defines the data load address
     :param rec_typ: record type hex line
-    :param data: memory data
+    :param data: memory data or offset address
     :return: created hex line
     """
-    rec_mark = ":"
     rec_len = str(hex(record_len)[2:]).rjust(2, '0')
+    if type(data) == int:
+        data = hex(data)[2:].rjust(4, '0')
     hex_line = rec_len + load_offset + rec_typ + data
     chk_sum = str(hex(ProcessingHexLine(hex_line).get_crc_and_amount_data()[0])[2:]).rjust(2, '0')
-    hex_line = (rec_mark + hex_line + chk_sum + "\n").upper()
+    hex_line = (RECORD_MARK + hex_line + chk_sum + "\n").upper()
 
     return hex_line
