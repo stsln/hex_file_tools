@@ -159,7 +159,15 @@ class SegmentList:
         self.last_amount_data = current_amount_data
 
     def gen_hex_lines(self):
-        pass
+        """
+        Function generates hex lines of all segment memory lists
+        :return: generated hex lines
+        """
+        hex_lines_mem_list = ""
+        start_ofs_address = self.start_ofs_address
+        for mem_list_item in self.segList:
+            hex_lines_mem_list += mem_list_item.gen_hex_lines() + "\n"
+        return hex_lines_mem_list[:-1]
 
 
 class MemList:
@@ -189,11 +197,12 @@ class MemList:
     def gen_hex_lines(self):
         """
         Function generates hex lines of all memory list items
+        :return: generated hex lines
         """
         hex_lines_mem_list = ""
         for mem_item in self.memList:
             hex_lines_mem_list += mem_item.gen_hex_lines() + "\n"
-        return hex_lines_mem_list
+        return hex_lines_mem_list[:-1]
 
 
 class Mem:
