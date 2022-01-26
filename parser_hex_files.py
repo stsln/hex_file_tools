@@ -75,6 +75,7 @@ class ParserHex:
         :param number_hex_file: number hex file
         :return: count regions hex file
         """
+
         return len(self.dataHexFiles[number_hex_file].regList)
 
     def gen_region_hex_file(self, number_hex_file, number_region):
