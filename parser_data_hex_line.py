@@ -29,7 +29,7 @@ class ProcessingHexLine:
         :return: number_calc_checksum: calculated CRC hex line
                  amount_data: amount of data hex line
         """
-        number_calc_checksum = 0x0100  # Number calculate CRC
+        calc_checksum = 0x0100  # Number calculate CRC
         sum_line = 0
         amount_data = 0
 
@@ -37,15 +37,15 @@ class ProcessingHexLine:
             sum_line = 0xFF & (sum_line + int(self.line_hex_file[i:i + 2], 16))
             amount_data += 1
 
-        number_calc_checksum = 0xFF & (number_calc_checksum - sum_line)
+        calc_checksum = 0xFF & (calc_checksum - sum_line)
         amount_data -= 4
 
-        return number_calc_checksum, amount_data
+        return calc_checksum, amount_data
 
-    def processing_line(self):
+    def parsing(self):
         """
-        Function hex line processing
-        :return: flag_return: True - successful processing hex line,
+        Function hex line parsing
+        :return: flag_return: True - successful parsing hex line,
                               False - corrupted hex line
                  type: record type
                  address: offset address
@@ -67,46 +67,112 @@ class ProcessingHexLine:
             return flag_return, rec_typ, load_offset, data, amount_data
 
 
-class RegionsList:
+class Mem:
     """
-    Class that stores a lists of segment data memory and
-    starting liner address data with functions to work with them
+    Class that stores the memory data, start and end address memory of a hex file section
     """
 
-    regList = None
-    starting_liner_address_data = None
+    start_rec_address = None
+    end_rec_address = None
+    bytes_data = None
+    total_amount_data = None
+    amount_hex_line_data = None
+
+    flag_load = False
 
     def __init__(self):
         """
-        Function initializing an empty list of segment
+        Function initializing a new memory, with the creation of an empty data bytearray
         """
-        self.regList = []
+        self.bytes_data = bytearray()
 
-    def create_new_seg(self, address: str):
+    def is_load(self) -> bool:
         """
-        Function of creating a new list of segments and adding to the list
-        :param address: starting liner address data
+        Function check creating memory
+        :return: True - memory created,
+                 False - memory not created
         """
-        tmp_seg = SegmentList(address)
-        tmp_seg.create_new_mem_list()
-        tmp_seg.current_mem_list.create_new_mem()
-        self.regList.append(tmp_seg)
-        return tmp_seg
+        return self.flag_load
 
-    def create_starting_liner_address_data(self, data: str):
+    def complete(self):
         """
-        Function save starting liner address data as bytearray
-        :param data: starting liner address data
+        Function completion of the current memory and calculating the total amount of data
         """
-        self.starting_liner_address_data = bytearray()
+        if self.is_load():
+            self.total_amount_data = len(self.bytes_data)
+
+    def add_data(self, address: str, data: str):
+        """
+        Function adding data to current memory
+        :param address: address offset load hex line data
+        :param data: hex line data
+        """
+        if not self.is_load():
+            self.start_rec_address = int(address, 16)
+            self.amount_hex_line_data = int(len(data) / 2)
+            self.flag_load = True
         for i in range(0, len(data), 2):
-            self.starting_liner_address_data.append(int(data[i:i+2], 16) & 0xFF)
+            self.bytes_data.append(int(data[i:i+2], 16) & 0xFF)
+        self.end_rec_address = int(address, 16)
 
-    def gen_hex(self, start_address, end_address, empty=0xFFFF):
-        pass
+    def gen_hex_lines(self, start_load_offset: str = '0x0000', end_load_offset: str = '0xFFFF') -> str:
+        """
+        Function generates hex lines from memory
+        :param start_load_offset: hex lines start address
+        :param end_load_offset: hex lines end address
+        :return: data of memory in hex lines
+        """
+        hex_lines_mem = ""
+        memory_section_data = str(binascii.b2a_hex(self.bytes_data))[2:-1]
 
-    def gen_binary(self, empty=0xFFFF):
-        pass
+        for line_number in range(int(self.total_amount_data / self.amount_hex_line_data)):
+            load_offset = hex(self.start_rec_address +
+                              line_number * self.amount_hex_line_data)[2:].rjust(4, '0')
+            if int(start_load_offset, 16) > int(load_offset, 16):
+                continue
+            elif int(end_load_offset, 16) < int(load_offset, 16):
+                break
+            data = memory_section_data[line_number * self.amount_hex_line_data * 2:
+                                       (line_number + 1) * self.amount_hex_line_data * 2]
+            hex_lines_mem += create_hex_line(self.amount_hex_line_data, load_offset, TYPE_DATA, data)
+        hex_lines_mem = hex_lines_mem[:-1]
+
+        return hex_lines_mem
+
+
+class MemList:
+    """
+    Class that stores a list of memory with functions to work with them.
+    If there are several items in the list, then these are sections
+    """
+
+    memList = None
+
+    current_mem = None
+
+    def __init__(self):
+        """
+        Function initializing an empty list of memory
+        """
+        self.memList = []
+        self.current_mem = None
+
+    def create_new_mem(self):
+        """
+        Function creating a new memory and adding to list of memory
+        """
+        self.current_mem = Mem()
+        self.memList.append(self.current_mem)
+
+    def gen_hex_lines(self):
+        """
+        Function generates hex lines of all memory list items
+        :return: generated hex lines
+        """
+        hex_lines_mem_list = ""
+        for mem_item in self.memList:
+            hex_lines_mem_list += mem_item.gen_hex_lines() + "\n"
+        return hex_lines_mem_list[:-1]
 
 
 class SegmentList:
@@ -175,117 +241,54 @@ class SegmentList:
         :return: generated hex lines
         """
         hex_lines_mem_list = ""
-        hex_lines_mem_list += create_hex_line(2, NO_LOAD_OFFSET, TYPE_EXTENDED_LINEAR_ADDRESS, self.start_ofs_address)
+        hex_lines_mem_list += create_hex_line(2, NO_LOAD_OFFSET,
+                                              TYPE_EXTENDED_LINEAR_ADDRESS, self.start_ofs_address)
         for mem_list_item in self.segList:
             hex_lines_mem_list += mem_list_item.gen_hex_lines() + "\n"
         return hex_lines_mem_list[:-1]
 
 
-class MemList:
+class RegionsList:
     """
-    Class that stores a list of memory with functions to work with them.
-    If there are several items in the list, then these are sections
+    Class that stores a lists of segment data memory and
+    starting liner address data with functions to work with them
     """
 
-    memList = None
-
-    current_mem = None
+    regList = None
+    starting_liner_address_data = None
 
     def __init__(self):
         """
-        Function initializing an empty list of memory
+        Function initializing an empty list of segment
         """
-        self.memList = []
-        self.current_mem = None
+        self.regList = []
 
-    def create_new_mem(self):
+    def create_new_seg(self, address: str) -> SegmentList:
         """
-        Function creating a new memory and adding to list of memory
+        Function of creating a new list of segments and adding to the list
+        :param address: starting liner address data
+        :return: new list of segments
         """
-        self.current_mem = Mem()
-        self.memList.append(self.current_mem)
+        tmp_seg = SegmentList(address)
+        tmp_seg.create_new_mem_list()
+        tmp_seg.current_mem_list.create_new_mem()
+        self.regList.append(tmp_seg)
+        return tmp_seg
 
-    def gen_hex_lines(self):
+    def create_starting_liner_address_data(self, data: str):
         """
-        Function generates hex lines of all memory list items
-        :return: generated hex lines
+        Function save starting liner address data as bytearray
+        :param data: starting liner address data
         """
-        hex_lines_mem_list = ""
-        for mem_item in self.memList:
-            hex_lines_mem_list += mem_item.gen_hex_lines() + "\n"
-        return hex_lines_mem_list[:-1]
-
-
-class Mem:
-    """
-    Class that stores the memory data, start and end address memory of a hex file section
-    """
-
-    start_rec_address = None
-    end_rec_address = None
-    bytes_data = None
-    total_amount_data = None
-    amount_hex_line_data = None
-
-    flag_load = False
-
-    def __init__(self):
-        """
-        Function initializing a new memory, with the creation of an empty data bytearray
-        """
-        self.bytes_data = bytearray()
-
-    def is_load(self) -> bool:
-        """
-        Function check creating memory
-        :return: True - memory created,
-                 False - memory not created
-        """
-        return self.flag_load
-
-    def complete(self):
-        """
-        Function completion of the current memory and calculating the total amount of data
-        """
-        if self.is_load():
-            self.total_amount_data = len(self.bytes_data)
-
-    def add_data(self, address: str, data: str):
-        """
-        Function adding data to current memory
-        :param address: address offset load hex line data
-        :param data: hex line data
-        """
-        if not self.is_load():
-            self.start_rec_address = int(address, 16)
-            self.amount_hex_line_data = int(len(data) / 2)
-            self.flag_load = True
+        self.starting_liner_address_data = bytearray()
         for i in range(0, len(data), 2):
-            self.bytes_data.append(int(data[i:i+2], 16) & 0xFF)
-        self.end_rec_address = int(address, 16)
+            self.starting_liner_address_data.append(int(data[i:i+2], 16) & 0xFF)
 
-    def gen_hex_lines(self, start_load_offset: str = '0x0000', end_load_offset: str = '0xFFFF') -> str:
-        """
-        Function generates hex lines from memory
-        :param start_load_offset: hex lines start address
-        :param end_load_offset: hex lines end address
-        :return: data of memory in hex lines
-        """
-        hex_lines_mem = ""
-        memory_section_data = str(binascii.b2a_hex(self.bytes_data))[2:-1]
+    def gen_hex(self, start_address, end_address, empty=0xFFFF):
+        pass
 
-        for line_number in range(int(self.total_amount_data / self.amount_hex_line_data)):
-            load_offset = hex(self.start_rec_address + line_number * self.amount_hex_line_data)[2:].rjust(4, '0')
-            if int(start_load_offset, 16) > int(load_offset, 16):
-                continue
-            elif int(end_load_offset, 16) < int(load_offset, 16):
-                break
-            data = memory_section_data[line_number * self.amount_hex_line_data * 2:
-                                       (line_number + 1) * self.amount_hex_line_data * 2]
-            hex_lines_mem += create_hex_line(self.amount_hex_line_data, load_offset, TYPE_DATA, data)
-        hex_lines_mem = hex_lines_mem[:-1]
-
-        return hex_lines_mem
+    def gen_binary(self, empty=0xFFFF):
+        pass
 
 
 def create_hex_line(record_len: int, load_offset: str, rec_typ: str, data) -> str:

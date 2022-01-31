@@ -14,18 +14,19 @@ class ParserHex:
     Class processing accepted hex files and type record hex line
     """
 
-    hexFilesList = []  # List of accepted names hex files
-    dataHexFiles = []  # Data processed hex files
+    hexFilesNameList = []
+    hexFilesDataList = []
 
     def __init__(self, list_hex_files: list):
-        self.hexFilesList = list_hex_files
-        self.dataHexFiles = []
+        self.hexFilesNameList = list_hex_files
+        self.hexFilesDataList = []
 
     def processing_files(self):
         """
-        Function processing of hex files for availability and corruption or upon successful opening parsing data
+        Function processing of hex files for availability and
+        corruption or upon successful opening parsing data
         """
-        for name_hex_file in self.hexFilesList:
+        for name_hex_file in self.hexFilesNameList:
             print('Processing file ' + name_hex_file + '.hex')
             try:
                 data_hex_file = open(name_hex_file + '.hex', 'r')
@@ -51,7 +52,7 @@ class ParserHex:
 
         for line_hex in data_file:
             is_good, type_rec, address, \
-                data, amount_data = parser_data_hex_line.ProcessingHexLine(line_hex[1:]).processing_line()
+                data, amount_data = parser_data_hex_line.ProcessingHexLine(line_hex[1:]).parsing()
             if is_good:
                 if TYPE_EXTENDED_LINEAR_ADDRESS == type_rec:
                     if current_seg:
@@ -64,7 +65,7 @@ class ParserHex:
                 elif TYPE_END_OF_FILE == type_rec:
                     if current_seg:
                         current_seg.current_mem_list.current_mem.complete()
-                    self.dataHexFiles.append(regions_hex_file)
+                    self.hexFilesDataList.append(regions_hex_file)
                     return True
             else:
                 return False
@@ -76,7 +77,7 @@ class ParserHex:
         :return: count regions hex file
         """
 
-        return len(self.dataHexFiles[number_hex_file].regList)
+        return len(self.hexFilesDataList[number_hex_file].regList)
 
     def gen_region_hex_file(self, number_hex_file, number_region):
         pass
