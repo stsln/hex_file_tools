@@ -283,7 +283,11 @@ class RegionsList:
         for i in range(0, len(data), 2):
             self.starting_liner_address_data.append(int(data[i:i+2], 16) & 0xFF)
 
-    def gen_hex_lines(self):
+    def gen_hex_lines(self,
+                      start_ofs_address: str = '0x0000',
+                      end_ofs_address: str = '0xFFFF',
+                      start_address_mem: str = '0x0000',
+                      end_address_mem: str = '0xFFFF'):
         """
         Function generates hex lines of all region memory lists
         :return: generated hex lines
@@ -291,7 +295,10 @@ class RegionsList:
         hex_lines_seg_list = ""
 
         for seg_list_item in self.regList:
-            hex_lines_seg_list += seg_list_item.gen_hex_lines() + "\n"
+            if seg_list_item.start_ofs_address < int(start_ofs_address, 16):
+                continue
+            elif seg_list_item.start_ofs_address <= int(end_ofs_address, 16):
+                hex_lines_seg_list += seg_list_item.gen_hex_lines() + "\n"
 
         hex_lines_seg_list += create_hex_line(4, TYPE_STARTING_LINEAR_ADDRESS,
                                               self.starting_liner_address_data)
