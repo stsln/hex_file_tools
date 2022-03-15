@@ -1,14 +1,14 @@
 import binascii
 
-RECORD_MARK = ":"
+RECORD_MARK = ':'
 
 # Record type hex line
-TYPE_DATA = "00"
-TYPE_END_OF_FILE = "01"
-TYPE_EXTENDED_SEGMENT_ADDRESS = "02"
-TYPE_START_SEGMENT_ADDRESS = "03"
-TYPE_EXTENDED_LINEAR_ADDRESS = "04"
-TYPE_STARTING_LINEAR_ADDRESS = "05"
+TYPE_DATA = '00'
+TYPE_END_OF_FILE = '01'
+TYPE_EXTENDED_SEGMENT_ADDRESS = '02'
+TYPE_START_SEGMENT_ADDRESS = '03'
+TYPE_EXTENDED_LINEAR_ADDRESS = '04'
+TYPE_STARTING_LINEAR_ADDRESS = '05'
 
 
 class ProcessingHexLine:
@@ -121,7 +121,7 @@ class Mem:
         :param end_load_offset: hex lines end address
         :return: data of memory in hex lines
         """
-        hex_lines_mem = ""
+        hex_lines_mem = ''
         memory_section_data = str(binascii.b2a_hex(self.bytes_data))[2:-1]
 
         for line_number in range(int(self.total_amount_data / self.amount_hex_line_data)):
@@ -168,9 +168,9 @@ class MemList:
         Function generates hex lines of all memory list items
         :return: generated hex lines
         """
-        hex_lines_mem_list = ""
+        hex_lines_mem_list = ''
         for mem_item in self.memList:
-            hex_lines_mem_list += mem_item.gen_hex_lines() + "\n"
+            hex_lines_mem_list += mem_item.gen_hex_lines() + '\n'
         return hex_lines_mem_list[:-1]
 
 
@@ -239,11 +239,11 @@ class SegmentList:
         Function generates hex lines of all segment memory lists
         :return: generated hex lines
         """
-        hex_lines_mem_list = ""
+        hex_lines_mem_list = ''
         hex_lines_mem_list += create_hex_line(2, TYPE_EXTENDED_LINEAR_ADDRESS,
                                               self.start_ofs_address)
         for mem_list_item in self.segList:
-            hex_lines_mem_list += mem_list_item.gen_hex_lines() + "\n"
+            hex_lines_mem_list += mem_list_item.gen_hex_lines() + '\n'
         return hex_lines_mem_list[:-1]
 
 
@@ -292,13 +292,13 @@ class RegionsList:
         Function generates hex lines of all region memory lists
         :return: generated hex lines
         """
-        hex_lines_seg_list = ""
+        hex_lines_seg_list = ''
 
         for seg_list_item in self.regList:
             if seg_list_item.start_ofs_address < int(start_ofs_address, 16):
                 continue
             elif seg_list_item.start_ofs_address <= int(end_ofs_address, 16):
-                hex_lines_seg_list += seg_list_item.gen_hex_lines() + "\n"
+                hex_lines_seg_list += seg_list_item.gen_hex_lines() + '\n'
 
         hex_lines_seg_list += create_hex_line(4, TYPE_STARTING_LINEAR_ADDRESS,
                                               self.starting_liner_address_data)
@@ -323,11 +323,11 @@ def create_hex_line(record_len: int, rec_typ: str, data=None, load_offset: str =
     elif isinstance(data, bytearray):
         data = str(binascii.b2a_hex(data))[2:-1]
     elif isinstance(data, type(None)):
-        data = ""
+        data = ''
 
     rec_len = str(hex(record_len)[2:]).rjust(2, '0')
     hex_line = rec_len + load_offset + rec_typ + data
     chk_sum = str(hex(ProcessingHexLine(hex_line).get_crc_and_amount_data()[0])[2:]).rjust(2, '0')
-    hex_line = (RECORD_MARK + hex_line + chk_sum + "\n").upper()
+    hex_line = (RECORD_MARK + hex_line + chk_sum + '\n').upper()
 
     return hex_line
