@@ -68,7 +68,7 @@ class ProcessingHexLine:
 
 class Mem:
     """
-    Class that stores the memory data, start and end address memory of a hex file section
+    Class that stores the memory data, start and end address memory of a hex file
     """
 
     start_rec_address = None
@@ -122,7 +122,7 @@ class Mem:
         :return: data of memory in hex lines
         """
         hex_lines_mem = ''
-        memory_section_data = str(binascii.b2a_hex(self.bytes_data))[2:-1]
+        memory_data = str(binascii.b2a_hex(self.bytes_data))[2:-1]
 
         for line_number in range(int(self.total_amount_data / self.amount_hex_line_data)):
             load_offset = hex(self.start_rec_address +
@@ -131,8 +131,8 @@ class Mem:
                 continue
             elif int(end_load_offset, 16) < int(load_offset, 16):
                 break
-            data = memory_section_data[line_number * self.amount_hex_line_data * 2:
-                                       (line_number + 1) * self.amount_hex_line_data * 2]
+            data = memory_data[line_number * self.amount_hex_line_data * 2:
+                               (line_number + 1) * self.amount_hex_line_data * 2]
             hex_lines_mem += create_hex_line(self.amount_hex_line_data, TYPE_DATA, data, load_offset)
         hex_lines_mem = hex_lines_mem[:-1]
 
@@ -141,8 +141,7 @@ class Mem:
 
 class MemList:
     """
-    Class that stores a list of memory with functions to work with them.
-    If there are several items in the list, then these are sections
+    Class that stores a list of memory with functions to work with them
     """
 
     memList = None
@@ -255,6 +254,7 @@ class RegionsList:
 
     regList = None
     starting_liner_address_data = None
+    name_hex_file = None
 
     def __init__(self):
         """

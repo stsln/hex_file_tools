@@ -31,7 +31,7 @@ class ParserHex:
             try:
                 data_hex_file = open(name_hex_file + '.hex', 'r')
                 print('File has been successfully opened for processing')
-                if self.processing_file_line_by_line(data_hex_file):
+                if self.processing_file_line_by_line(name_hex_file, data_hex_file):
                     print('File has been processed successfully\n')
                 else:
                     print('Further processing of the file is impossible - the file is damaged!')
@@ -40,15 +40,17 @@ class ParserHex:
                 print('File not found\n')
                 continue
 
-    def processing_file_line_by_line(self, data_file) -> bool:
+    def processing_file_line_by_line(self, name_hex_file, data_file) -> bool:
         """
         Function hex file processing line by line
+        :param name_hex_file: name hex file
         :param data_file: data hex file
         :return: True - successful file processing,
                  False - file corrupted
         """
         current_seg = None
         regions_hex_file = parser_data_hex_line.RegionsList()
+        regions_hex_file.name_hex_file = name_hex_file
 
         for line_hex in data_file:
             is_good, type_rec, address, \
