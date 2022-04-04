@@ -8,4 +8,6 @@ data_hex_files.get_count_regions(number_hex_file=1)
 data_hex_files.gen_common_hex_file(number_hex_file=0, empty=0xF0)
 data_hex_files.gen_region_hex_file(number_hex_file=0, number_region=0)
 data_hex_files.gen_hex_file(number_hex_file=2)
-test = data_hex_files.hexFilesDataList[2].gen_hex_lines()
+
+region_adr, load_offset_adr, region_data = data_hex_files.hexFilesDataList[0].regList[2].get_text_hex_editor()
+test = data_hex_files.hexFilesDataList[0].regList[2].gen_hex_lines()

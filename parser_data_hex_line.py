@@ -114,14 +114,17 @@ class Mem:
             self.bytes_data.append(int(data[i:i+2], 16) & 0xFF)
         self.end_rec_address = int(address, 16)
 
-    def gen_hex_lines(self, start_load_offset: str = '0x0000', end_load_offset: str = '0xFFFF') -> str:
+    def gen_hex_lines(self,
+                      start_load_offset: str = '0x0000', end_load_offset: str = '0xFFFF',
+                      is_editor: bool = False) -> tuple[str, str]:
         """
-        Function generates hex lines from memory
+        Function generates hex lines from memory to create or edit a file
         :param start_load_offset: hex lines start address
         :param end_load_offset: hex lines end address
-        :return: data of memory in hex lines
+        :param is_editor: means the text is intended for the editor
+        :return: data of memory in hex lines or only data hex line and address load offset
         """
-        hex_lines_mem = ''
+        load_offset_adr, hex_lines_mem = '', ''
         memory_data = str(binascii.b2a_hex(self.bytes_data))[2:-1]
 
         for line_number in range(int(self.total_amount_data / self.amount_hex_line_data)):
@@ -133,10 +136,14 @@ class Mem:
                 break
             data = memory_data[line_number * self.amount_hex_line_data * 2:
                                (line_number + 1) * self.amount_hex_line_data * 2]
-            hex_lines_mem += create_hex_line(self.amount_hex_line_data, TYPE_DATA, data, load_offset)
+            if is_editor:
+                load_offset_adr += load_offset + '\n'
+                hex_lines_mem += data + '\n'
+            else:
+                hex_lines_mem += create_hex_line(self.amount_hex_line_data, TYPE_DATA, data, load_offset)
         hex_lines_mem = hex_lines_mem[:-1]
 
-        return hex_lines_mem
+        return load_offset_adr, hex_lines_mem
 
 
 class MemList:
@@ -169,8 +176,22 @@ class MemList:
         """
         hex_lines_mem_list = ''
         for mem_item in self.memList:
-            hex_lines_mem_list += mem_item.gen_hex_lines() + '\n'
+            hex_lines_mem_list += mem_item.gen_hex_lines()[1] + '\n'
         return hex_lines_mem_list[:-1]
+
+    def get_text_hex_editor(self):
+        """
+        Function returns the disassembled memory list of the hex file in the form of two lines:
+        the addresses of the memory list items data and the memory list items data
+        :return: the addresses of the memory list items data and the memory list items data
+        """
+        load_offset_adr, region_data = '', ''
+        for mem_list_item in self.memList:
+            result_data = mem_list_item.gen_hex_lines(is_editor=True)
+            load_offset_adr += result_data[0]
+            region_data += result_data[1] + '\n'
+
+        return load_offset_adr, region_data
 
 
 class SegmentList:
@@ -244,6 +265,21 @@ class SegmentList:
         for mem_list_item in self.segList:
             hex_lines_mem_list += mem_list_item.gen_hex_lines() + '\n'
         return hex_lines_mem_list[:-1]
+
+    def get_text_hex_editor(self):
+        """
+        Function returns the disassembled region of the hex file in the form of three lines: the initial offset of the
+        region, the addresses of the region data and the region data for further work with them in the editor
+        :return: the initial offset of the region, the addresses of the region data and the region data
+        """
+        region_adr = hex(self.start_ofs_address)[2:].rjust(4, '0')
+        load_offset_adr, region_data = '', ''
+        for mem_list_item in self.segList:
+            result_data = mem_list_item.get_text_hex_editor()
+            load_offset_adr += result_data[0]
+            region_data += result_data[1]
+
+        return region_adr, load_offset_adr, region_data
 
 
 class RegionsList:
@@ -329,5 +365,4 @@ def create_hex_line(record_len: int, rec_typ: str, data=None, load_offset: str =
     hex_line = rec_len + load_offset + rec_typ + data
     chk_sum = str(hex(ProcessingHexLine(hex_line).get_crc_and_amount_data()[0])[2:]).rjust(2, '0')
     hex_line = (RECORD_MARK + hex_line + chk_sum + '\n').upper()
-
     return hex_line
