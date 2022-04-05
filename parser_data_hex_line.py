@@ -1,5 +1,7 @@
 import binascii
 
+import parser_hex_files
+
 RECORD_MARK = ':'
 
 # Record type hex line
@@ -122,7 +124,7 @@ class Mem:
         :param start_load_offset: hex lines start address
         :param end_load_offset: hex lines end address
         :param is_editor: means the text is intended for the editor
-        :return: data of memory in hex lines or only data hex line and address load offset
+        :return: data of memory in hex lines or only data hex line and load offset address
         """
         load_offset_adr, hex_lines_mem = '', ''
         memory_data = str(binascii.b2a_hex(self.bytes_data))[2:-1]
@@ -281,6 +283,24 @@ class SegmentList:
 
         return region_adr, load_offset_adr, region_data
 
+    def save_hex_region(self, region_adr, load_offset_adr, region_data):
+        """
+        Функция сохраняет hex-регион, если произошли правки в редакторе
+        """
+        self.start_ofs_address = int(region_adr, 16)
+        self.segList.clear()
+        self.last_amount_data = None
+
+        offset_adr, data = load_offset_adr.split(), region_data.split()
+        hex_lines = ''
+
+        if len(offset_adr) == len(data):
+            for i in range(len(data)):
+                hex_lines += create_hex_line(int(len(data[i]) / 2), TYPE_DATA, data[i], offset_adr[i])
+            flag = parser_hex_files.processing_file_line_by_line(hex_lines, self.segList)
+        else:
+            pass
+
 
 class RegionsList:
     """
@@ -319,11 +339,8 @@ class RegionsList:
         for i in range(0, len(data), 2):
             self.starting_liner_address_data.append(int(data[i:i+2], 16) & 0xFF)
 
-    def gen_hex_lines(self,
-                      start_ofs_address: str = '0x0000',
-                      end_ofs_address: str = '0xFFFF',
-                      start_address_mem: str = '0x0000',
-                      end_address_mem: str = '0xFFFF'):
+    def gen_hex_lines(self, start_ofs_address: str = '0x0000', end_ofs_address: str = '0xFFFF',
+                      start_address_mem: str = '0x0000', end_address_mem: str = '0xFFFF'):
         """
         Function generates hex lines of all region memory lists
         :return: generated hex lines
