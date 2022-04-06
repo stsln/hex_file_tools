@@ -1,7 +1,5 @@
 import binascii
 
-import parser_hex_files
-
 RECORD_MARK = ':'
 
 # Record type hex line
@@ -287,19 +285,34 @@ class SegmentList:
         """
         Функция сохраняет hex-регион, если произошли правки в редакторе
         """
+        start_ofs_adr_copy, seg_list_copy, last_amount_data_copy = \
+            self.start_ofs_address, self.segList.copy(), self.last_amount_data
+
         self.start_ofs_address = int(region_adr, 16)
         self.segList.clear()
-        self.last_amount_data = None
+        self.last_amount_data = 0
 
         offset_adr, data = load_offset_adr.split(), region_data.split()
-        hex_lines = ''
 
+        flag_processing = True
         if len(offset_adr) == len(data):
             for i in range(len(data)):
-                hex_lines += create_hex_line(int(len(data[i]) / 2), TYPE_DATA, data[i], offset_adr[i])
-            flag = parser_hex_files.processing_file_line_by_line(hex_lines, self.segList)
+                line_hex = create_hex_line(int(len(data[i]) / 2), TYPE_DATA, data[i], offset_adr[i])
+                if not ProcessingHexLine(line_hex[1:]).parsing():
+                    flag_processing = False
+                    break
+                self.add_data(offset_adr[i], data[i], int(len(data[i]) / 2))
         else:
-            pass
+            flag_processing = False
+
+        if not flag_processing:
+            self.start_ofs_address = start_ofs_adr_copy
+            self.segList = seg_list_copy
+            self.last_amount_data = last_amount_data_copy
+        else:
+            self.current_mem_list.current_mem.complete()
+
+        return flag_processing
 
 
 class RegionsList:

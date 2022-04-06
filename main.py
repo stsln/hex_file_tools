@@ -13,5 +13,5 @@ data_hex_files.hexFilesDataList[0].regList[2].gen_hex_lines()
 test1 = data_hex_files.hexFilesDataList[0].regList[0].gen_hex_lines()
 region_adr, load_offset_adr, region_data = data_hex_files.hexFilesDataList[0].regList[0].get_text_hex_editor()
 region_adr = '0910'
-data_hex_files.hexFilesDataList[0].regList[0].save_hex_region(region_adr, load_offset_adr, region_data)
+flag = data_hex_files.hexFilesDataList[0].regList[0].save_hex_region(region_adr, load_offset_adr, region_data)
 test2 = data_hex_files.hexFilesDataList[0].regList[0].gen_hex_lines()
