@@ -31,7 +31,7 @@ def processing_file_line_by_line(data_file, regions_hex_file, current_seg=None) 
             elif TYPE_DATA == type_rec:
                 current_seg.add_data(address, data, amount_data)
             elif TYPE_STARTING_LINEAR_ADDRESS == type_rec:
-                regions_hex_file.create_starting_liner_address_data(data)
+                regions_hex_file.create_start_liner_adr_data(data)
             elif TYPE_END_OF_FILE == type_rec:
                 if current_seg:
                     current_seg.current_mem_list.current_mem.complete()
@@ -45,29 +45,26 @@ class ParserHex:
     Class processing accepted hex files and type record hex line
     """
 
-    hexFilesNameList = []
-    hexFilesDataList = []
+    hexFilesDataList = {}
 
-    def __init__(self, list_hex_files: list):
-        self.hexFilesNameList = list_hex_files
-        self.hexFilesDataList = []
+    def __init__(self):
+        self.hexFilesDataList = {}
 
-    def processing_files(self):
+    def processing_files(self, list_hex_files: list):
         """
         Function processing of hex files for availability and
         corruption or upon successful opening parsing data
         """
         self.hexFilesDataList.clear()
 
-        for name_hex_file in self.hexFilesNameList:
+        for name_hex_file in list_hex_files:
             print('Processing file ' + name_hex_file + '.hex')
             try:
                 data_hex_file = open(name_hex_file + '.hex', 'r')
                 print('File has been successfully opened for processing')
                 regions_hex_file = parser_data_hex_line.RegionsList()
-                regions_hex_file.name_hex_file = name_hex_file
                 if processing_file_line_by_line(data_hex_file, regions_hex_file):
-                    self.hexFilesDataList.append(regions_hex_file)
+                    self.hexFilesDataList[name_hex_file] = regions_hex_file
                     print('File has been processed successfully\n')
                 else:
                     print('Further processing of the file is impossible - the file is damaged!')
@@ -76,20 +73,5 @@ class ParserHex:
                 print('File not found\n')
                 continue
 
-    def get_count_regions(self, number_hex_file: int) -> int:
-        """
-        Function returns the number of regions in the hex file
-        :param number_hex_file: number hex file
-        :return: count regions hex file
-        """
-
-        return len(self.hexFilesDataList[number_hex_file].regList)
-
-    def gen_region_hex_file(self, number_hex_file, number_region):
-        pass
-
-    def gen_hex_file(self, number_hex_file, empty=0xFF):
-        pass
-
-    def gen_common_hex_file(self, number_hex_file, empty=0xFF):
+    def merge(self, empty=0xFF):
         pass

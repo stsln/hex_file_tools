@@ -322,8 +322,7 @@ class RegionsList:
     """
 
     regList = None
-    starting_liner_address_data = None
-    name_hex_file = None
+    start_liner_adr_data = None
 
     def __init__(self):
         """
@@ -343,14 +342,21 @@ class RegionsList:
         self.regList.append(tmp_seg)
         return tmp_seg
 
-    def create_starting_liner_address_data(self, data: str):
+    def create_start_liner_adr_data(self, data: str):
         """
         Function save starting liner address data as bytearray
         :param data: starting liner address data
         """
-        self.starting_liner_address_data = bytearray()
+        self.start_liner_adr_data = bytearray()
         for i in range(0, len(data), 2):
-            self.starting_liner_address_data.append(int(data[i:i+2], 16) & 0xFF)
+            self.start_liner_adr_data.append(int(data[i:i+2], 16) & 0xFF)
+
+    def get_count_regions(self) -> int:
+        """
+        Function returns the number of regions in the hex file
+        :return: count regions hex file
+        """
+        return len(self.regList)
 
     def gen_hex_lines(self, start_ofs_address: str = '0x0000', end_ofs_address: str = '0xFFFF',
                       start_address_mem: str = '0x0000', end_address_mem: str = '0xFFFF'):
@@ -367,7 +373,7 @@ class RegionsList:
                 hex_lines_seg_list += seg_list_item.gen_hex_lines() + '\n'
 
         hex_lines_seg_list += create_hex_line(4, TYPE_STARTING_LINEAR_ADDRESS,
-                                              self.starting_liner_address_data)
+                                              self.start_liner_adr_data)
         hex_lines_seg_list += create_hex_line(0, TYPE_END_OF_FILE)
         return hex_lines_seg_list
 
