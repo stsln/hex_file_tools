@@ -71,8 +71,8 @@ class Mem:
     Class that stores the memory data, start and end address memory of a hex file
     """
 
-    start_rec_address = None
-    end_rec_address = None
+    start_rec_adr = None
+    end_rec_adr = None
     bytes_data = None
     total_amount_data = None
     amount_hex_line_data = None
@@ -107,12 +107,12 @@ class Mem:
         :param data: hex line data
         """
         if not self.is_load():
-            self.start_rec_address = int(address, 16)
+            self.start_rec_adr = int(address, 16)
             self.amount_hex_line_data = int(len(data) / 2)
             self.flag_load = True
         for i in range(0, len(data), 2):
             self.bytes_data.append(int(data[i:i+2], 16) & 0xFF)
-        self.end_rec_address = int(address, 16)
+        self.end_rec_adr = int(address, 16)
 
     def gen_hex_lines(self,
                       start_load_offset: str = '0x0000', end_load_offset: str = '0xFFFF',
@@ -128,7 +128,7 @@ class Mem:
         memory_data = str(binascii.b2a_hex(self.bytes_data))[2:-1]
 
         for line_number in range(int(self.total_amount_data / self.amount_hex_line_data)):
-            load_offset = hex(self.start_rec_address +
+            load_offset = hex(self.start_rec_adr +
                               line_number * self.amount_hex_line_data)[2:].rjust(4, '0')
             if int(start_load_offset, 16) > int(load_offset, 16):
                 continue
@@ -151,7 +151,7 @@ class MemList:
     Class that stores a list of memory with functions to work with them
     """
 
-    memList = None
+    mem_list = None
 
     current_mem = None
 
@@ -159,7 +159,7 @@ class MemList:
         """
         Function initializing an empty list of memory
         """
-        self.memList = []
+        self.mem_list = []
         self.current_mem = None
 
     def create_new_mem(self):
@@ -167,7 +167,7 @@ class MemList:
         Function creating a new memory and adding to list of memory
         """
         self.current_mem = Mem()
-        self.memList.append(self.current_mem)
+        self.mem_list.append(self.current_mem)
 
     def gen_hex_lines(self):
         """
@@ -175,18 +175,18 @@ class MemList:
         :return: generated hex lines
         """
         hex_lines_mem_list = ''
-        for mem_item in self.memList:
+        for mem_item in self.mem_list:
             hex_lines_mem_list += mem_item.gen_hex_lines()[1] + '\n'
         return hex_lines_mem_list[:-1]
 
-    def get_text_hex_editor(self):
+    def get_hex_editor(self):
         """
         Function returns the disassembled memory list of the hex file in the form of two lines:
         the addresses of the memory list items data and the memory list items data
         :return: the addresses of the memory list items data and the memory list items data
         """
         load_offset_adr, region_data = '', ''
-        for mem_list_item in self.memList:
+        for mem_list_item in self.mem_list:
             result_data = mem_list_item.gen_hex_lines(is_editor=True)
             load_offset_adr += result_data[0]
             region_data += result_data[1] + '\n'
@@ -199,30 +199,30 @@ class SegmentList:
     Class that stores a lists of memory data and start offset address with functions to work with them
     """
 
-    start_ofs_address = None
-    segList = None
+    start_ofs_adr = None
+    seg_list = None
 
-    current_mem_list = None
+    current_seg = None
     last_amount_data = None
 
-    def __init__(self, ofs_address: str):
+    def __init__(self, ofs_adr: str):
         """
         Function for initializing an empty list of segments with offset start address filling
-        :param ofs_address: offset start address
+        :param ofs_adr: offset start address
         """
-        self.segList = []
-        self.start_ofs_address = int(ofs_address, 16)
-        self.current_mem_list = None
+        self.seg_list = []
+        self.start_ofs_adr = int(ofs_adr, 16)
+        self.current_seg = None
         self.last_amount_data = None
 
-    def create_new_mem_list(self):
+    def create_new_seg(self):
         """
         Function creating a new memory list element and adding to list of segment
         """
-        self.current_mem_list = MemList()
-        self.segList.append(self.current_mem_list)
+        self.current_seg = MemList()
+        self.seg_list.append(self.current_seg)
 
-    def is_need_new_mem_list(self, current_amount_data: int) -> bool:
+    def is_need_new_seg(self, current_amount_data: int) -> bool:
         """
         Function checks whether there is a need to create a new list of memory
         :param current_amount_data: current amount of data
@@ -241,17 +241,17 @@ class SegmentList:
         :param data: hex line data
         :param current_amount_data: current amount of data in the hex line
         """
-        if self.is_need_new_mem_list(current_amount_data):
-            self.current_mem_list.current_mem.complete()
-            self.create_new_mem_list()
-            self.current_mem_list.create_new_mem()
-            self.current_mem_list.current_mem.add_data(address, data)
+        if self.is_need_new_seg(current_amount_data):
+            self.current_seg.current_mem.complete()
+            self.create_new_seg()
+            self.current_seg.create_new_mem()
+            self.current_seg.current_mem.add_data(address, data)
         else:
-            if self.current_mem_list.current_mem.end_rec_address and \
-                    self.current_mem_list.current_mem.end_rec_address != int(address, 16) - current_amount_data:
-                self.current_mem_list.current_mem.complete()
-                self.current_mem_list.create_new_mem()
-            self.current_mem_list.current_mem.add_data(address, data)
+            if self.current_seg.current_mem.end_rec_adr and \
+                    self.current_seg.current_mem.end_rec_adr != int(address, 16) - current_amount_data:
+                self.current_seg.current_mem.complete()
+                self.current_seg.create_new_mem()
+            self.current_seg.current_mem.add_data(address, data)
         self.last_amount_data = current_amount_data
 
     def gen_hex_lines(self):
@@ -261,21 +261,23 @@ class SegmentList:
         """
         hex_lines_mem_list = ''
         hex_lines_mem_list += create_hex_line(2, TYPE_EXTENDED_LINEAR_ADDRESS,
-                                              self.start_ofs_address)
-        for mem_list_item in self.segList:
+                                              self.start_ofs_adr)
+        for mem_list_item in self.seg_list:
             hex_lines_mem_list += mem_list_item.gen_hex_lines() + '\n'
         return hex_lines_mem_list[:-1]
 
-    def get_text_hex_editor(self):
+    def get_hex_editor(self):
         """
-        Function returns the disassembled region of the hex file in the form of three lines: the initial offset of the
-        region, the addresses of the region data and the region data for further work with them in the editor
+        Function returns the disassembled region of the hex file in the
+        form of three lines: the initial offset of the region,
+        the addresses of the region data and the region data for further
+        work with them in the editor
         :return: the initial offset of the region, the addresses of the region data and the region data
         """
-        region_adr = hex(self.start_ofs_address)[2:].rjust(4, '0')
+        region_adr = hex(self.start_ofs_adr)[2:].rjust(4, '0')
         load_offset_adr, region_data = '', ''
-        for mem_list_item in self.segList:
-            result_data = mem_list_item.get_text_hex_editor()
+        for seg_item in self.seg_list:
+            result_data = seg_item.get_hex_editor()
             load_offset_adr += result_data[0]
             region_data += result_data[1]
 
@@ -286,10 +288,10 @@ class SegmentList:
         Функция сохраняет hex-регион, если произошли правки в редакторе
         """
         start_ofs_adr_copy, seg_list_copy, last_amount_data_copy = \
-            self.start_ofs_address, self.segList.copy(), self.last_amount_data
+            self.start_ofs_adr, self.seg_list.copy(), self.last_amount_data
 
-        self.start_ofs_address = int(region_adr, 16)
-        self.segList.clear()
+        self.start_ofs_adr = int(region_adr, 16)
+        self.seg_list.clear()
         self.last_amount_data = 0
 
         offset_adr, data = load_offset_adr.split(), region_data.split()
@@ -306,41 +308,41 @@ class SegmentList:
             flag_processing = False
 
         if not flag_processing:
-            self.start_ofs_address = start_ofs_adr_copy
-            self.segList = seg_list_copy
+            self.start_ofs_adr = start_ofs_adr_copy
+            self.seg_list = seg_list_copy
             self.last_amount_data = last_amount_data_copy
         else:
-            self.current_mem_list.current_mem.complete()
+            self.current_seg.current_mem.complete()
 
         return flag_processing
 
 
 class RegionsList:
     """
-    Class that stores a lists of segment data memory and
+    Class that stores lists of region data and
     starting liner address data with functions to work with them
     """
 
-    regList = None
+    reg_list = None
     start_liner_adr_data = None
 
     def __init__(self):
         """
-        Function initializing an empty list of segment
+        Function initializing an empty dictionary of hex file regions
         """
-        self.regList = []
+        self.reg_list = {}
 
-    def create_new_seg(self, address: str) -> SegmentList:
+    def create_new_reg(self, address: str) -> SegmentList:
         """
         Function of creating a new list of segments and adding to the list
         :param address: starting liner address data
         :return: new list of segments
         """
-        tmp_seg = SegmentList(address)
-        tmp_seg.create_new_mem_list()
-        tmp_seg.current_mem_list.create_new_mem()
-        self.regList.append(tmp_seg)
-        return tmp_seg
+        tmp_reg = SegmentList(address)
+        tmp_reg.create_new_seg()
+        tmp_reg.current_seg.create_new_mem()
+        self.reg_list[address] = tmp_reg
+        return tmp_reg
 
     def create_start_liner_adr_data(self, data: str):
         """
@@ -356,29 +358,40 @@ class RegionsList:
         Function returns the number of regions in the hex file
         :return: count regions hex file
         """
-        return len(self.regList)
+        return len(self.reg_list)
 
-    def gen_hex_lines(self, start_ofs_address: str = '0x0000', end_ofs_address: str = '0xFFFF',
-                      start_address_mem: str = '0x0000', end_address_mem: str = '0xFFFF'):
+    def gen_hex(self, is_end: bool = False, save: bool = False,
+                start_ofs_adr: str = '0x0000', end_ofs_adr: str = '0xFFFF'):
         """
         Function generates hex lines of all region memory lists
         :return: generated hex lines
         """
         hex_lines_seg_list = ''
 
-        for seg_list_item in self.regList:
-            if seg_list_item.start_ofs_address < int(start_ofs_address, 16):
+        for reg_item, data_item in self.reg_list.items():
+            if data_item.start_ofs_adr < int(start_ofs_adr, 16):
                 continue
-            elif seg_list_item.start_ofs_address <= int(end_ofs_address, 16):
-                hex_lines_seg_list += seg_list_item.gen_hex_lines() + '\n'
+            elif data_item.start_ofs_adr <= int(end_ofs_adr, 16):
+                hex_lines_seg_list += data_item.gen_hex_lines() + '\n'
 
-        hex_lines_seg_list += create_hex_line(4, TYPE_STARTING_LINEAR_ADDRESS,
-                                              self.start_liner_adr_data)
-        hex_lines_seg_list += create_hex_line(0, TYPE_END_OF_FILE)
+        if is_end:
+            hex_lines_seg_list += create_hex_line(4, TYPE_STARTING_LINEAR_ADDRESS, self.start_liner_adr_data)
+            hex_lines_seg_list += create_hex_line(0, TYPE_END_OF_FILE)
+
         return hex_lines_seg_list
 
-    def gen_binary(self):
+    def gen_bin(self):
         pass
+
+    def save_hex_region(self, old_reg_adr, new_region_adr, load_offset_adr, region_data):
+        """
+        Функция сохраняет hex-регион, если произошли правки в редакторе и они без ошибок
+        """
+        if self.reg_list[old_reg_adr].save_hex_region(new_region_adr, load_offset_adr, region_data):
+            self.reg_list[new_region_adr] = self.reg_list.pop(old_reg_adr)
+            print('The edits made have been saved successfully')
+        else:
+            print('There are errors in the carried edits!')
 
 
 def create_hex_line(record_len: int, rec_typ: str, data=None, load_offset: str = '0000') -> str:
