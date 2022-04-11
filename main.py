@@ -11,6 +11,6 @@ data_hex_files.hex_files_data_list['name_hex_file_1'].reg_list['0810'].gen_hex_l
 
 data_hex_files.merge()
 
-reg_adr, load_offset_adr, region_data = \
+reg_adr, load_offset_adr, reg_data = \
     data_hex_files.hex_files_data_list['name_hex_file_1'].reg_list['0810'].get_hex_editor()
-data_hex_files.hex_files_data_list['name_hex_file_1'].save_hex_region('0810', reg_adr, load_offset_adr, region_data)
+data_hex_files.hex_files_data_list['name_hex_file_1'].save_hex_region('0810', reg_adr, load_offset_adr, reg_data)

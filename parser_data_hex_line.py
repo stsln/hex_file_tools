@@ -287,9 +287,6 @@ class SegmentList:
         """
         Функция сохраняет hex-регион, если произошли правки в редакторе
         """
-        start_ofs_adr_copy, seg_list_copy, last_amount_data_copy = \
-            self.start_ofs_adr, self.seg_list.copy(), self.last_amount_data
-
         self.start_ofs_adr = int(region_adr, 16)
         self.seg_list.clear()
         self.last_amount_data = 0
@@ -307,11 +304,7 @@ class SegmentList:
         else:
             flag_processing = False
 
-        if not flag_processing:
-            self.start_ofs_adr = start_ofs_adr_copy
-            self.seg_list = seg_list_copy
-            self.last_amount_data = last_amount_data_copy
-        else:
+        if flag_processing:
             self.current_seg.current_mem.complete()
 
         return flag_processing
@@ -383,15 +376,28 @@ class RegionsList:
     def gen_bin(self):
         pass
 
-    def save_hex_region(self, old_reg_adr, new_region_adr, load_offset_adr, region_data):
+    def save_hex_region(self, old_reg_adr, new_reg_adr, load_offset_adr, reg_data):
         """
         Функция сохраняет hex-регион, если произошли правки в редакторе и они без ошибок
         """
-        if self.reg_list[old_reg_adr].save_hex_region(new_region_adr, load_offset_adr, region_data):
-            self.reg_list[new_region_adr] = self.reg_list.pop(old_reg_adr)
-            print('The edits made have been saved successfully')
+        reg_list_copy = self.reg_list.copy()
+        flag_err = False
+        reg_data = '5456'
+
+        if new_reg_adr not in self.reg_list.keys() or new_reg_adr == old_reg_adr:
+            if self.reg_list[old_reg_adr].save_hex_region(new_reg_adr, load_offset_adr, reg_data):
+                if new_reg_adr != old_reg_adr:
+                    self.reg_list[new_reg_adr] = self.reg_list.pop(old_reg_adr)
+            else:
+                self.reg_list = reg_list_copy.copy()
+                flag_err = True
         else:
-            print('There are errors in the carried edits!')
+            flag_err = True
+
+        if flag_err:
+            print('There are errors in the edits made or the address of such an offset already exists!')
+        else:
+            print('The edits made have been saved successfully')
 
 
 def create_hex_line(record_len: int, rec_typ: str, data=None, load_offset: str = '0000') -> str:
