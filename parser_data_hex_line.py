@@ -24,7 +24,7 @@ class ProcessingHexLine:
         """
         self.line_hex_file = hex_line
 
-    def get_crc_and_amount_data(self):
+    def get_crc_and_amount_data(self) -> tuple[int, int]:
         """
         Function calculating and returning CRC hex line and amounts of data
         :return: number_calc_checksum: calculated CRC hex line
@@ -43,7 +43,7 @@ class ProcessingHexLine:
 
         return calc_checksum, amount_data
 
-    def parsing(self):
+    def parsing(self) -> tuple[bool, int, int or str, int or str, int]:
         """
         Function hex line parsing
         :return: flag_return: True - successful parsing hex line,
@@ -256,7 +256,7 @@ class SegmentList:
             self.current_seg.current_mem.add_data(address, data)
         self.last_amount_data = current_amount_data
 
-    def gen_hex_lines(self):
+    def gen_hex_lines(self) -> str:
         """
         Function generates hex lines of all segment memory lists
         :return: generated hex lines
@@ -268,7 +268,7 @@ class SegmentList:
             hex_lines_mem_list += mem_list_item.gen_hex_lines() + '\n'
         return hex_lines_mem_list[:-1]
 
-    def get_hex_editor(self):
+    def get_hex_editor(self) -> tuple[str, str, str]:
         """
         Function returns the disassembled region of the hex file in the
         form of three lines: the initial offset of the region,
@@ -361,8 +361,7 @@ class RegionsList:
         """
         return len(self.reg_list)
 
-    def gen_hex(self, is_end: bool = False, save: bool = False,
-                start_ofs_adr: str = '0x0000', end_ofs_adr: str = '0xFFFF'):
+    def gen_hex(self, is_end: bool = False, start_ofs_adr: str = '0x0000', end_ofs_adr: str = '0xFFFF') -> str:
         """
         Function generates hex lines of all region memory lists
         :return: generated hex lines

@@ -1,3 +1,5 @@
+import random
+
 import parser_data_hex_line
 
 # Record type hex line
@@ -9,11 +11,11 @@ TYPE_EXTENDED_LINEAR_ADDRESS = 4
 TYPE_STARTING_LINEAR_ADDRESS = 5
 
 
-def processing_file_line_by_line(data_file, regions_hex_file, current_reg=None) -> bool:
+def processing_file_line_by_line(data_file, reg_hex_file, current_reg=None) -> bool:
     """
     Function hex data processing line by line
     :param data_file: data hex file
-    :param regions_hex_file: data hex file
+    :param reg_hex_file: data hex file
     :param current_reg: current region
     :return: True - successful file processing,
              False - file corrupted
@@ -27,11 +29,11 @@ def processing_file_line_by_line(data_file, regions_hex_file, current_reg=None) 
             if TYPE_EXTENDED_LINEAR_ADDRESS == type_rec:
                 if current_reg:
                     current_reg.current_seg.current_mem.complete()
-                current_reg = regions_hex_file.create_new_reg(data)
+                current_reg = reg_hex_file.create_new_reg(data)
             elif TYPE_DATA == type_rec:
                 current_reg.add_data(address, data, amount_data)
             elif TYPE_STARTING_LINEAR_ADDRESS == type_rec:
-                regions_hex_file.create_start_liner_adr_data(data)
+                reg_hex_file.create_start_liner_adr_data(data)
             elif TYPE_END_OF_FILE == type_rec:
                 if current_reg:
                     current_reg.current_seg.current_mem.complete()
@@ -72,6 +74,17 @@ class ParserHex:
             except FileNotFoundError:
                 print('File not found!\n')
                 continue
+
+    def save_file(self, name_file: str = 'merge', merge_file: bool = False):
+
+        if name_file in self.hex_files_data_list.keys():
+            hex_file_text = self.hex_files_data_list[name_file].gen_hex(is_end=True)
+            hex_file = open(name_file + '.hex', 'w')
+            hex_file.write(hex_file_text)
+            hex_file.close()
+        elif merge_file:
+            name_file += str(random.randrange(10000)) + '.hex'
+            pass
 
     def merge(self, empty=0xFF):
         """
