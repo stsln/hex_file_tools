@@ -1,3 +1,5 @@
+import copy
+
 import binascii
 
 RECORD_MARK = ':'
@@ -283,24 +285,30 @@ class SegmentList:
 
         return region_adr, load_offset_adr, region_data
 
-    def save_hex_region(self, region_adr, load_offset_adr, region_data):
+    def save_hex_region(self, reg_adr: str, load_offset_adr: str, reg_data: str) -> bool:
         """
         Функция сохраняет hex-регион, если произошли правки в редакторе
         """
-        self.start_ofs_adr = int(region_adr, 16)
+        self.start_ofs_adr = int(reg_adr, 16)
         self.seg_list.clear()
         self.last_amount_data = 0
 
-        offset_adr, data = load_offset_adr.split(), region_data.split()
+        load_offset_adr, reg_data = load_offset_adr.split(), reg_data.split()
 
         flag_processing = True
-        if len(offset_adr) == len(data):
-            for i in range(len(data)):
-                line_hex = create_hex_line(int(len(data[i]) / 2), TYPE_DATA, data[i], offset_adr[i])
+        if len(load_offset_adr) == len(reg_data):
+            for i in range(len(reg_data)):
+                if len(reg_data[i]) == 0 or len(load_offset_adr[i]) == 0:
+                    continue
+                load_offset_adr[i] = load_offset_adr[i].rjust(4, '0')
+                if len(reg_data[i]) % 2 != 0 or len(load_offset_adr[i]) > 4:
+                    flag_processing = False
+                    break
+                line_hex = create_hex_line(int(len(reg_data[i]) / 2), TYPE_DATA, reg_data[i], load_offset_adr[i])
                 if not ProcessingHexLine(line_hex[1:]).parsing():
                     flag_processing = False
                     break
-                self.add_data(offset_adr[i], data[i], int(len(data[i]) / 2))
+                self.add_data(load_offset_adr[i], reg_data[i], int(len(reg_data[i]) / 2))
         else:
             flag_processing = False
 
@@ -376,20 +384,20 @@ class RegionsList:
     def gen_bin(self):
         pass
 
-    def save_hex_region(self, old_reg_adr, new_reg_adr, load_offset_adr, reg_data):
+    def save_hex_region(self, old_reg_adr: str, new_reg_adr: str, load_offset_adr: str, reg_data: str):
         """
         Функция сохраняет hex-регион, если произошли правки в редакторе и они без ошибок
         """
-        reg_list_copy = self.reg_list.copy()
+        reg_list_copy = copy.deepcopy(self.reg_list)
+        new_reg_adr = new_reg_adr.rjust(4, '0')
         flag_err = False
-        reg_data = '5456'
 
-        if new_reg_adr not in self.reg_list.keys() or new_reg_adr == old_reg_adr:
+        if new_reg_adr not in self.reg_list.keys() and len(new_reg_adr) <= 4 or new_reg_adr == old_reg_adr:
             if self.reg_list[old_reg_adr].save_hex_region(new_reg_adr, load_offset_adr, reg_data):
                 if new_reg_adr != old_reg_adr:
                     self.reg_list[new_reg_adr] = self.reg_list.pop(old_reg_adr)
             else:
-                self.reg_list = reg_list_copy.copy()
+                self.reg_list = copy.deepcopy(reg_list_copy)
                 flag_err = True
         else:
             flag_err = True
@@ -398,6 +406,10 @@ class RegionsList:
             print('There are errors in the edits made or the address of such an offset already exists!')
         else:
             print('The edits made have been saved successfully')
+
+    def delete(self, reg_adr: str):
+        if reg_adr in self.reg_list.keys():
+            del self.reg_list[reg_adr]
 
 
 def create_hex_line(record_len: int, rec_typ: str, data=None, load_offset: str = '0000') -> str:
