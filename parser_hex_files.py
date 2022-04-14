@@ -76,15 +76,23 @@ class ParserHex:
                 continue
 
     def save_file(self, name_file: str = 'merge', merge_file: bool = False):
-
+        """
+        Написать описание
+        """
+        hex_file_text = ''
         if name_file in self.hex_files_data_list.keys():
             hex_file_text = self.hex_files_data_list[name_file].gen_hex(is_end=True)
-            hex_file = open(name_file + '.hex', 'w')
-            hex_file.write(hex_file_text)
-            hex_file.close()
         elif merge_file:
-            name_file += str(random.randrange(10000)) + '.hex'
-            pass
+            name_file += str(random.randrange(10000))
+            for item_name in self.hex_files_data_list.keys():
+                flag_end = False
+                if item_name == list(self.hex_files_data_list)[-1]:
+                    flag_end = True
+                hex_file_text += self.hex_files_data_list[item_name].gen_hex(is_end=flag_end)
+
+        hex_file = open(name_file + '.hex', 'w')
+        hex_file.write(hex_file_text)
+        hex_file.close()
 
     def merge(self, empty=0xFF):
         """
