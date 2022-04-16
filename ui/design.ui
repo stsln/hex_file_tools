@@ -7,13 +7,37 @@
     <x>0</x>
     <y>0</y>
     <width>1440</width>
-    <height>717</height>
+    <height>700</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>3000</width>
+    <height>1000</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>HEX files tools</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="minimumSize">
+    <size>
+     <width>1440</width>
+     <height>700</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>1440</width>
+     <height>16777215</height>
+    </size>
+   </property>
    <property name="styleSheet">
     <string notr="true">background-color: #fff</string>
    </property>
@@ -21,7 +45,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>60</y>
+      <y>80</y>
       <width>1440</width>
       <height>571</height>
      </rect>
@@ -43,7 +67,7 @@ border-radius: 16px;</string>
       <rect>
        <x>20</x>
        <y>210</y>
-       <width>681</width>
+       <width>680</width>
        <height>291</height>
       </rect>
      </property>
@@ -70,7 +94,7 @@ QLabel
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="tools_title">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -83,13 +107,184 @@ QLabel
        <string>Инструменты</string>
       </property>
      </widget>
+     <widget class="QLabel" name="export_min_title">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>170</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel 
+{
+	font-family: 'Inter';
+	font-weight: 400;
+	font-size: 24px;
+	color: #000000;
+	border: 0;
+	text-align: left;
+}</string>
+      </property>
+      <property name="text">
+       <string>Экспорт</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_export_hex">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>220</y>
+        <width>310</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	font-family: 'Inter';
+	font-weight: 600;
+	font-size: 20px;
+	color: #79C9CA;
+	background-color: rgba(121, 201, 202, 0.1);
+	border: 1px solid #C4C4C4;
+	border-radius: 16px;
+}
+
+QPushButton::hover
+{
+	background-color: rgba(121, 201, 202, 0.2);
+	border: 1px solid #C4C4C4;
+}
+
+QPushButton::pressed
+{
+	background-color: rgba(121, 201, 202, 0.3);
+}</string>
+      </property>
+      <property name="text">
+       <string>в bin</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>101.svg</normaloff>101.svg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_export_bin">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>220</y>
+        <width>310</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	font-family: 'Inter';
+	font-weight: 600;
+	font-size: 20px;
+	color: #77A4D3;
+	background-color: rgba(119, 164, 211, 0.1);
+	border: 1px solid #C4C4C4;
+	border-radius: 16px;
+}
+
+QPushButton::hover
+{
+	background-color: rgba(119, 164, 211, 0.2);
+	border: 1px solid #C4C4C4;
+}
+
+QPushButton::pressed
+{
+	background-color: rgba(119, 164, 211, 0.3);
+}</string>
+      </property>
+      <property name="text">
+       <string>в bin</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>0x0.svg</normaloff>0x0.svg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="btn_merge">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>20</y>
+        <width>150</width>
+        <height>150</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QToolButton
+{
+	font-family: 'Inter';
+	font-weight: 600;
+	font-size: 16px;
+	color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 255), stop:1 rgba(121, 201, 202, 255));
+	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 49), stop:1 rgba(121, 201, 202, 49));
+	border: 1px solid #C4C4C4;
+	border-radius: 16px;
+}
+
+QToolButton::hover
+{
+	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 79), stop:1 rgba(121, 201, 202, 82));
+	border: 1px solid #C4C4C4;
+}
+
+QToolButton::pressed
+{
+	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 113), stop:1 rgba(121, 201, 202, 110));
+}</string>
+      </property>
+      <property name="text">
+       <string>Объединить</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>merge.svg</normaloff>merge.svg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>80</width>
+        <height>80</height>
+       </size>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="autoRepeat">
+       <bool>false</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>false</bool>
+      </property>
+     </widget>
     </widget>
     <widget class="QFrame" name="files">
      <property name="geometry">
       <rect>
        <x>20</x>
        <y>20</y>
-       <width>681</width>
+       <width>680</width>
        <height>191</height>
       </rect>
      </property>
@@ -110,29 +305,27 @@ QLabel
 	text-align: left;
 }
 
-QPushButton
+QToolButton
 {
 	font-family: 'Inter';
 	font-weight: 400;
 	font-size: 16px;
 	position: top;
-
 	background-color: #FFFFFF;
 	border: 1px dashed #C4C4C4;
 	border-radius: 16px;
 }
 
-QPushButton::hover
+QToolButton::hover
 {
 	background-color: rgba(196, 196, 196, 0.125);
 	border: 1px solid #C4C4C4;
 }
 
-QPushButton::pressed
+QToolButton::pressed
 {
 	background-color: rgba(196, 196, 196, 0.25);
 	border: 1px solid #C4C4C4;
-	icon: 0;
 }
 </string>
      </property>
@@ -142,7 +335,7 @@ QPushButton::pressed
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QLabel" name="label_files">
+     <widget class="QLabel" name="files_title">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -161,7 +354,7 @@ QPushButton::pressed
        <string>Файлы</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="files_1">
+     <widget class="QToolButton" name="btn_files_1">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -170,21 +363,17 @@ QPushButton::pressed
         <height>120</height>
        </rect>
       </property>
-      <property name="toolTip">
-       <string/>
-      </property>
-      <property name="whatsThis">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
-</string>
-      </property>
       <property name="text">
        <string>Добавить</string>
       </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
      </widget>
-     <widget class="QPushButton" name="files_2">
+     <widget class="QToolButton" name="btn_files_2">
       <property name="geometry">
        <rect>
         <x>140</x>
@@ -193,17 +382,20 @@ QPushButton::pressed
         <height>120</height>
        </rect>
       </property>
-      <property name="toolTip">
-       <string/>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
       <property name="text">
        <string>Добавить</string>
       </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
      </widget>
-     <widget class="QPushButton" name="files_3">
+     <widget class="QToolButton" name="btn_files_3">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>280</x>
@@ -212,17 +404,17 @@ QPushButton::pressed
         <height>120</height>
        </rect>
       </property>
-      <property name="toolTip">
-       <string/>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
       <property name="text">
        <string>Добавить</string>
       </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
      </widget>
-     <widget class="QPushButton" name="files_4">
+     <widget class="QToolButton" name="btn_files_4">
       <property name="geometry">
        <rect>
         <x>420</x>
@@ -231,17 +423,17 @@ QPushButton::pressed
         <height>120</height>
        </rect>
       </property>
-      <property name="toolTip">
-       <string/>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
       <property name="text">
        <string>Добавить</string>
       </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
      </widget>
-     <widget class="QPushButton" name="files_5">
+     <widget class="QToolButton" name="btn_files_5">
       <property name="geometry">
        <rect>
         <x>560</x>
@@ -250,23 +442,46 @@ QPushButton::pressed
         <height>120</height>
        </rect>
       </property>
-      <property name="toolTip">
-       <string/>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
       <property name="text">
        <string>Добавить</string>
       </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
      </widget>
+    </widget>
+    <widget class="QFrame" name="editor">
+     <property name="geometry">
+      <rect>
+       <x>720</x>
+       <y>20</y>
+       <width>701</width>
+       <height>481</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame
+{
+	background-color: rgb(255, 255, 255);
+	border: 0;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
     </widget>
    </widget>
    <widget class="QLabel" name="name_prj">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>0</y>
+      <y>20</y>
       <width>1031</width>
       <height>51</height>
      </rect>
