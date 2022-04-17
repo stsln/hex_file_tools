@@ -424,11 +424,24 @@ QToolButton::pressed
       <property name="text">
        <string>Добавить</string>
       </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>file_off.svg</normaloff>file_off.svg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>60</width>
+        <height>60</height>
+       </size>
+      </property>
       <property name="checkable">
        <bool>false</bool>
       </property>
       <property name="checked">
        <bool>false</bool>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
       </property>
      </widget>
      <widget class="QToolButton" name="btn_files_3">
@@ -446,11 +459,24 @@ QToolButton::pressed
       <property name="text">
        <string>Добавить</string>
       </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>file_off.svg</normaloff>file_off.svg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>60</width>
+        <height>60</height>
+       </size>
+      </property>
       <property name="checkable">
        <bool>false</bool>
       </property>
       <property name="checked">
        <bool>false</bool>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
       </property>
      </widget>
      <widget class="QToolButton" name="btn_files_4">
@@ -465,11 +491,24 @@ QToolButton::pressed
       <property name="text">
        <string>Добавить</string>
       </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>file_off.svg</normaloff>file_off.svg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>60</width>
+        <height>60</height>
+       </size>
+      </property>
       <property name="checkable">
        <bool>false</bool>
       </property>
       <property name="checked">
        <bool>false</bool>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
       </property>
      </widget>
      <widget class="QToolButton" name="btn_files_5">
@@ -484,11 +523,24 @@ QToolButton::pressed
       <property name="text">
        <string>Добавить</string>
       </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>file_off.svg</normaloff>file_off.svg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>60</width>
+        <height>60</height>
+       </size>
+      </property>
       <property name="checkable">
        <bool>false</bool>
       </property>
       <property name="checked">
        <bool>false</bool>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
       </property>
      </widget>
     </widget>
