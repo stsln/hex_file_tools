@@ -55,7 +55,7 @@ class ProcessingHexLine:
         """
         flag_return = True
         rec_len = int(self.line_hex_file[:2], 16)
-        load_offset = self.line_hex_file[2:6]
+        load_ofs = self.line_hex_file[2:6]
         rec_typ = int(self.line_hex_file[6:8], 16)
         check_sum = int(self.line_hex_file[-3:], 16)
         self.line_hex_file = self.line_hex_file[:-3]
@@ -65,7 +65,7 @@ class ProcessingHexLine:
         if check_sum_calc != check_sum or amount_data != rec_len:
             return not flag_return, 0, 0, 0, 0
         else:
-            return flag_return, rec_typ, load_offset, data, amount_data
+            return flag_return, rec_typ, load_ofs, data, amount_data
 
 
 class Mem:
@@ -116,36 +116,34 @@ class Mem:
             self.bytes_data.append(int(data[i:i+2], 16) & 0xFF)
         self.end_rec_adr = int(address, 16)
 
-    def gen_hex_lines(self,
-                      start_load_offset: str = '0x0000', end_load_offset: str = '0xFFFF',
-                      is_editor: bool = False) -> tuple[str, str]:
+    def gen_hex(self, start_load_ofs: str = '0x0000', end_load_ofs: str = '0xFFFF',
+                is_editor: bool = False) -> tuple[str, str]:
         """
         Function generates hex lines from memory to create or edit a file
-        :param start_load_offset: hex lines start address
-        :param end_load_offset: hex lines end address
+        :param start_load_ofs: hex lines start address
+        :param end_load_ofs: hex lines end address
         :param is_editor: means the text is intended for the editor
         :return: data of memory in hex lines or only data hex line and load offset address
         """
-        load_offset_adr, hex_lines_mem = '', ''
+        load_ofs_adr, hex_lines_mem = '', ''
         memory_data = str(binascii.b2a_hex(self.bytes_data))[2:-1]
 
         for line_number in range(int(self.total_amount_data / self.amount_hex_line_data)):
-            load_offset = hex(self.start_rec_adr +
-                              line_number * self.amount_hex_line_data)[2:].rjust(4, '0')
-            if int(start_load_offset, 16) > int(load_offset, 16):
+            load_ofs = hex(self.start_rec_adr + line_number * self.amount_hex_line_data)[2:].rjust(4, '0')
+            if int(start_load_ofs, 16) > int(load_ofs, 16):
                 continue
-            elif int(end_load_offset, 16) < int(load_offset, 16):
+            elif int(end_load_ofs, 16) < int(load_ofs, 16):
                 break
             data = memory_data[line_number * self.amount_hex_line_data * 2:
                                (line_number + 1) * self.amount_hex_line_data * 2]
             if is_editor:
-                load_offset_adr += load_offset + '\n'
+                load_ofs_adr += load_ofs + '\n'
                 hex_lines_mem += data + '\n'
             else:
-                hex_lines_mem += create_hex_line(self.amount_hex_line_data, TYPE_DATA, data, load_offset)
+                hex_lines_mem += create_hex_line(self.amount_hex_line_data, TYPE_DATA, data, load_ofs)
         hex_lines_mem = hex_lines_mem[:-1]
 
-        return load_offset_adr, hex_lines_mem
+        return load_ofs_adr, hex_lines_mem
 
 
 class MemList:
@@ -171,14 +169,14 @@ class MemList:
         self.current_mem = Mem()
         self.mem_list.append(self.current_mem)
 
-    def gen_hex_lines(self):
+    def gen_hex(self):
         """
         Function generates hex lines of all memory list items
         :return: generated hex lines
         """
         hex_lines_mem_list = ''
         for mem_item in self.mem_list:
-            hex_lines_mem_list += mem_item.gen_hex_lines()[1] + '\n'
+            hex_lines_mem_list += mem_item.gen_hex()[1] + '\n'
         return hex_lines_mem_list[:-1]
 
     def get_hex_editor(self):
@@ -187,13 +185,13 @@ class MemList:
         the addresses of the memory list items data and the memory list items data
         :return: the addresses of the memory list items data and the memory list items data
         """
-        load_offset_adr, region_data = '', ''
+        load_ofs_adr, region_data = '', ''
         for mem_list_item in self.mem_list:
-            result_data = mem_list_item.gen_hex_lines(is_editor=True)
-            load_offset_adr += result_data[0]
+            result_data = mem_list_item.gen_hex(is_editor=True)
+            load_ofs_adr += result_data[0]
             region_data += result_data[1] + '\n'
 
-        return load_offset_adr, region_data
+        return load_ofs_adr, region_data
 
 
 class SegmentList:
@@ -256,7 +254,7 @@ class SegmentList:
             self.current_seg.current_mem.add_data(address, data)
         self.last_amount_data = current_amount_data
 
-    def gen_hex_lines(self) -> str:
+    def gen_hex(self) -> str:
         """
         Function generates hex lines of all segment memory lists
         :return: generated hex lines
@@ -265,7 +263,7 @@ class SegmentList:
         hex_lines_mem_list += create_hex_line(2, TYPE_EXTENDED_LINEAR_ADDRESS,
                                               self.start_ofs_adr)
         for mem_list_item in self.seg_list:
-            hex_lines_mem_list += mem_list_item.gen_hex_lines() + '\n'
+            hex_lines_mem_list += mem_list_item.gen_hex() + '\n'
         return hex_lines_mem_list[:-1]
 
     def get_hex_editor(self) -> tuple[str, str, str]:
@@ -277,15 +275,15 @@ class SegmentList:
         :return: the initial offset of the region, the addresses of the region data and the region data
         """
         region_adr = hex(self.start_ofs_adr)[2:].rjust(4, '0')
-        load_offset_adr, region_data = '', ''
+        load_ofs_adr, region_data = '', ''
         for seg_item in self.seg_list:
             result_data = seg_item.get_hex_editor()
-            load_offset_adr += result_data[0]
+            load_ofs_adr += result_data[0]
             region_data += result_data[1]
 
-        return region_adr, load_offset_adr, region_data
+        return region_adr, load_ofs_adr, region_data
 
-    def save_hex_region(self, reg_adr: str, load_offset_adr: str, reg_data: str) -> bool:
+    def save_hex_region(self, reg_adr: str, load_ofs_adr: str, reg_data: str) -> bool:
         """
         Функция сохраняет hex-регион, если произошли правки в редакторе
         """
@@ -293,22 +291,22 @@ class SegmentList:
         self.seg_list.clear()
         self.last_amount_data = 0
 
-        load_offset_adr, reg_data = load_offset_adr.split(), reg_data.split()
+        load_ofs_adr, reg_data = load_ofs_adr.split(), reg_data.split()
 
         flag_processing = True
-        if len(load_offset_adr) == len(reg_data):
+        if len(load_ofs_adr) == len(reg_data):
             for i in range(len(reg_data)):
-                if len(reg_data[i]) == 0 or len(load_offset_adr[i]) == 0:
+                if len(reg_data[i]) == 0 or len(load_ofs_adr[i]) == 0:
                     continue
-                load_offset_adr[i] = load_offset_adr[i].rjust(4, '0')
-                if len(reg_data[i]) % 2 != 0 or len(load_offset_adr[i]) > 4:
+                load_ofs_adr[i] = load_ofs_adr[i].rjust(4, '0')
+                if len(reg_data[i]) % 2 != 0 or len(load_ofs_adr[i]) > 4:
                     flag_processing = False
                     break
-                line_hex = create_hex_line(int(len(reg_data[i]) / 2), TYPE_DATA, reg_data[i], load_offset_adr[i])
+                line_hex = create_hex_line(int(len(reg_data[i]) / 2), TYPE_DATA, reg_data[i], load_ofs_adr[i])
                 if not ProcessingHexLine(line_hex[1:]).parsing():
                     flag_processing = False
                     break
-                self.add_data(load_offset_adr[i], reg_data[i], int(len(reg_data[i]) / 2))
+                self.add_data(load_ofs_adr[i], reg_data[i], int(len(reg_data[i]) / 2))
         else:
             flag_processing = False
 
@@ -372,7 +370,7 @@ class RegionsList:
             if data_item.start_ofs_adr < int(start_ofs_adr, 16):
                 continue
             elif data_item.start_ofs_adr <= int(end_ofs_adr, 16):
-                hex_lines_seg_list += data_item.gen_hex_lines() + '\n'
+                hex_lines_seg_list += data_item.gen_hex() + '\n'
 
         if is_end:
             hex_lines_seg_list += create_hex_line(4, TYPE_STARTING_LINEAR_ADDRESS, self.start_liner_adr_data)
@@ -381,9 +379,12 @@ class RegionsList:
         return hex_lines_seg_list
 
     def gen_bin(self):
+        """
+        Написать описание
+        """
         pass
 
-    def save_hex_region(self, old_reg_adr: str, new_reg_adr: str, load_offset_adr: str, reg_data: str):
+    def save_hex_region(self, old_reg_adr: str, new_reg_adr: str, load_ofs_adr: str, reg_data: str):
         """
         Функция сохраняет hex-регион, если произошли правки в редакторе и они без ошибок
         """
@@ -392,7 +393,7 @@ class RegionsList:
         flag_err = False
 
         if new_reg_adr not in self.reg_list.keys() and len(new_reg_adr) <= 4 or new_reg_adr == old_reg_adr:
-            if self.reg_list[old_reg_adr].save_hex_region(new_reg_adr, load_offset_adr, reg_data):
+            if self.reg_list[old_reg_adr].save_hex_region(new_reg_adr, load_ofs_adr, reg_data):
                 if new_reg_adr != old_reg_adr:
                     self.reg_list[new_reg_adr] = self.reg_list.pop(old_reg_adr)
             else:
@@ -407,17 +408,21 @@ class RegionsList:
             print('The edits made have been saved successfully')
 
     def delete(self, reg_adr: str):
+        """
+        Function removes the region from the hex file data
+        :param reg_adr: star offset address, which should be deleted
+        """
         if reg_adr in self.reg_list.keys():
             del self.reg_list[reg_adr]
 
 
-def create_hex_line(record_len: int, rec_typ: str, data=None, load_offset: str = '0000') -> str:
+def create_hex_line(record_len: int, rec_typ: str, data=None, load_ofs: str = '0000') -> str:
     """
     Function of creating a hex line from the received data
     :param record_len: number of bytes of data in the record
     :param rec_typ: hex line record type
     :param data: memory data or offset address
-    :param load_offset: offset that defines the data load address (by default, 0000 is not load offset)
+    :param load_ofs: offset that defines the data load address (by default, 0000 is not load offset)
     :return: created hex line
     """
     if isinstance(data, int):
@@ -428,7 +433,7 @@ def create_hex_line(record_len: int, rec_typ: str, data=None, load_offset: str =
         data = ''
 
     rec_len = str(hex(record_len)[2:]).rjust(2, '0')
-    hex_line = rec_len + load_offset + rec_typ + data
+    hex_line = rec_len + load_ofs + rec_typ + data
     chk_sum = str(hex(ProcessingHexLine(hex_line).get_crc_and_amount_data()[0])[2:]).rjust(2, '0')
     hex_line = (RECORD_MARK + hex_line + chk_sum + '\n').upper()
     return hex_line

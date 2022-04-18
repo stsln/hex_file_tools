@@ -47,17 +47,17 @@ class ParserHex:
     Class processing accepted hex files
     """
 
-    hex_files_data_list = {}
+    data_hex_list = {}
 
     def __init__(self):
-        self.hex_files_data_list = {}
+        self.data_hex_list = {}
 
     def processing(self, list_name_hex_files: list):
         """
         Function processing of hex files for availability and
         corruption or upon successful opening parsing data
         """
-        self.hex_files_data_list.clear()
+        self.data_hex_list.clear()
 
         for name_hex_file in list_name_hex_files:
             print('Processing file ' + name_hex_file + '.hex')
@@ -66,7 +66,7 @@ class ParserHex:
                 print('File has been successfully opened for processing.')
                 regions_hex_file = parser_data_hex_line.RegionsList()
                 if processing_file_line_by_line(data_hex_file, regions_hex_file):
-                    self.hex_files_data_list[name_hex_file] = regions_hex_file
+                    self.data_hex_list[name_hex_file] = regions_hex_file
                     print('File has been processed successfully.\n')
                 else:
                     print('Further processing of the file is impossible - the file is damaged!')
@@ -80,15 +80,15 @@ class ParserHex:
         Написать описание
         """
         hex_file_text = ''
-        if name_file in self.hex_files_data_list.keys():
-            hex_file_text = self.hex_files_data_list[name_file].gen_hex(is_end=True)
+        if name_file in self.data_hex_list.keys():
+            hex_file_text = self.data_hex_list[name_file].gen_hex(is_end=True)
         elif merge_file:
             name_file += str(random.randrange(10000))
-            for item_name in self.hex_files_data_list.keys():
+            for item_name in self.data_hex_list.keys():
                 flag_end = False
-                if item_name == list(self.hex_files_data_list)[-1]:
+                if item_name == list(self.data_hex_list)[-1]:
                     flag_end = True
-                hex_file_text += self.hex_files_data_list[item_name].gen_hex(is_end=flag_end)
+                hex_file_text += self.data_hex_list[item_name].gen_hex(is_end=flag_end)
 
         hex_file = open(name_file + '.hex', 'w')
         hex_file.write(hex_file_text)
