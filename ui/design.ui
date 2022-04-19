@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1440</width>
-    <height>801</height>
+    <height>806</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -48,8 +48,8 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>80</y>
-      <width>1440</width>
+      <y>70</y>
+      <width>1281</width>
       <height>691</height>
      </rect>
     </property>
@@ -71,7 +71,7 @@ border-radius: 16px;</string>
        <x>20</x>
        <y>210</y>
        <width>680</width>
-       <height>291</height>
+       <height>371</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -103,7 +103,7 @@ QLabel
         <x>20</x>
         <y>10</y>
         <width>241</width>
-        <height>41</height>
+        <height>40</height>
        </rect>
       </property>
       <property name="text">
@@ -114,9 +114,9 @@ QLabel
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>170</y>
+        <y>260</y>
         <width>101</width>
-        <height>31</height>
+        <height>30</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -137,22 +137,23 @@ QLabel
      <widget class="QPushButton" name="btn_export_hex">
       <property name="geometry">
        <rect>
-        <x>350</x>
-        <y>220</y>
-        <width>310</width>
-        <height>51</height>
+        <x>220</x>
+        <y>300</y>
+        <width>180</width>
+        <height>50</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton
 {
 	font-family: 'Inter';
-	font-weight: 600;
-	font-size: 20px;
+	font-weight: 400;
+	font-size: 18px;
 	color: #79C9CA;
 	background-color: rgba(121, 201, 202, 0.1);
 	border: 1px solid #C4C4C4;
 	border-radius: 16px;
+	padding: 0 15px 0 15px;
 }
 
 QPushButton::hover
@@ -167,7 +168,7 @@ QPushButton::pressed
 }</string>
       </property>
       <property name="text">
-       <string>в bin</string>
+       <string>        в bin</string>
       </property>
       <property name="icon">
        <iconset>
@@ -184,21 +185,22 @@ QPushButton::pressed
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>220</y>
-        <width>310</width>
-        <height>51</height>
+        <y>300</y>
+        <width>180</width>
+        <height>50</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton
 {
 	font-family: 'Inter';
-	font-weight: 600;
-	font-size: 20px;
+	font-weight: 400;
+	font-size: 18px;
 	color: #77A4D3;
 	background-color: rgba(119, 164, 211, 0.1);
 	border: 1px solid #C4C4C4;
 	border-radius: 16px;
+	padding: 0 15px 0 15px;
 }
 
 QPushButton::hover
@@ -212,8 +214,11 @@ QPushButton::pressed
 	background-color: rgba(119, 164, 211, 0.3);
 }</string>
       </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhNone</set>
+      </property>
       <property name="text">
-       <string>в bin</string>
+       <string>        в hex</string>
       </property>
       <property name="icon">
        <iconset>
@@ -229,8 +234,8 @@ QPushButton::pressed
      <widget class="QToolButton" name="btn_merge">
       <property name="geometry">
        <rect>
-        <x>490</x>
-        <y>20</y>
+        <x>510</x>
+        <y>100</y>
         <width>150</width>
         <height>150</height>
        </rect>
@@ -249,23 +254,23 @@ QPushButton::pressed
 {
 	padding: 0;
 	font-family: 'Inter';
-	font-weight: 600;
+	font-weight: 400;
 	font-size: 20px;
 	color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 255), stop:1 rgba(121, 201, 202, 255));
-	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 49), stop:1 rgba(121, 201, 202, 49));
+	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 35), stop:1 rgba(121, 201, 202, 35));
 	border: 1px solid #C4C4C4;
 	border-radius: 16px;
 }
 
 QToolButton::hover
 {
-	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 79), stop:1 rgba(121, 201, 202, 82));
+	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 50), stop:1 rgba(121, 201, 202, 50));
 	border: 1px solid #C4C4C4;
 }
 
 QToolButton::pressed
 {
-	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 113), stop:1 rgba(121, 201, 202, 110));
+	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 70), stop:1 rgba(121, 201, 202, 70));
 }</string>
       </property>
       <property name="text">
@@ -301,6 +306,144 @@ QToolButton::pressed
       </property>
       <property name="toolButtonStyle">
        <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="export_min_title_2">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>260</y>
+        <width>141</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel 
+{
+	font-family: 'Inter';
+	font-weight: 400;
+	font-size: 24px;
+	color: #000000;
+	border: 0;
+	text-align: left;
+}</string>
+      </property>
+      <property name="text">
+       <string>Добавить</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_export_hex_5">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>300</y>
+        <width>240</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	font-family: 'Inter';
+	font-weight: 400;
+	font-size: 18px;
+	background-color: #fff;
+	border: 1px solid #C4C4C4;
+	border-radius: 16px;
+}
+
+QPushButton::hover
+{
+	background-color: rgba(196, 196, 196, 0.125);
+}
+
+QPushButton::pressed
+{
+	background-color: rgba(196, 196, 196, 0.25);
+}</string>
+      </property>
+      <property name="text">
+       <string>Добавить</string>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QListView" name="listView">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>100</y>
+        <width>471</width>
+        <height>151</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QListView {
+	border: 1px solid #C4C4C4;
+	border-radius: 16px;
+}</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="export_min_title_3">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>60</y>
+        <width>261</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel 
+{
+	font-family: 'Inter';
+	font-weight: 400;
+	font-size: 24px;
+	color: #000000;
+	border: 0;
+	text-align: left;
+}</string>
+      </property>
+      <property name="text">
+       <string>Регионы hex-файлов</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>70</y>
+        <width>20</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QCheckBox {
+	border: 1px solid #C4C4C4;
+	border-radius: 16px;
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="tristate">
+       <bool>false</bool>
       </property>
      </widget>
     </widget>
@@ -549,7 +692,7 @@ QToolButton::pressed
       <rect>
        <x>720</x>
        <y>20</y>
-       <width>701</width>
+       <width>531</width>
        <height>481</height>
       </rect>
      </property>
@@ -558,6 +701,16 @@ QToolButton::pressed
 {
 	background-color: rgb(255, 255, 255);
 	border: 0;
+}
+
+QLabel 
+{
+	font-family: 'Inter';
+	font-weight: 700;
+	font-size: 32px;
+	color: #000000;
+	border: 0;
+	text-align: left;
 }</string>
      </property>
      <property name="frameShape">
@@ -566,14 +719,158 @@ QToolButton::pressed
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
+     <widget class="QLabel" name="tools_title_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>241</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Редактор</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_export_hex_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>70</y>
+        <width>180</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	font-family: 'Inter';
+	font-weight: 400;
+	font-size: 18px;
+	background-color: #fff;
+	border: 1px solid #C4C4C4;
+	border-radius: 16px;
+}
+
+QPushButton::hover
+{
+	background-color: rgba(121, 201, 202, 0.2);
+	border: 1px solid #C4C4C4;
+}
+
+QPushButton::pressed
+{
+	background-color: rgba(121, 201, 202, 0.3);
+}</string>
+      </property>
+      <property name="text">
+       <string>Сохранить</string>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_export_hex_3">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>70</y>
+        <width>180</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	font-family: 'Inter';
+	font-weight: 400;
+	font-size: 18px;
+	background-color: #fff;
+	border: 1px solid #C4C4C4;
+	border-radius: 16px;
+}
+
+QPushButton::hover
+{
+	color: rgb(229, 46, 46);
+	background-color: ;
+	background-color: rgba(229, 46, 46, 0.1);
+	border: 1px solid #C4C4C4;
+}
+
+QPushButton::pressed
+{
+	color: rgb(229, 46, 46);
+	background-color: rgba(229, 46, 46, 0.15);
+}</string>
+      </property>
+      <property name="text">
+       <string>Удалить</string>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>180</y>
+        <width>421</width>
+        <height>271</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame {
+	background-color: #FAFAFA;
+	border: 0;
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QTextEdit" name="textEdit">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>111</width>
+         <height>271</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QTextEdit {
+	font-family: 'JetBrains Mono';
+	font-weight: 400;
+	font-size: 18px;
+	color: #009C93;
+
+	border: 1px solid #C4C4C4;
+	border-radius: 16px;
+	background-color: rgba(0, 156, 147, 0.1);
+
+	padding: 5px;
+}</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
     <widget class="QFrame" name="mes">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>520</y>
-       <width>681</width>
-       <height>91</height>
+       <y>600</y>
+       <width>680</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -595,16 +892,16 @@ QToolButton::pressed
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>20</y>
+      <y>10</y>
       <width>1031</width>
-      <height>51</height>
+      <height>45</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">font-family: 'Inter';
 font-style: normal;
 font-weight: 700;
-font-size: 45px;
+font-size: 40px;
 color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(7, 119, 164, 206));</string>
     </property>
     <property name="text">
