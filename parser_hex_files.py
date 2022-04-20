@@ -1,4 +1,5 @@
 import random
+from collections import Counter
 
 import parser_data_hex_line
 
@@ -100,4 +101,15 @@ class ParserHex:
         :param empty: what data to fill the void with
         :return: True, False
         """
-        pass
+        regs_list = []
+
+        for name_hex, names_reg in self.data_hex_list.items():
+            print('Hex file: ' + name_hex)
+            for ofs_adr_reg in names_reg.reg_list:
+                print('ofs adr: ' + ofs_adr_reg)
+                regs_list.append(ofs_adr_reg)
+
+        counter = Counter(regs_list)
+        for reg, count in counter.items():
+            if count > 1:
+                print(reg)
