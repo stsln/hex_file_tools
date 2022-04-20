@@ -76,40 +76,55 @@ class ParserHex:
                 print('File not found!\n')
                 continue
 
-    def save_file(self, name_file: str = 'merge', merge_file: bool = False):
+    def save_file(self, name_file: str = 'merge', merge_file: bool = False, hex_file_text: str = ''):
         """
-        Написать описание
+        Function save modified hex file or hex text to file
+        :param name_file: name of the file to be saved
+        :param merge_file: True - hex text of merge files
+        :param hex_file_text: hex text
         """
-        hex_file_text = ''
         if name_file in self.data_hex_list.keys():
             hex_file_text = self.data_hex_list[name_file].gen_hex(is_end=True)
         elif merge_file:
             name_file += str(random.randrange(10000))
-            for item_name in self.data_hex_list.keys():
-                flag_end = False
-                if item_name == list(self.data_hex_list)[-1]:
-                    flag_end = True
-                hex_file_text += self.data_hex_list[item_name].gen_hex(is_end=flag_end)
+        else:
+            name_file = 'hex_file' + str(random.randrange(10000))
 
         hex_file = open(name_file + '.hex', 'w')
         hex_file.write(hex_file_text)
         hex_file.close()
 
-    def merge(self, empty=0xFF):
+    def merge(self, empty=0xFF) -> tuple[bool, list]:
         """
         Function merge all or part of the hex files data
         :param empty: what data to fill the void with
-        :return: True, False
+        :return: True - merge successful or False - merge not successful,
+                 reg_err - list of repeated regions
         """
         regs_list = []
+        flag_err = False
+        reg_err = []
 
         for name_hex, names_reg in self.data_hex_list.items():
-            print('Hex file: ' + name_hex)
             for ofs_adr_reg in names_reg.reg_list:
-                print('ofs adr: ' + ofs_adr_reg)
                 regs_list.append(ofs_adr_reg)
 
         counter = Counter(regs_list)
         for reg, count in counter.items():
             if count > 1:
-                print(reg)
+                flag_err = True
+                reg_err.append(reg)
+
+        if flag_err:  # not
+            text_hex_file_merge = ''
+            for _, reg_list in self.data_hex_list.items():
+                text_hex_file_merge += reg_list.gen_hex()
+
+            text_hex_file_merge += \
+                parser_data_hex_line.create_hex_line(4, parser_data_hex_line.TYPE_STARTING_LINEAR_ADDRESS,
+                                                     self.start_liner_adr_data)
+            text_hex_file_merge += parser_data_hex_line.create_hex_line(0, parser_data_hex_line.TYPE_END_OF_FILE)
+            #self.save_file(merge_file=True, hex_file_text=text_hex_file_merge)
+            return True, reg_err
+        else:
+            return False, reg_err
