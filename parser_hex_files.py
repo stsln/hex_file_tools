@@ -94,37 +94,29 @@ class ParserHex:
         hex_file.write(hex_file_text)
         hex_file.close()
 
-    def merge(self, empty=0xFF) -> tuple[bool, list]:
+    def merge(self) -> tuple[bool, list]:
         """
         Function merge all or part of the hex files data
-        :param empty: what data to fill the void with
         :return: True - merge successful or False - merge not successful,
-                 reg_err - list of repeated regions
+                 ofs_adr_repeat_list - list of repeated regions
         """
-        regs_list = []
-        flag_err = False
-        reg_err = []
+        ofs_adr_list = []
+        ofs_adr_repeat_list = []
 
-        for name_hex, names_reg in self.data_hex_list.items():
-            for ofs_adr_reg in names_reg.reg_list:
-                regs_list.append(ofs_adr_reg)
+        for _, reg_list in self.data_hex_list.items():
+            for ofs_adr in reg_list.reg_list:
+                ofs_adr_list.append(ofs_adr)
 
-        counter = Counter(regs_list)
-        for reg, count in counter.items():
-            if count > 1:
-                flag_err = True
-                reg_err.append(reg)
+        for ofs_adr, num_identical in Counter(ofs_adr_list).items():
+            if num_identical > 1:
+                ofs_adr_repeat_list.append(ofs_adr)
 
-        if flag_err:  # not
+        if not ofs_adr_repeat_list:
             text_hex_file_merge = ''
             for _, reg_list in self.data_hex_list.items():
                 text_hex_file_merge += reg_list.gen_hex()
-
-            text_hex_file_merge += \
-                parser_data_hex_line.create_hex_line(4, parser_data_hex_line.TYPE_STARTING_LINEAR_ADDRESS,
-                                                     self.start_liner_adr_data)
             text_hex_file_merge += parser_data_hex_line.create_hex_line(0, parser_data_hex_line.TYPE_END_OF_FILE)
-            #self.save_file(merge_file=True, hex_file_text=text_hex_file_merge)
-            return True, reg_err
+            self.save_file(merge_file=True, hex_file_text=text_hex_file_merge)
+            return True, ofs_adr_repeat_list
         else:
-            return False, reg_err
+            return False, ofs_adr_repeat_list

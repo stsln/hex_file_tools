@@ -2,12 +2,9 @@ import parser_hex_files
 
 print('HEX file tools\n')
 
-name_hex_files = ['name_hex_file_1', 'name_hex_file_2', 'name_hex_file_3']
+name_hex_files = ['name_hex_file_1', 'name_hex_file_2', 'name_hex_file_3', 'common']
 data_hex = parser_hex_files.ParserHex()
 data_hex.processing(name_hex_files)
-
-data_hex.merge()
-data_hex.save_file(merge_file=True)
 
 """
 data_hex.data_hex_list['name_hex_file_2'].get_count_regions()
@@ -21,4 +18,6 @@ data_hex.data_hex_list['name_hex_file_1'].save_hex_region('0810', reg_adr, load_
 data_hex.data_hex_list['name_hex_file_1'].delete('0811')
 
 data_hex.save_file('name_hex_file_1')
+
+flag_merge, repeat_list = data_hex.merge()
 """
