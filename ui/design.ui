@@ -286,6 +286,9 @@ QToolButton::pressed
         <height>100</height>
        </size>
       </property>
+      <property name="shortcut">
+       <string>Ctrl+M</string>
+      </property>
       <property name="checkable">
        <bool>false</bool>
       </property>
@@ -650,6 +653,9 @@ QToolButton::pressed
         <height>60</height>
        </size>
       </property>
+      <property name="shortcut">
+       <string>Ctrl+S</string>
+      </property>
       <property name="checkable">
        <bool>false</bool>
       </property>
@@ -777,6 +783,9 @@ QPushButton::pressed
         <height>50</height>
        </size>
       </property>
+      <property name="shortcut">
+       <string>Ctrl+S</string>
+      </property>
      </widget>
      <widget class="QPushButton" name="btn_del">
       <property name="geometry">
@@ -820,6 +829,9 @@ QPushButton::pressed
         <width>50</width>
         <height>50</height>
        </size>
+      </property>
+      <property name="shortcut">
+       <string>Ctrl+D</string>
       </property>
      </widget>
      <widget class="QFrame" name="edit_text">
@@ -958,6 +970,9 @@ QPushButton::pressed
         <height>50</height>
        </size>
       </property>
+      <property name="shortcut">
+       <string>Ctrl+H</string>
+      </property>
      </widget>
      <widget class="QPushButton" name="btn_save_3">
       <property name="geometry">
@@ -997,6 +1012,9 @@ QPushButton::pressed
         <width>50</width>
         <height>50</height>
        </size>
+      </property>
+      <property name="shortcut">
+       <string>Ctrl+B</string>
       </property>
      </widget>
     </widget>
