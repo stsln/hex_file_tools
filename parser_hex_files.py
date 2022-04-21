@@ -76,6 +76,20 @@ class ParserHex:
                 print('File not found!\n')
                 continue
 
+    def get_adr_reg(self) -> dict:
+        """
+        Function for quickly getting all the offsets of file regions
+        :return: hex_files_adr_reg_dict - dictionary, where the key is the name of the file,
+                                          and the value is a list of addresses of offsets of regions
+        """
+        hex_files_adr_reg_dict = {}
+        for name_hex_file, reg_list in self.data_hex_list.items():
+            hex_files_adr_reg_dict[name_hex_file] = []
+            for ofs_adr in reg_list.reg_list:
+                hex_files_adr_reg_dict[name_hex_file].append(ofs_adr)
+
+        return hex_files_adr_reg_dict
+
     def save_file(self, name_file: str = 'merge', merge_file: bool = False, hex_file_text: str = ''):
         """
         Function save modified hex file or hex text to file
