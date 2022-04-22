@@ -285,7 +285,12 @@ class SegmentList:
 
     def save_hex_region(self, reg_adr: str, load_ofs_adr: str, reg_data: str) -> bool:
         """
-        Функция сохраняет hex-регион, если произошли правки в редакторе
+        Function saves the hex region if the data is error-free
+        :param reg_adr: address of the region offset
+        :param load_ofs_adr: data addresses
+        :param reg_data: region data
+        :return: True - successful saving,
+                 False - saving error
         """
         self.start_ofs_adr = int(reg_adr, 16)
         self.seg_list.clear()
@@ -386,7 +391,9 @@ class RegionsList:
 
     def save_hex_region(self, old_reg_adr: str, new_reg_adr: str, load_ofs_adr: str, reg_data: str):
         """
-        Функция сохраняет hex-регион, если произошли правки в редакторе и они без ошибок
+        Function saves the hex region if changes have been made to the
+        old region in the editor or new data has been added.
+        Описать параметры!
         """
         reg_list_copy = copy.deepcopy(self.reg_list)
         new_reg_adr = new_reg_adr.rjust(4, '0')
