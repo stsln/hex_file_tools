@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>0x0.svg</file>
+    <file>101.svg</file>
+    <file>file_off.svg</file>
+    <file>file_on.svg</file>
+    <file>merge.svg</file>
+  </qresource>
+</RCC>

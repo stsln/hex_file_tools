@@ -213,12 +213,15 @@ QToolButton::pressed
                   <height>120</height>
                  </size>
                 </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>Добавить</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>file_off.svg</normaloff>file_off.svg</iconset>
+                 <iconset resource="files.qrc">
+                  <normaloff>:/icons/file_off.svg</normaloff>:/icons/file_off.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -251,12 +254,15 @@ QToolButton::pressed
                   <height>120</height>
                  </size>
                 </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>Добавить</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>file_off.svg</normaloff>file_off.svg</iconset>
+                 <iconset resource="files.qrc">
+                  <normaloff>:/icons/file_off.svg</normaloff>:/icons/file_off.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -292,12 +298,15 @@ QToolButton::pressed
                   <height>120</height>
                  </size>
                 </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>Добавить</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>file_off.svg</normaloff>file_off.svg</iconset>
+                 <iconset resource="files.qrc">
+                  <normaloff>:/icons/file_off.svg</normaloff>:/icons/file_off.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -330,12 +339,15 @@ QToolButton::pressed
                   <height>120</height>
                  </size>
                 </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>Добавить</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>file_off.svg</normaloff>file_off.svg</iconset>
+                 <iconset resource="files.qrc">
+                  <normaloff>:/icons/file_off.svg</normaloff>:/icons/file_off.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -371,12 +383,15 @@ QToolButton::pressed
                   <height>120</height>
                  </size>
                 </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>Добавить</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>file_off.svg</normaloff>file_off.svg</iconset>
+                 <iconset resource="files.qrc">
+                  <normaloff>:/icons/file_off.svg</normaloff>:/icons/file_off.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -510,6 +525,9 @@ QLabel
                   <height>150</height>
                  </size>
                 </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="toolTip">
                  <string/>
                 </property>
@@ -547,8 +565,8 @@ QToolButton::pressed
                  <string>Объединить</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>merge.svg</normaloff>merge.svg</iconset>
+                 <iconset resource="files.qrc">
+                  <normaloff>:/icons/merge.svg</normaloff>:/icons/merge.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -618,6 +636,9 @@ QToolButton::pressed
                   <height>50</height>
                  </size>
                 </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton
 {
@@ -649,8 +670,8 @@ QPushButton::pressed
                  <string>в hex</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>0x0.svg</normaloff>0x0.svg</iconset>
+                 <iconset resource="files.qrc">
+                  <normaloff>:/icons/0x0.svg</normaloff>:/icons/0x0.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -667,6 +688,9 @@ QPushButton::pressed
                   <width>0</width>
                   <height>50</height>
                  </size>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton
@@ -696,8 +720,8 @@ QPushButton::pressed
                  <string>в bin</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>101.svg</normaloff>101.svg</iconset>
+                 <iconset resource="files.qrc">
+                  <normaloff>:/icons/101.svg</normaloff>:/icons/101.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -732,6 +756,9 @@ QPushButton::pressed
                   <width>0</width>
                   <height>50</height>
                  </size>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton
@@ -858,46 +885,57 @@ QPushButton::pressed
         </layout>
        </item>
        <item>
-        <widget class="QFrame" name="right_lt">
-         <property name="styleSheet">
-          <string notr="true">QFrame
+        <layout class="QVBoxLayout" name="right_lt">
+         <property name="spacing">
+          <number>15</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QFrame" name="editor">
+           <property name="styleSheet">
+            <string notr="true">QFrame
 {
 	background-color: rgb(255, 255, 255);
 	border: 0;
 }</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <property name="spacing">
-           <number>15</number>
-          </property>
-          <property name="leftMargin">
-           <number>15</number>
-          </property>
-          <property name="topMargin">
-           <number>15</number>
-          </property>
-          <property name="rightMargin">
-           <number>15</number>
-          </property>
-          <property name="bottomMargin">
-           <number>15</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="editor_title">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <property name="spacing">
+             <number>15</number>
             </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel 
+            <property name="leftMargin">
+             <number>15</number>
+            </property>
+            <property name="topMargin">
+             <number>15</number>
+            </property>
+            <property name="rightMargin">
+             <number>15</number>
+            </property>
+            <property name="bottomMargin">
+             <number>15</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="editor_title">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLabel 
 {
 	font-family: 'Inter';
 	font-weight: 700;
@@ -906,33 +944,36 @@ QPushButton::pressed
 	border: 0;
 	text-align: left;
 }</string>
-            </property>
-            <property name="text">
-             <string>Редактор</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="save_del_lt">
-            <property name="spacing">
-             <number>15</number>
-            </property>
+              </property>
+              <property name="text">
+               <string>Редактор</string>
+              </property>
+             </widget>
+            </item>
             <item>
-             <widget class="QPushButton" name="btn_save">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+             <layout class="QHBoxLayout" name="save_del_lt">
+              <property name="spacing">
+               <number>15</number>
               </property>
-              <property name="minimumSize">
-               <size>
-                <width>200</width>
-                <height>50</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton
+              <item>
+               <widget class="QPushButton" name="btn_save">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>200</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton
 {
 	font-family: 'Inter';
 	font-weight: 400;
@@ -951,40 +992,43 @@ QPushButton::pressed
 {
 	background-color: rgba(196, 196, 196, 0.25);
 }</string>
-              </property>
-              <property name="text">
-               <string>Сохранить</string>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>50</width>
-                <height>50</height>
-               </size>
-              </property>
-              <property name="shortcut">
-               <string>Ctrl+S</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btn_del">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>200</width>
-                <height>50</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton
+                </property>
+                <property name="text">
+                 <string>Сохранить</string>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>50</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="shortcut">
+                 <string>Ctrl+S</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_del">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>200</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton
 {
 	font-family: 'Inter';
 	font-weight: 400;
@@ -1007,55 +1051,98 @@ QPushButton::pressed
 	color: rgb(229, 46, 46);
 	background-color: rgba(229, 46, 46, 0.15);
 }</string>
-              </property>
-              <property name="text">
-               <string>Удалить</string>
-              </property>
-              <property name="iconSize">
+                </property>
+                <property name="text">
+                 <string>Удалить</string>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>50</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="shortcut">
+                 <string>Ctrl+D</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTabWidget" name="tabWidget">
+              <property name="minimumSize">
                <size>
-                <width>50</width>
-                <height>50</height>
+                <width>400</width>
+                <height>0</height>
                </size>
               </property>
-              <property name="shortcut">
-               <string>Ctrl+D</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QTabWidget" name="tabWidget">
-            <property name="minimumSize">
-             <size>
-              <width>400</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QTabWiget {
+              <property name="styleSheet">
+               <string notr="true">QTabWiget {
 	border: 0;
 	border-radius: 16px;
 }</string>
-            </property>
-            <property name="currentIndex">
-             <number>0</number>
-            </property>
-            <widget class="QWidget" name="tab">
-             <attribute name="title">
-              <string>hex</string>
-             </attribute>
-             <widget class="QPlainTextEdit" name="text_ofs_reg">
-              <property name="geometry">
-               <rect>
-                <x>30</x>
-                <y>20</y>
-                <width>65</width>
-                <height>35</height>
-               </rect>
               </property>
-              <property name="styleSheet">
-               <string notr="true">QPlainTextEdit {
+              <property name="currentIndex">
+               <number>0</number>
+              </property>
+              <widget class="QWidget" name="tab">
+               <property name="styleSheet">
+                <string notr="true">QWidget
+{
+	background-color: #FAFAFA;
+	border: 0;
+}</string>
+               </property>
+               <attribute name="title">
+                <string>hex</string>
+               </attribute>
+               <layout class="QGridLayout" name="gridLayout">
+                <property name="leftMargin">
+                 <number>15</number>
+                </property>
+                <property name="topMargin">
+                 <number>15</number>
+                </property>
+                <property name="rightMargin">
+                 <number>15</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>15</number>
+                </property>
+                <property name="spacing">
+                 <number>5</number>
+                </property>
+                <item row="1" column="1">
+                 <widget class="QPlainTextEdit" name="plainTextEdit_2">
+                  <property name="styleSheet">
+                   <string notr="true">QPlainTextEdit {
+	font-family: 'JetBrains Mono';
+	font-weight: 400;
+	font-size: 18px;
+	color: #009C93;
+	border: 1px solid #C4C4C4;
+	border-radius: 16px;
+	padding: 5px;
+}</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QPlainTextEdit" name="text_ofs_reg">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>65</width>
+                    <height>35</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPlainTextEdit {
 	font-family: 'JetBrains Mono';
 	font-weight: 400;
 	font-size: 18px;
@@ -1067,46 +1154,64 @@ QPushButton::pressed
 
 	padding: 5px;
 }</string>
-              </property>
-              <property name="verticalScrollBarPolicy">
-               <enum>Qt::ScrollBarAlwaysOff</enum>
-              </property>
-              <property name="horizontalScrollBarPolicy">
-               <enum>Qt::ScrollBarAlwaysOff</enum>
-              </property>
-             </widget>
-             <widget class="QFrame" name="edit_text">
-              <property name="geometry">
-               <rect>
-                <x>20</x>
-                <y>70</y>
-                <width>401</width>
-                <height>451</height>
-               </rect>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QFrame {
-	background-color: #FAFAFA;
+                  </property>
+                  <property name="verticalScrollBarPolicy">
+                   <enum>Qt::ScrollBarAlwaysOff</enum>
+                  </property>
+                  <property name="horizontalScrollBarPolicy">
+                   <enum>Qt::ScrollBarAlwaysOff</enum>
+                  </property>
+                  <property name="overwriteMode">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLabel" name="label">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel 
+{
+	font-family: 'Inter';
+	font-weight: 500;
+	font-size: 16px;
+	color: rgba(0, 0, 0, 50%);
 	border: 0;
+	text-align: left;
 }</string>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <widget class="QPlainTextEdit" name="plainTextEdit">
-               <property name="geometry">
-                <rect>
-                 <x>20</x>
-                 <y>80</y>
-                 <width>65</width>
-                 <height>271</height>
-                </rect>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QPlainTextEdit {
+                  </property>
+                  <property name="text">
+                   <string>Смещение региона, файла code.hex</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QPlainTextEdit" name="plainTextEdit">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>65</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>65</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPlainTextEdit {
 	font-family: 'JetBrains Mono';
 	font-weight: 400;
 	font-size: 18px;
@@ -1118,64 +1223,28 @@ QPushButton::pressed
 
 	padding: 5px;
 }</string>
-               </property>
+                  </property>
+                  <property name="verticalScrollBarPolicy">
+                   <enum>Qt::ScrollBarAlwaysOff</enum>
+                  </property>
+                  <property name="horizontalScrollBarPolicy">
+                   <enum>Qt::ScrollBarAlwaysOff</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
-              <widget class="QPlainTextEdit" name="plainTextEdit_2">
-               <property name="geometry">
-                <rect>
-                 <x>130</x>
-                 <y>20</y>
-                 <width>211</width>
-                 <height>401</height>
-                </rect>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QPlainTextEdit {
-	font-family: 'JetBrains Mono';
-	font-weight: 400;
-	font-size: 18px;
-	color: #009C93;
-	border: 1px solid #C4C4C4;
-	border-radius: 16px;
-	padding: 5px;
-}</string>
-               </property>
+              <widget class="QWidget" name="tab_2">
+               <attribute name="title">
+                <string>bin</string>
+               </attribute>
               </widget>
              </widget>
-             <widget class="QLabel" name="label">
-              <property name="geometry">
-               <rect>
-                <x>100</x>
-                <y>30</y>
-                <width>351</width>
-                <height>21</height>
-               </rect>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QLabel 
-{
-	font-family: 'Inter';
-	font-weight: 500;
-	font-size: 16px;
-	color: rgba(0, 0, 0, 50%);
-	border: 0;
-	text-align: left;
-}</string>
-              </property>
-              <property name="text">
-               <string>Смещение региона, файла code.hex</string>
-              </property>
-             </widget>
-            </widget>
-            <widget class="QWidget" name="tab_2">
-             <attribute name="title">
-              <string>bin</string>
-             </attribute>
-            </widget>
-           </widget>
-          </item>
-         </layout>
-        </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -1183,6 +1252,8 @@ QPushButton::pressed
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="files.qrc"/>
+ </resources>
  <connections/>
 </ui>
