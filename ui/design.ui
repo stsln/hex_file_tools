@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1372</width>
-    <height>806</height>
+    <width>1226</width>
+    <height>777</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,9 +18,12 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
-    <string notr="true">background-color: #fff</string>
+    <string notr="true">QWidget
+{
+	background-color: #fff;
+}</string>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QVBoxLayout" name="main_lt">
     <property name="spacing">
      <number>15</number>
     </property>
@@ -45,11 +48,14 @@
        </sizepolicy>
       </property>
       <property name="styleSheet">
-       <string notr="true">font-family: 'Inter';
-font-style: normal;
-font-weight: 700;
-font-size: 40px;
-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(7, 119, 164, 206));</string>
+       <string notr="true">QLabel
+{
+	font-family: 'Inter';
+	font-weight: 700;
+	font-size: 40px;
+	color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(7, 119, 164, 206));
+	padding-left: 5px;
+}</string>
       </property>
       <property name="text">
        <string>Инструментарий для работы с HEX-файлами</string>
@@ -57,12 +63,15 @@ color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(7, 119, 1
      </widget>
     </item>
     <item>
-     <widget class="QFrame" name="main_frame">
+     <widget class="QFrame" name="main_frame_lt">
       <property name="styleSheet">
-       <string notr="true">background-color: #FAFAFA;
-border: 1px solid #C4C4C4;
-box-sizing: border-box;
-border-radius: 16px;</string>
+       <string notr="true">QFrame
+{
+	background-color: #FAFAFA;
+	border: 1px solid #C4C4C4;
+	box-sizing: border-box;
+	border-radius: 16px;
+}</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -87,14 +96,14 @@ border-radius: 16px;</string>
         <number>15</number>
        </property>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout">
+        <layout class="QVBoxLayout" name="left_lt">
          <property name="spacing">
           <number>15</number>
          </property>
          <item>
           <widget class="QFrame" name="files">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -124,7 +133,7 @@ QToolButton
 	font-size: 16px;
 	position: top;
 	background-color: #FFFFFF;
-	border: 1px dashed #C4C4C4;
+	border: 1px solid #C4C4C4;
 	border-radius: 16px;
 }
 
@@ -183,24 +192,33 @@ QToolButton::pressed
              </widget>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <layout class="QHBoxLayout" name="files_lt">
               <property name="spacing">
                <number>15</number>
               </property>
+              <property name="sizeConstraint">
+               <enum>QLayout::SetDefaultConstraint</enum>
+              </property>
               <item>
-               <widget class="QToolButton" name="btn_files_1">
+               <widget class="QToolButton" name="btn_file_1">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>120</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Добавить</string>
                 </property>
                 <property name="icon">
                  <iconset>
-                  <normaloff>C:/Users/sonyl/.designer/backup/file_off.svg</normaloff>C:/Users/sonyl/.designer/backup/file_off.svg</iconset>
+                  <normaloff>file_off.svg</normaloff>file_off.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -220,19 +238,25 @@ QToolButton::pressed
                </widget>
               </item>
               <item>
-               <widget class="QToolButton" name="btn_files_2">
+               <widget class="QToolButton" name="btn_file_2">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>120</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Добавить</string>
                 </property>
                 <property name="icon">
                  <iconset>
-                  <normaloff>C:/Users/sonyl/.designer/backup/file_off.svg</normaloff>C:/Users/sonyl/.designer/backup/file_off.svg</iconset>
+                  <normaloff>file_off.svg</normaloff>file_off.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -252,7 +276,7 @@ QToolButton::pressed
                </widget>
               </item>
               <item>
-               <widget class="QToolButton" name="btn_files_3">
+               <widget class="QToolButton" name="btn_file_3">
                 <property name="enabled">
                  <bool>true</bool>
                 </property>
@@ -262,12 +286,18 @@ QToolButton::pressed
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>120</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Добавить</string>
                 </property>
                 <property name="icon">
                  <iconset>
-                  <normaloff>C:/Users/sonyl/.designer/backup/file_off.svg</normaloff>C:/Users/sonyl/.designer/backup/file_off.svg</iconset>
+                  <normaloff>file_off.svg</normaloff>file_off.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -287,19 +317,25 @@ QToolButton::pressed
                </widget>
               </item>
               <item>
-               <widget class="QToolButton" name="btn_files_4">
+               <widget class="QToolButton" name="btn_file_4">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>120</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Добавить</string>
                 </property>
                 <property name="icon">
                  <iconset>
-                  <normaloff>C:/Users/sonyl/.designer/backup/file_off.svg</normaloff>C:/Users/sonyl/.designer/backup/file_off.svg</iconset>
+                  <normaloff>file_off.svg</normaloff>file_off.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -322,19 +358,25 @@ QToolButton::pressed
                </widget>
               </item>
               <item>
-               <widget class="QToolButton" name="btn_files_5">
+               <widget class="QToolButton" name="btn_file_5">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>120</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Добавить</string>
                 </property>
                 <property name="icon">
                  <iconset>
-                  <normaloff>C:/Users/sonyl/.designer/backup/file_off.svg</normaloff>C:/Users/sonyl/.designer/backup/file_off.svg</iconset>
+                  <normaloff>file_off.svg</normaloff>file_off.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -360,6 +402,12 @@ QToolButton::pressed
          </item>
          <item>
           <widget class="QFrame" name="tools">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="styleSheet">
             <string notr="true">QFrame
 {
@@ -383,63 +431,96 @@ QLabel
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <widget class="QLabel" name="tools_title">
-            <property name="geometry">
-             <rect>
-              <x>20</x>
-              <y>10</y>
-              <width>241</width>
-              <height>40</height>
-             </rect>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <property name="spacing">
+             <number>15</number>
             </property>
-            <property name="text">
-             <string>Инструменты</string>
+            <property name="leftMargin">
+             <number>15</number>
             </property>
-           </widget>
-           <widget class="QLabel" name="export_min_title">
-            <property name="geometry">
-             <rect>
-              <x>20</x>
-              <y>260</y>
-              <width>101</width>
-              <height>30</height>
-             </rect>
+            <property name="topMargin">
+             <number>15</number>
             </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel 
-{
-	font-family: 'Inter';
-	font-weight: 400;
-	font-size: 20px;
-	color: #000000;
-	border: 0;
-	text-align: left;
+            <property name="rightMargin">
+             <number>15</number>
+            </property>
+            <property name="bottomMargin">
+             <number>15</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="tools_title">
+              <property name="text">
+               <string>Инструменты</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="reg_merge_lt">
+              <item row="1" column="0">
+               <widget class="QListView" name="reg_list">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QListView {
+	border: 1px solid #C4C4C4;
+	border-radius: 16px;
 }</string>
-            </property>
-            <property name="text">
-             <string>Экспорт</string>
-            </property>
-           </widget>
-           <widget class="QToolButton" name="btn_merge">
-            <property name="geometry">
-             <rect>
-              <x>510</x>
-              <y>100</y>
-              <width>150</width>
-              <height>150</height>
-             </rect>
-            </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="statusTip">
-             <string/>
-            </property>
-            <property name="accessibleName">
-             <string/>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QToolButton
+                </property>
+                <property name="flow">
+                 <enum>QListView::TopToBottom</enum>
+                </property>
+                <property name="isWrapping" stdset="0">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QToolButton" name="btn_merge">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string/>
+                </property>
+                <property name="statusTip">
+                 <string/>
+                </property>
+                <property name="accessibleName">
+                 <string/>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QToolButton
 {
 	padding: 0;
 	font-family: 'Inter';
@@ -461,56 +542,50 @@ QToolButton::pressed
 {
 	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 70), stop:1 rgba(121, 201, 202, 70));
 }</string>
-            </property>
-            <property name="text">
-             <string>Объединить</string>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>C:/Users/sonyl/.designer/backup/merge.svg</normaloff>C:/Users/sonyl/.designer/backup/merge.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>100</width>
-              <height>100</height>
-             </size>
-            </property>
-            <property name="shortcut">
-             <string>Ctrl+M</string>
-            </property>
-            <property name="checkable">
-             <bool>false</bool>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-            <property name="autoRepeat">
-             <bool>false</bool>
-            </property>
-            <property name="autoExclusive">
-             <bool>false</bool>
-            </property>
-            <property name="autoRepeatInterval">
-             <number>100</number>
-            </property>
-            <property name="popupMode">
-             <enum>QToolButton::DelayedPopup</enum>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextUnderIcon</enum>
-            </property>
-           </widget>
-           <widget class="QLabel" name="export_min_title_2">
-            <property name="geometry">
-             <rect>
-              <x>430</x>
-              <y>260</y>
-              <width>211</width>
-              <height>30</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel 
+                </property>
+                <property name="text">
+                 <string>Объединить</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>merge.svg</normaloff>merge.svg</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>100</width>
+                  <height>100</height>
+                 </size>
+                </property>
+                <property name="shortcut">
+                 <string>Ctrl+M</string>
+                </property>
+                <property name="checkable">
+                 <bool>false</bool>
+                </property>
+                <property name="checked">
+                 <bool>false</bool>
+                </property>
+                <property name="autoRepeat">
+                 <bool>false</bool>
+                </property>
+                <property name="autoExclusive">
+                 <bool>false</bool>
+                </property>
+                <property name="autoRepeatInterval">
+                 <number>100</number>
+                </property>
+                <property name="popupMode">
+                 <enum>QToolButton::DelayedPopup</enum>
+                </property>
+                <property name="toolButtonStyle">
+                 <enum>Qt::ToolButtonTextUnderIcon</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="reg_title">
+                <property name="styleSheet">
+                 <string notr="true">QLabel 
 {
 	font-family: 'Inter';
 	font-weight: 400;
@@ -519,74 +594,32 @@ QToolButton::pressed
 	border: 0;
 	text-align: left;
 }</string>
-            </property>
-            <property name="text">
-             <string>Добавить новый регион</string>
-            </property>
-           </widget>
-           <widget class="QListView" name="listView">
-            <property name="geometry">
-             <rect>
-              <x>20</x>
-              <y>100</y>
-              <width>471</width>
-              <height>151</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QListView {
-	border: 1px solid #C4C4C4;
-	border-radius: 16px;
-}</string>
-            </property>
-            <property name="flow">
-             <enum>QListView::TopToBottom</enum>
-            </property>
-            <property name="isWrapping" stdset="0">
-             <bool>false</bool>
-            </property>
-           </widget>
-           <widget class="QLabel" name="export_min_title_3">
-            <property name="geometry">
-             <rect>
-              <x>20</x>
-              <y>60</y>
-              <width>261</width>
-              <height>25</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel 
-{
-	font-family: 'Inter';
-	font-weight: 400;
-	font-size: 20px;
-	color: #000000;
-	border: 0;
-	text-align: left;
-}</string>
-            </property>
-            <property name="text">
-             <string>Регионы hex-файлов</string>
-            </property>
-           </widget>
-           <widget class="QWidget" name="layoutWidget">
-            <property name="geometry">
-             <rect>
-              <x>20</x>
-              <y>306</y>
-              <width>611</width>
-              <height>52</height>
-             </rect>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <property name="sizeConstraint">
-              <enum>QLayout::SetDefaultConstraint</enum>
-             </property>
-             <item>
-              <widget class="QPushButton" name="btn_export_bin">
-               <property name="styleSheet">
-                <string notr="true">QPushButton
+                </property>
+                <property name="text">
+                 <string>Регионы hex-файлов</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="exp_new_lt">
+              <property name="sizeConstraint">
+               <enum>QLayout::SetDefaultConstraint</enum>
+              </property>
+              <property name="spacing">
+               <number>15</number>
+              </property>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="btn_exp_hex">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton
 {
 	font-family: 'Inter';
 	font-weight: 400;
@@ -608,42 +641,35 @@ QPushButton::pressed
 {
 	background-color: rgba(119, 164, 211, 0.3);
 }</string>
-               </property>
-               <property name="inputMethodHints">
-                <set>Qt::ImhNone</set>
-               </property>
-               <property name="text">
-                <string>        в hex</string>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>C:/Users/sonyl/.designer/backup/0x0.svg</normaloff>C:/Users/sonyl/.designer/backup/0x0.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>48</width>
-                 <height>48</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>15</width>
-                 <height>0</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btn_export_hex">
-               <property name="styleSheet">
-                <string notr="true">QPushButton
+                </property>
+                <property name="inputMethodHints">
+                 <set>Qt::ImhNone</set>
+                </property>
+                <property name="text">
+                 <string>в hex</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>0x0.svg</normaloff>0x0.svg</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>48</width>
+                  <height>48</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QPushButton" name="btn_exp_bin">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton
 {
 	font-family: 'Inter';
 	font-weight: 400;
@@ -665,39 +691,50 @@ QPushButton::pressed
 {
 	background-color: rgba(121, 201, 202, 0.3);
 }</string>
-               </property>
-               <property name="text">
-                <string>        в bin</string>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>C:/Users/sonyl/.designer/backup/101.svg</normaloff>C:/Users/sonyl/.designer/backup/101.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>48</width>
-                 <height>48</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>15</width>
-                 <height>0</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btn_export_hex_5">
-               <property name="styleSheet">
-                <string notr="true">QPushButton
+                </property>
+                <property name="text">
+                 <string>в bin</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>101.svg</normaloff>101.svg</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>48</width>
+                  <height>48</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="export_title">
+                <property name="styleSheet">
+                 <string notr="true">QLabel 
+{
+	font-family: 'Inter';
+	font-weight: 400;
+	font-size: 20px;
+	color: #000000;
+	border: 0;
+	text-align: left;
+}</string>
+                </property>
+                <property name="text">
+                 <string>Экспорт</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QPushButton" name="btn_new_reg">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton
 {
 	font-family: 'Inter';
 	font-weight: 400;
@@ -716,24 +753,49 @@ QPushButton::pressed
 {
 	background-color: rgba(196, 196, 196, 0.25);
 }</string>
-               </property>
-               <property name="text">
-                <string>Добавить</string>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>50</width>
-                 <height>50</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
+                </property>
+                <property name="text">
+                 <string>Добавить</string>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>50</width>
+                  <height>50</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QLabel" name="new_reg_title">
+                <property name="styleSheet">
+                 <string notr="true">QLabel 
+{
+	font-family: 'Inter';
+	font-weight: 400;
+	font-size: 20px;
+	color: #000000;
+	border: 0;
+	text-align: left;
+}</string>
+                </property>
+                <property name="text">
+                 <string>Добавить новый регион</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="mes">
+          <widget class="QFrame" name="message">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="styleSheet">
             <string notr="true">QFrame
 {
@@ -747,20 +809,17 @@ QPushButton::pressed
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QFrame" name="editor">
-         <property name="styleSheet">
-          <string notr="true">QFrame
-{
-	background-color: rgb(255, 255, 255);
-	border: 0;
-}
-
-QLabel 
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <item>
+             <widget class="QLabel" name="message_title">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLabel 
 {
 	font-family: 'Inter';
 	font-weight: 700;
@@ -768,6 +827,43 @@ QLabel
 	color: #000000;
 	border: 0;
 	text-align: left;
+}</string>
+              </property>
+              <property name="text">
+               <string>Сообщения</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="message_label">
+              <property name="styleSheet">
+               <string notr="true">QLabel 
+{
+	font-family: 'Inter';
+	font-weight: 400;
+	font-size: 20px;
+	color: #000000;
+	border: 0;
+	text-align: left;
+}</string>
+              </property>
+              <property name="text">
+               <string>Тут будут результаты работы</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QFrame" name="right_lt">
+         <property name="styleSheet">
+          <string notr="true">QFrame
+{
+	background-color: rgb(255, 255, 255);
+	border: 0;
 }</string>
          </property>
          <property name="frameShape">
@@ -800,24 +896,38 @@ QLabel
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel 
+{
+	font-family: 'Inter';
+	font-weight: 700;
+	font-size: 32px;
+	color: #000000;
+	border: 0;
+	text-align: left;
+}</string>
+            </property>
             <property name="text">
              <string>Редактор</string>
             </property>
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout">
+           <layout class="QHBoxLayout" name="save_del_lt">
             <property name="spacing">
-             <number>7</number>
-            </property>
-            <property name="sizeConstraint">
-             <enum>QLayout::SetDefaultConstraint</enum>
+             <number>15</number>
             </property>
             <item>
              <widget class="QPushButton" name="btn_save">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
-                <width>0</width>
+                <width>200</width>
                 <height>50</height>
                </size>
               </property>
@@ -857,29 +967,19 @@ QPushButton::pressed
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>15</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
              <widget class="QPushButton" name="btn_del">
               <property name="enabled">
                <bool>true</bool>
               </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
-                <width>0</width>
+                <width>200</width>
                 <height>50</height>
                </size>
               </property>
@@ -926,6 +1026,12 @@ QPushButton::pressed
           </item>
           <item>
            <widget class="QTabWidget" name="tabWidget">
+            <property name="minimumSize">
+             <size>
+              <width>400</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">QTabWiget {
 	border: 0;
@@ -943,7 +1049,7 @@ QPushButton::pressed
               <property name="geometry">
                <rect>
                 <x>30</x>
-                <y>10</y>
+                <y>20</y>
                 <width>65</width>
                 <height>35</height>
                </rect>
@@ -973,9 +1079,9 @@ QPushButton::pressed
               <property name="geometry">
                <rect>
                 <x>20</x>
-                <y>100</y>
+                <y>70</y>
                 <width>401</width>
-                <height>401</height>
+                <height>451</height>
                </rect>
               </property>
               <property name="styleSheet">
@@ -993,8 +1099,8 @@ QPushButton::pressed
               <widget class="QPlainTextEdit" name="plainTextEdit">
                <property name="geometry">
                 <rect>
-                 <x>0</x>
-                 <y>0</y>
+                 <x>20</x>
+                 <y>80</y>
                  <width>65</width>
                  <height>271</height>
                 </rect>
@@ -1018,7 +1124,7 @@ QPushButton::pressed
                <property name="geometry">
                 <rect>
                  <x>130</x>
-                 <y>0</y>
+                 <y>20</y>
                  <width>211</width>
                  <height>401</height>
                 </rect>
@@ -1035,6 +1141,30 @@ QPushButton::pressed
 }</string>
                </property>
               </widget>
+             </widget>
+             <widget class="QLabel" name="label">
+              <property name="geometry">
+               <rect>
+                <x>100</x>
+                <y>30</y>
+                <width>351</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLabel 
+{
+	font-family: 'Inter';
+	font-weight: 500;
+	font-size: 16px;
+	color: rgba(0, 0, 0, 50%);
+	border: 0;
+	text-align: left;
+}</string>
+              </property>
+              <property name="text">
+               <string>Смещение региона, файла code.hex</string>
+              </property>
              </widget>
             </widget>
             <widget class="QWidget" name="tab_2">
