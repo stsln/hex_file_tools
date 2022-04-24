@@ -1,9 +1,9 @@
 <RCC>
   <qresource prefix="icons">
-    <file>0x0.svg</file>
-    <file>101.svg</file>
-    <file>file_off.svg</file>
-    <file>file_on.svg</file>
-    <file>merge.svg</file>
+    <file>icons/0x0.svg</file>
+    <file>icons/101.svg</file>
+    <file>icons/file_off.svg</file>
+    <file>icons/file_on.svg</file>
+    <file>icons/merge.svg</file>
   </qresource>
 </RCC>

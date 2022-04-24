@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1226</width>
-    <height>777</height>
+    <height>789</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -81,24 +81,24 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <property name="spacing">
-        <number>15</number>
+        <number>20</number>
        </property>
        <property name="leftMargin">
-        <number>15</number>
+        <number>20</number>
        </property>
        <property name="topMargin">
-        <number>15</number>
+        <number>20</number>
        </property>
        <property name="rightMargin">
-        <number>15</number>
+        <number>20</number>
        </property>
        <property name="bottomMargin">
-        <number>15</number>
+        <number>20</number>
        </property>
        <item>
         <layout class="QVBoxLayout" name="left_lt">
          <property name="spacing">
-          <number>15</number>
+          <number>20</number>
          </property>
          <item>
           <widget class="QFrame" name="files">
@@ -221,7 +221,7 @@ QToolButton::pressed
                 </property>
                 <property name="icon">
                  <iconset resource="files.qrc">
-                  <normaloff>:/icons/file_off.svg</normaloff>:/icons/file_off.svg</iconset>
+                  <normaloff>:/icons/icons/file_off.svg</normaloff>:/icons/icons/file_off.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -262,7 +262,7 @@ QToolButton::pressed
                 </property>
                 <property name="icon">
                  <iconset resource="files.qrc">
-                  <normaloff>:/icons/file_off.svg</normaloff>:/icons/file_off.svg</iconset>
+                  <normaloff>:/icons/icons/file_off.svg</normaloff>:/icons/icons/file_off.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -306,7 +306,7 @@ QToolButton::pressed
                 </property>
                 <property name="icon">
                  <iconset resource="files.qrc">
-                  <normaloff>:/icons/file_off.svg</normaloff>:/icons/file_off.svg</iconset>
+                  <normaloff>:/icons/icons/file_off.svg</normaloff>:/icons/icons/file_off.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -347,7 +347,7 @@ QToolButton::pressed
                 </property>
                 <property name="icon">
                  <iconset resource="files.qrc">
-                  <normaloff>:/icons/file_off.svg</normaloff>:/icons/file_off.svg</iconset>
+                  <normaloff>:/icons/icons/file_off.svg</normaloff>:/icons/icons/file_off.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -391,7 +391,7 @@ QToolButton::pressed
                 </property>
                 <property name="icon">
                  <iconset resource="files.qrc">
-                  <normaloff>:/icons/file_off.svg</normaloff>:/icons/file_off.svg</iconset>
+                  <normaloff>:/icons/icons/file_off.svg</normaloff>:/icons/icons/file_off.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -471,40 +471,6 @@ QLabel
             </item>
             <item>
              <layout class="QGridLayout" name="reg_merge_lt">
-              <item row="1" column="0">
-               <widget class="QListView" name="reg_list">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>150</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>150</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QListView {
-	border: 1px solid #C4C4C4;
-	border-radius: 16px;
-}</string>
-                </property>
-                <property name="flow">
-                 <enum>QListView::TopToBottom</enum>
-                </property>
-                <property name="isWrapping" stdset="0">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
               <item row="1" column="1">
                <widget class="QToolButton" name="btn_merge">
                 <property name="sizePolicy">
@@ -566,7 +532,7 @@ QToolButton::pressed
                 </property>
                 <property name="icon">
                  <iconset resource="files.qrc">
-                  <normaloff>:/icons/merge.svg</normaloff>:/icons/merge.svg</iconset>
+                  <normaloff>:/icons/icons/merge.svg</normaloff>:/icons/icons/merge.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -616,6 +582,84 @@ QToolButton::pressed
                 <property name="text">
                  <string>Регионы hex-файлов</string>
                 </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QListWidget" name="reg_list">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QListWidget
+{
+	padding: 5px;
+	font-family: 'JetBrains Mono';
+	font-size: 16px;
+	border: 1px solid #C4C4C4;
+	border-radius: 16px;
+}
+
+QListWidget::item
+{
+	border-bottom: 1px solid #C4C4C4;
+	selection-color: rgb(7, 119, 164);
+	selection-background-color: rgb(0, 0, 0);
+}</string>
+                </property>
+                <property name="currentRow">
+                 <number>-1</number>
+                </property>
+                <property name="sortingEnabled">
+                 <bool>false</bool>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>0x0800 | code.hex</string>
+                 </property>
+                 <property name="foreground">
+                  <brush brushstyle="NoBrush">
+                   <color alpha="255">
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                   </color>
+                  </brush>
+                 </property>
+                 <property name="checkState">
+                  <enum>Unchecked</enum>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>0x0801 | code.hex</string>
+                 </property>
+                 <property name="checkState">
+                  <enum>Unchecked</enum>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>0x0810 | code.hex</string>
+                 </property>
+                 <property name="checkState">
+                  <enum>Unchecked</enum>
+                 </property>
+                </item>
                </widget>
               </item>
              </layout>
@@ -671,7 +715,7 @@ QPushButton::pressed
                 </property>
                 <property name="icon">
                  <iconset resource="files.qrc">
-                  <normaloff>:/icons/0x0.svg</normaloff>:/icons/0x0.svg</iconset>
+                  <normaloff>:/icons/icons/0x0.svg</normaloff>:/icons/icons/0x0.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -721,7 +765,7 @@ QPushButton::pressed
                 </property>
                 <property name="icon">
                  <iconset resource="files.qrc">
-                  <normaloff>:/icons/101.svg</normaloff>:/icons/101.svg</iconset>
+                  <normaloff>:/icons/icons/101.svg</normaloff>:/icons/icons/101.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -969,6 +1013,12 @@ QPushButton::pressed
                   <height>50</height>
                  </size>
                 </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>50</height>
+                 </size>
+                </property>
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
@@ -1021,6 +1071,12 @@ QPushButton::pressed
                 <property name="minimumSize">
                  <size>
                   <width>200</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
                   <height>50</height>
                  </size>
                 </property>
