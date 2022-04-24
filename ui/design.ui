@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1226</width>
+    <width>1258</width>
     <height>789</height>
    </rect>
   </property>
@@ -1128,25 +1128,47 @@ QPushButton::pressed
              <widget class="QTabWidget" name="tabWidget">
               <property name="minimumSize">
                <size>
-                <width>400</width>
+                <width>500</width>
                 <height>0</height>
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">QTabWiget {
+               <string notr="true">QTabWiget
+{
+	font-family: 'Inter';
+}
+
+QTabWidget::tab-bar
+{
+	min-width: 1000;
+}
+
+QTabBar::tab
+{
+	font-family: 'Inter';
+	font-size: 15px;
+	color: rgb(7, 119, 164);
+	height: 30px;
+    border-radius: 16px;
+	border: 1px solid #C4C4C4;
+}
+
+QTabWidget::pane
+{ 
 	border: 0;
-	border-radius: 16px;
-}</string>
+}
+
+</string>
               </property>
               <property name="currentIndex">
                <number>0</number>
               </property>
-              <widget class="QWidget" name="tab">
+              <widget class="QWidget" name="tab_hex">
                <property name="styleSheet">
                 <string notr="true">QWidget
 {
 	background-color: #FAFAFA;
-	border: 0;
+	border-radius: 16px;
 }</string>
                </property>
                <attribute name="title">
@@ -1168,21 +1190,6 @@ QPushButton::pressed
                 <property name="spacing">
                  <number>5</number>
                 </property>
-                <item row="1" column="1">
-                 <widget class="QPlainTextEdit" name="plainTextEdit_2">
-                  <property name="styleSheet">
-                   <string notr="true">QPlainTextEdit {
-	font-family: 'JetBrains Mono';
-	font-weight: 400;
-	font-size: 18px;
-	color: #009C93;
-	border: 1px solid #C4C4C4;
-	border-radius: 16px;
-	padding: 5px;
-}</string>
-                  </property>
-                 </widget>
-                </item>
                 <item row="0" column="0">
                  <widget class="QPlainTextEdit" name="text_ofs_reg">
                   <property name="sizePolicy">
@@ -1219,6 +1226,27 @@ QPushButton::pressed
                   </property>
                   <property name="overwriteMode">
                    <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QPlainTextEdit" name="plainTextEdit_2">
+                  <property name="minimumSize">
+                   <size>
+                    <width>400</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPlainTextEdit {
+	font-family: 'JetBrains Mono';
+	font-weight: 400;
+	font-size: 18px;
+	color: #009C93;
+	border: 1px solid #C4C4C4;
+	border-radius: 16px;
+	padding: 5px;
+}</string>
                   </property>
                  </widget>
                 </item>
@@ -1290,10 +1318,38 @@ QPushButton::pressed
                 </item>
                </layout>
               </widget>
-              <widget class="QWidget" name="tab_2">
+              <widget class="QWidget" name="tab_bin">
+               <property name="styleSheet">
+                <string notr="true">QWidget
+{
+	background-color: #FAFAFA;
+	border-radius: 16px;
+}</string>
+               </property>
                <attribute name="title">
                 <string>bin</string>
                </attribute>
+               <widget class="QPlainTextEdit" name="plainTextEdit_3">
+                <property name="geometry">
+                 <rect>
+                  <x>30</x>
+                  <y>50</y>
+                  <width>400</width>
+                  <height>192</height>
+                 </rect>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPlainTextEdit {
+	font-family: 'JetBrains Mono';
+	font-weight: 400;
+	font-size: 18px;
+	color: #009C93;
+	border: 1px solid #C4C4C4;
+	border-radius: 16px;
+	padding: 5px;
+}</string>
+                </property>
+               </widget>
               </widget>
              </widget>
             </item>
