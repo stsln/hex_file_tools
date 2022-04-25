@@ -229,9 +229,6 @@ QToolButton::pressed
                   <height>60</height>
                  </size>
                 </property>
-                <property name="checkable">
-                 <bool>false</bool>
-                </property>
                 <property name="checked">
                  <bool>false</bool>
                 </property>
@@ -269,9 +266,6 @@ QToolButton::pressed
                   <width>60</width>
                   <height>60</height>
                  </size>
-                </property>
-                <property name="checkable">
-                 <bool>false</bool>
                 </property>
                 <property name="checked">
                  <bool>false</bool>
@@ -314,9 +308,6 @@ QToolButton::pressed
                   <height>60</height>
                  </size>
                 </property>
-                <property name="checkable">
-                 <bool>false</bool>
-                </property>
                 <property name="checked">
                  <bool>false</bool>
                 </property>
@@ -358,9 +349,6 @@ QToolButton::pressed
                 <property name="shortcut">
                  <string>Ctrl+S</string>
                 </property>
-                <property name="checkable">
-                 <bool>false</bool>
-                </property>
                 <property name="checked">
                  <bool>false</bool>
                 </property>
@@ -398,9 +386,6 @@ QToolButton::pressed
                   <width>60</width>
                   <height>60</height>
                  </size>
-                </property>
-                <property name="checkable">
-                 <bool>false</bool>
                 </property>
                 <property name="checked">
                  <bool>false</bool>
@@ -494,15 +479,6 @@ QLabel
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
-                <property name="toolTip">
-                 <string/>
-                </property>
-                <property name="statusTip">
-                 <string/>
-                </property>
-                <property name="accessibleName">
-                 <string/>
-                </property>
                 <property name="styleSheet">
                  <string notr="true">QToolButton
 {
@@ -543,23 +519,8 @@ QToolButton::pressed
                 <property name="shortcut">
                  <string>Ctrl+M</string>
                 </property>
-                <property name="checkable">
-                 <bool>false</bool>
-                </property>
                 <property name="checked">
                  <bool>false</bool>
-                </property>
-                <property name="autoRepeat">
-                 <bool>false</bool>
-                </property>
-                <property name="autoExclusive">
-                 <bool>false</bool>
-                </property>
-                <property name="autoRepeatInterval">
-                 <number>100</number>
-                </property>
-                <property name="popupMode">
-                 <enum>QToolButton::DelayedPopup</enum>
                 </property>
                 <property name="toolButtonStyle">
                  <enum>Qt::ToolButtonTextUnderIcon</enum>
@@ -619,21 +580,10 @@ QListWidget::item
 	border-bottom: 1px solid #C4C4C4;
 	selection-color: rgb(7, 119, 164);
 	selection-background-color: rgb(0, 0, 0);
-}
-
-QCheckBox::indicator
-{
-	border-radius: 16px;
 }</string>
                 </property>
                 <property name="dragDropMode">
                  <enum>QAbstractItemView::InternalMove</enum>
-                </property>
-                <property name="currentRow">
-                 <number>-1</number>
-                </property>
-                <property name="sortingEnabled">
-                 <bool>false</bool>
                 </property>
                 <item>
                  <property name="text">
@@ -714,9 +664,6 @@ QPushButton::pressed
 {
 	background-color: rgba(119, 164, 211, 0.3);
 }</string>
-                </property>
-                <property name="inputMethodHints">
-                 <set>Qt::ImhNone</set>
                 </property>
                 <property name="text">
                  <string>в hex</string>
@@ -1140,6 +1087,9 @@ QPushButton::pressed
                 <height>0</height>
                </size>
               </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="styleSheet">
                <string notr="true">QTabWiget
 {
@@ -1161,6 +1111,16 @@ QTabBar::tab
 	border: 1px solid #C4C4C4;
 }
 
+QTabBar::tab:hover
+{
+	background-color: rgba(7, 119, 164, 0.1);
+}
+
+QTabBar::tab:selected
+{
+	background-color: rgba(7, 119, 164, 0.15);
+}
+
 QTabWidget::pane
 { 
 	border: 0;
@@ -1169,31 +1129,27 @@ QTabWidget::pane
 </string>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="tab_hex">
                <property name="styleSheet">
-                <string notr="true">QWidget
-{
-	background-color: #FAFAFA;
-	border-radius: 16px;
-}</string>
+                <string notr="true"/>
                </property>
                <attribute name="title">
                 <string>hex</string>
                </attribute>
                <layout class="QGridLayout" name="gridLayout">
                 <property name="leftMargin">
-                 <number>15</number>
+                 <number>0</number>
                 </property>
                 <property name="topMargin">
                  <number>15</number>
                 </property>
                 <property name="rightMargin">
-                 <number>15</number>
+                 <number>0</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>15</number>
+                 <number>0</number>
                 </property>
                 <property name="spacing">
                  <number>5</number>
@@ -1213,16 +1169,15 @@ QTabWidget::pane
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QPlainTextEdit {
+                   <string notr="true">QPlainTextEdit
+{
 	font-family: 'JetBrains Mono';
 	font-weight: 400;
 	font-size: 18px;
 	color: #77A4D3;
-
 	border: 1px solid #C4C4C4;
 	border-radius: 16px;
 	background-color: rgba(119, 164, 211, 0.25);
-
 	padding: 5px;
 }</string>
                   </property>
@@ -1246,14 +1201,15 @@ QTabWidget::pane
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QPlainTextEdit {
+                   <string notr="true">QPlainTextEdit
+{
 	font-family: 'JetBrains Mono';
 	font-weight: 400;
 	font-size: 18px;
-	color: #009C93;
 	border: 1px solid #C4C4C4;
 	border-radius: 16px;
 	padding: 5px;
+	background-color: #FAFAFA;
 }</string>
                   </property>
                  </widget>
@@ -1303,16 +1259,15 @@ QTabWidget::pane
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QPlainTextEdit {
+                   <string notr="true">QPlainTextEdit
+{
 	font-family: 'JetBrains Mono';
 	font-weight: 400;
 	font-size: 18px;
 	color: #009C93;
-
 	border: 1px solid #C4C4C4;
 	border-radius: 16px;
 	background-color: rgba(0, 156, 147, 0.1);
-
 	padding: 5px;
 }</string>
                   </property>
@@ -1328,11 +1283,7 @@ QTabWidget::pane
               </widget>
               <widget class="QWidget" name="tab_bin">
                <property name="styleSheet">
-                <string notr="true">QWidget
-{
-	background-color: #FAFAFA;
-	border-radius: 16px;
-}</string>
+                <string notr="true"/>
                </property>
                <attribute name="title">
                 <string>bin</string>
@@ -1340,21 +1291,22 @@ QTabWidget::pane
                <widget class="QPlainTextEdit" name="plainTextEdit_3">
                 <property name="geometry">
                  <rect>
-                  <x>30</x>
-                  <y>50</y>
-                  <width>400</width>
-                  <height>192</height>
+                  <x>10</x>
+                  <y>10</y>
+                  <width>471</width>
+                  <height>471</height>
                  </rect>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QPlainTextEdit {
+                 <string notr="true">QPlainTextEdit
+{
 	font-family: 'JetBrains Mono';
 	font-weight: 400;
 	font-size: 18px;
-	color: #009C93;
 	border: 1px solid #C4C4C4;
 	border-radius: 16px;
 	padding: 5px;
+	background-color: #FAFAFA;
 }</string>
                 </property>
                </widget>
