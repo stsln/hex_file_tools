@@ -1,3 +1,6 @@
+import sys
+
+from ui.design import *
 import parser_hex_files
 
 print('HEX file tools\n')
@@ -23,3 +26,13 @@ flag_merge, repeat_list = data_hex.merge()
 
 adr_reg_list = data_hex.get_adr_reg()
 """
+
+app = QtWidgets.QApplication(sys.argv)
+MainWindow = QtWidgets.QMainWindow()
+ui = Ui_Main()
+ui.setupUi(MainWindow)
+MainWindow.show()
+
+ui.btn_file_1.setText('file.hex')
+
+sys.exit(app.exec())
