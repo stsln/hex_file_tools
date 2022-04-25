@@ -12,225 +12,58 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_Main(object):
     def setupUi(self, Main):
         Main.setObjectName("Main")
-        Main.resize(1440, 806)
-        Main.setMinimumSize(QtCore.QSize(0, 0))
-        Main.setMaximumSize(QtCore.QSize(3000, 1000))
+        Main.resize(1258, 789)
         Main.setToolButtonStyle(QtCore.Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
         self.centralwidget = QtWidgets.QWidget(Main)
-        self.centralwidget.setMinimumSize(QtCore.QSize(1440, 700))
-        self.centralwidget.setMaximumSize(QtCore.QSize(1440, 16777215))
-        self.centralwidget.setStyleSheet("background-color: #fff")
-        self.centralwidget.setObjectName("centralwidget")
-        self.main_frame = QtWidgets.QFrame(self.centralwidget)
-        self.main_frame.setGeometry(QtCore.QRect(0, 70, 1281, 691))
-        self.main_frame.setStyleSheet("background-color: #FAFAFA;\n"
-"border: 1px solid #C4C4C4;\n"
-"box-sizing: border-box;\n"
-"border-radius: 16px;")
-        self.main_frame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
-        self.main_frame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
-        self.main_frame.setObjectName("main_frame")
-        self.tools = QtWidgets.QFrame(self.main_frame)
-        self.tools.setGeometry(QtCore.QRect(20, 210, 680, 371))
-        self.tools.setStyleSheet("QFrame\n"
+        self.centralwidget.setStyleSheet("QWidget\n"
 "{\n"
-"    background-color: rgb(255, 255, 255);\n"
-"    border: 0;\n"
-"}\n"
-"\n"
-"QLabel \n"
+"    background-color: #fff;\n"
+"}")
+        self.centralwidget.setObjectName("centralwidget")
+        self.main_lt = QtWidgets.QVBoxLayout(self.centralwidget)
+        self.main_lt.setContentsMargins(0, 0, 0, 0)
+        self.main_lt.setSpacing(15)
+        self.main_lt.setObjectName("main_lt")
+        self.name_prj = QtWidgets.QLabel(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.name_prj.sizePolicy().hasHeightForWidth())
+        self.name_prj.setSizePolicy(sizePolicy)
+        self.name_prj.setStyleSheet("QLabel\n"
 "{\n"
 "    font-family: \'Inter\';\n"
 "    font-weight: 700;\n"
-"    font-size: 32px;\n"
-"    color: #000000;\n"
-"    border: 0;\n"
-"    text-align: left;\n"
+"    font-size: 40px;\n"
+"    color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(7, 119, 164, 206));\n"
+"    padding-left: 5px;\n"
 "}")
-        self.tools.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
-        self.tools.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
-        self.tools.setObjectName("tools")
-        self.tools_title = QtWidgets.QLabel(self.tools)
-        self.tools_title.setGeometry(QtCore.QRect(20, 10, 241, 40))
-        self.tools_title.setObjectName("tools_title")
-        self.export_min_title = QtWidgets.QLabel(self.tools)
-        self.export_min_title.setGeometry(QtCore.QRect(20, 260, 101, 30))
-        self.export_min_title.setStyleSheet("QLabel \n"
+        self.name_prj.setObjectName("name_prj")
+        self.main_lt.addWidget(self.name_prj)
+        self.main_frame_lt = QtWidgets.QFrame(self.centralwidget)
+        self.main_frame_lt.setStyleSheet("QFrame\n"
 "{\n"
-"    font-family: \'Inter\';\n"
-"    font-weight: 400;\n"
-"    font-size: 24px;\n"
-"    color: #000000;\n"
-"    border: 0;\n"
-"    text-align: left;\n"
-"}")
-        self.export_min_title.setObjectName("export_min_title")
-        self.btn_export_hex = QtWidgets.QPushButton(self.tools)
-        self.btn_export_hex.setGeometry(QtCore.QRect(220, 300, 180, 50))
-        self.btn_export_hex.setStyleSheet("QPushButton\n"
-"{\n"
-"    font-family: \'Inter\';\n"
-"    font-weight: 400;\n"
-"    font-size: 18px;\n"
-"    color: #79C9CA;\n"
-"    background-color: rgba(121, 201, 202, 0.1);\n"
+"    background-color: #FAFAFA;\n"
 "    border: 1px solid #C4C4C4;\n"
-"    border-radius: 16px;\n"
-"    padding: 0 15px 0 15px;\n"
-"}\n"
-"\n"
-"QPushButton::hover\n"
-"{\n"
-"    background-color: rgba(121, 201, 202, 0.2);\n"
-"    border: 1px solid #C4C4C4;\n"
-"}\n"
-"\n"
-"QPushButton::pressed\n"
-"{\n"
-"    background-color: rgba(121, 201, 202, 0.3);\n"
-"}")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("101.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_export_hex.setIcon(icon)
-        self.btn_export_hex.setIconSize(QtCore.QSize(50, 50))
-        self.btn_export_hex.setObjectName("btn_export_hex")
-        self.btn_export_bin = QtWidgets.QPushButton(self.tools)
-        self.btn_export_bin.setGeometry(QtCore.QRect(20, 300, 180, 50))
-        self.btn_export_bin.setStyleSheet("QPushButton\n"
-"{\n"
-"    font-family: \'Inter\';\n"
-"    font-weight: 400;\n"
-"    font-size: 18px;\n"
-"    color: #77A4D3;\n"
-"    background-color: rgba(119, 164, 211, 0.1);\n"
-"    border: 1px solid #C4C4C4;\n"
-"    border-radius: 16px;\n"
-"    padding: 0 15px 0 15px;\n"
-"}\n"
-"\n"
-"QPushButton::hover\n"
-"{\n"
-"    background-color: rgba(119, 164, 211, 0.2);\n"
-"    border: 1px solid #C4C4C4;\n"
-"}\n"
-"\n"
-"QPushButton::pressed\n"
-"{\n"
-"    background-color: rgba(119, 164, 211, 0.3);\n"
-"}")
-        self.btn_export_bin.setInputMethodHints(QtCore.Qt.InputMethodHint.ImhNone)
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("0x0.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_export_bin.setIcon(icon1)
-        self.btn_export_bin.setIconSize(QtCore.QSize(50, 50))
-        self.btn_export_bin.setObjectName("btn_export_bin")
-        self.btn_merge = QtWidgets.QToolButton(self.tools)
-        self.btn_merge.setGeometry(QtCore.QRect(510, 100, 150, 150))
-        self.btn_merge.setToolTip("")
-        self.btn_merge.setStatusTip("")
-        self.btn_merge.setAccessibleName("")
-        self.btn_merge.setStyleSheet("QToolButton\n"
-"{\n"
-"    padding: 0;\n"
-"    font-family: \'Inter\';\n"
-"    font-weight: 400;\n"
-"    font-size: 20px;\n"
-"    color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 255), stop:1 rgba(121, 201, 202, 255));\n"
-"    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 35), stop:1 rgba(121, 201, 202, 35));\n"
-"    border: 1px solid #C4C4C4;\n"
-"    border-radius: 16px;\n"
-"}\n"
-"\n"
-"QToolButton::hover\n"
-"{\n"
-"    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 50), stop:1 rgba(121, 201, 202, 50));\n"
-"    border: 1px solid #C4C4C4;\n"
-"}\n"
-"\n"
-"QToolButton::pressed\n"
-"{\n"
-"    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 70), stop:1 rgba(121, 201, 202, 70));\n"
-"}")
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("merge.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_merge.setIcon(icon2)
-        self.btn_merge.setIconSize(QtCore.QSize(100, 100))
-        self.btn_merge.setCheckable(False)
-        self.btn_merge.setChecked(False)
-        self.btn_merge.setAutoRepeat(False)
-        self.btn_merge.setAutoExclusive(False)
-        self.btn_merge.setAutoRepeatInterval(100)
-        self.btn_merge.setPopupMode(QtWidgets.QToolButton.ToolButtonPopupMode.DelayedPopup)
-        self.btn_merge.setToolButtonStyle(QtCore.Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-        self.btn_merge.setObjectName("btn_merge")
-        self.export_min_title_2 = QtWidgets.QLabel(self.tools)
-        self.export_min_title_2.setGeometry(QtCore.QRect(420, 260, 141, 30))
-        self.export_min_title_2.setStyleSheet("QLabel \n"
-"{\n"
-"    font-family: \'Inter\';\n"
-"    font-weight: 400;\n"
-"    font-size: 24px;\n"
-"    color: #000000;\n"
-"    border: 0;\n"
-"    text-align: left;\n"
-"}")
-        self.export_min_title_2.setObjectName("export_min_title_2")
-        self.btn_export_hex_5 = QtWidgets.QPushButton(self.tools)
-        self.btn_export_hex_5.setGeometry(QtCore.QRect(420, 300, 240, 51))
-        self.btn_export_hex_5.setStyleSheet("QPushButton\n"
-"{\n"
-"    font-family: \'Inter\';\n"
-"    font-weight: 400;\n"
-"    font-size: 18px;\n"
-"    background-color: #fff;\n"
-"    border: 1px solid #C4C4C4;\n"
-"    border-radius: 16px;\n"
-"}\n"
-"\n"
-"QPushButton::hover\n"
-"{\n"
-"    background-color: rgba(196, 196, 196, 0.125);\n"
-"}\n"
-"\n"
-"QPushButton::pressed\n"
-"{\n"
-"    background-color: rgba(196, 196, 196, 0.25);\n"
-"}")
-        self.btn_export_hex_5.setIconSize(QtCore.QSize(50, 50))
-        self.btn_export_hex_5.setObjectName("btn_export_hex_5")
-        self.listView = QtWidgets.QListView(self.tools)
-        self.listView.setGeometry(QtCore.QRect(20, 100, 471, 151))
-        self.listView.setStyleSheet("QListView {\n"
-"    border: 1px solid #C4C4C4;\n"
+"    box-sizing: border-box;\n"
 "    border-radius: 16px;\n"
 "}")
-        self.listView.setObjectName("listView")
-        self.export_min_title_3 = QtWidgets.QLabel(self.tools)
-        self.export_min_title_3.setGeometry(QtCore.QRect(20, 60, 261, 25))
-        self.export_min_title_3.setStyleSheet("QLabel \n"
-"{\n"
-"    font-family: \'Inter\';\n"
-"    font-weight: 400;\n"
-"    font-size: 24px;\n"
-"    color: #000000;\n"
-"    border: 0;\n"
-"    text-align: left;\n"
-"}")
-        self.export_min_title_3.setObjectName("export_min_title_3")
-        self.checkBox = QtWidgets.QCheckBox(self.tools)
-        self.checkBox.setGeometry(QtCore.QRect(430, 70, 20, 20))
-        self.checkBox.setMouseTracking(True)
-        self.checkBox.setStyleSheet("QCheckBox {\n"
-"    border: 1px solid #C4C4C4;\n"
-"    border-radius: 16px;\n"
-"}")
-        self.checkBox.setText("")
-        self.checkBox.setIconSize(QtCore.QSize(25, 25))
-        self.checkBox.setCheckable(True)
-        self.checkBox.setTristate(False)
-        self.checkBox.setObjectName("checkBox")
-        self.files = QtWidgets.QFrame(self.main_frame)
-        self.files.setGeometry(QtCore.QRect(20, 20, 680, 191))
+        self.main_frame_lt.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
+        self.main_frame_lt.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
+        self.main_frame_lt.setObjectName("main_frame_lt")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.main_frame_lt)
+        self.horizontalLayout_3.setContentsMargins(20, 20, 20, 20)
+        self.horizontalLayout_3.setSpacing(20)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.left_lt = QtWidgets.QVBoxLayout()
+        self.left_lt.setSpacing(20)
+        self.left_lt.setObjectName("left_lt")
+        self.files = QtWidgets.QFrame(self.main_frame_lt)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.files.sizePolicy().hasHeightForWidth())
+        self.files.setSizePolicy(sizePolicy)
         self.files.setStyleSheet("QFrame \n"
 "{\n"
 "    border: 0;\n"
@@ -255,7 +88,7 @@ class Ui_Main(object):
 "    font-size: 16px;\n"
 "    position: top;\n"
 "    background-color: #FFFFFF;\n"
-"    border: 1px dashed #C4C4C4;\n"
+"    border: 1px solid #C4C4C4;\n"
 "    border-radius: 16px;\n"
 "}\n"
 "\n"
@@ -274,57 +107,106 @@ class Ui_Main(object):
         self.files.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.files.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.files.setObjectName("files")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.files)
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_3.setSpacing(15)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.files_title = QtWidgets.QLabel(self.files)
-        self.files_title.setGeometry(QtCore.QRect(0, 0, 130, 30))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.files_title.sizePolicy().hasHeightForWidth())
+        self.files_title.setSizePolicy(sizePolicy)
         self.files_title.setAutoFillBackground(False)
         self.files_title.setStyleSheet("")
         self.files_title.setObjectName("files_title")
-        self.btn_files_1 = QtWidgets.QToolButton(self.files)
-        self.btn_files_1.setGeometry(QtCore.QRect(0, 50, 120, 120))
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("file_off.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btn_files_1.setIcon(icon3)
-        self.btn_files_1.setIconSize(QtCore.QSize(60, 60))
-        self.btn_files_1.setCheckable(False)
-        self.btn_files_1.setChecked(False)
-        self.btn_files_1.setToolButtonStyle(QtCore.Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-        self.btn_files_1.setObjectName("btn_files_1")
-        self.btn_files_2 = QtWidgets.QToolButton(self.files)
-        self.btn_files_2.setGeometry(QtCore.QRect(140, 50, 120, 120))
-        self.btn_files_2.setIcon(icon3)
-        self.btn_files_2.setIconSize(QtCore.QSize(60, 60))
-        self.btn_files_2.setCheckable(False)
-        self.btn_files_2.setChecked(False)
-        self.btn_files_2.setToolButtonStyle(QtCore.Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-        self.btn_files_2.setObjectName("btn_files_2")
-        self.btn_files_3 = QtWidgets.QToolButton(self.files)
-        self.btn_files_3.setEnabled(True)
-        self.btn_files_3.setGeometry(QtCore.QRect(280, 50, 120, 120))
-        self.btn_files_3.setIcon(icon3)
-        self.btn_files_3.setIconSize(QtCore.QSize(60, 60))
-        self.btn_files_3.setCheckable(False)
-        self.btn_files_3.setChecked(False)
-        self.btn_files_3.setToolButtonStyle(QtCore.Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-        self.btn_files_3.setObjectName("btn_files_3")
-        self.btn_files_4 = QtWidgets.QToolButton(self.files)
-        self.btn_files_4.setGeometry(QtCore.QRect(420, 50, 120, 120))
-        self.btn_files_4.setIcon(icon3)
-        self.btn_files_4.setIconSize(QtCore.QSize(60, 60))
-        self.btn_files_4.setCheckable(False)
-        self.btn_files_4.setChecked(False)
-        self.btn_files_4.setToolButtonStyle(QtCore.Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-        self.btn_files_4.setObjectName("btn_files_4")
-        self.btn_files_5 = QtWidgets.QToolButton(self.files)
-        self.btn_files_5.setGeometry(QtCore.QRect(560, 50, 120, 120))
-        self.btn_files_5.setIcon(icon3)
-        self.btn_files_5.setIconSize(QtCore.QSize(60, 60))
-        self.btn_files_5.setCheckable(False)
-        self.btn_files_5.setChecked(False)
-        self.btn_files_5.setToolButtonStyle(QtCore.Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-        self.btn_files_5.setObjectName("btn_files_5")
-        self.editor = QtWidgets.QFrame(self.main_frame)
-        self.editor.setGeometry(QtCore.QRect(720, 20, 531, 481))
-        self.editor.setStyleSheet("QFrame\n"
+        self.verticalLayout_3.addWidget(self.files_title)
+        self.files_lt = QtWidgets.QHBoxLayout()
+        self.files_lt.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetDefaultConstraint)
+        self.files_lt.setSpacing(15)
+        self.files_lt.setObjectName("files_lt")
+        self.btn_file_1 = QtWidgets.QToolButton(self.files)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_file_1.sizePolicy().hasHeightForWidth())
+        self.btn_file_1.setSizePolicy(sizePolicy)
+        self.btn_file_1.setMinimumSize(QtCore.QSize(120, 120))
+        self.btn_file_1.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/icons/icons/file_off.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_file_1.setIcon(icon)
+        self.btn_file_1.setIconSize(QtCore.QSize(60, 60))
+        self.btn_file_1.setChecked(False)
+        self.btn_file_1.setToolButtonStyle(QtCore.Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+        self.btn_file_1.setObjectName("btn_file_1")
+        self.files_lt.addWidget(self.btn_file_1)
+        self.btn_file_2 = QtWidgets.QToolButton(self.files)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_file_2.sizePolicy().hasHeightForWidth())
+        self.btn_file_2.setSizePolicy(sizePolicy)
+        self.btn_file_2.setMinimumSize(QtCore.QSize(120, 120))
+        self.btn_file_2.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.btn_file_2.setIcon(icon)
+        self.btn_file_2.setIconSize(QtCore.QSize(60, 60))
+        self.btn_file_2.setChecked(False)
+        self.btn_file_2.setToolButtonStyle(QtCore.Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+        self.btn_file_2.setObjectName("btn_file_2")
+        self.files_lt.addWidget(self.btn_file_2)
+        self.btn_file_3 = QtWidgets.QToolButton(self.files)
+        self.btn_file_3.setEnabled(True)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_file_3.sizePolicy().hasHeightForWidth())
+        self.btn_file_3.setSizePolicy(sizePolicy)
+        self.btn_file_3.setMinimumSize(QtCore.QSize(120, 120))
+        self.btn_file_3.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.btn_file_3.setIcon(icon)
+        self.btn_file_3.setIconSize(QtCore.QSize(60, 60))
+        self.btn_file_3.setChecked(False)
+        self.btn_file_3.setToolButtonStyle(QtCore.Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+        self.btn_file_3.setObjectName("btn_file_3")
+        self.files_lt.addWidget(self.btn_file_3)
+        self.btn_file_4 = QtWidgets.QToolButton(self.files)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_file_4.sizePolicy().hasHeightForWidth())
+        self.btn_file_4.setSizePolicy(sizePolicy)
+        self.btn_file_4.setMinimumSize(QtCore.QSize(120, 120))
+        self.btn_file_4.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.btn_file_4.setIcon(icon)
+        self.btn_file_4.setIconSize(QtCore.QSize(60, 60))
+        self.btn_file_4.setChecked(False)
+        self.btn_file_4.setToolButtonStyle(QtCore.Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+        self.btn_file_4.setObjectName("btn_file_4")
+        self.files_lt.addWidget(self.btn_file_4)
+        self.btn_file_5 = QtWidgets.QToolButton(self.files)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_file_5.sizePolicy().hasHeightForWidth())
+        self.btn_file_5.setSizePolicy(sizePolicy)
+        self.btn_file_5.setMinimumSize(QtCore.QSize(120, 120))
+        self.btn_file_5.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.btn_file_5.setIcon(icon)
+        self.btn_file_5.setIconSize(QtCore.QSize(60, 60))
+        self.btn_file_5.setChecked(False)
+        self.btn_file_5.setToolButtonStyle(QtCore.Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+        self.btn_file_5.setObjectName("btn_file_5")
+        self.files_lt.addWidget(self.btn_file_5)
+        self.verticalLayout_3.addLayout(self.files_lt)
+        self.left_lt.addWidget(self.files)
+        self.tools = QtWidgets.QFrame(self.main_frame_lt)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tools.sizePolicy().hasHeightForWidth())
+        self.tools.setSizePolicy(sizePolicy)
+        self.tools.setStyleSheet("QFrame\n"
 "{\n"
 "    background-color: rgb(255, 255, 255);\n"
 "    border: 0;\n"
@@ -339,22 +221,156 @@ class Ui_Main(object):
 "    border: 0;\n"
 "    text-align: left;\n"
 "}")
-        self.editor.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
-        self.editor.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
-        self.editor.setObjectName("editor")
-        self.tools_title_2 = QtWidgets.QLabel(self.editor)
-        self.tools_title_2.setGeometry(QtCore.QRect(20, 10, 241, 40))
-        self.tools_title_2.setObjectName("tools_title_2")
-        self.btn_export_hex_2 = QtWidgets.QPushButton(self.editor)
-        self.btn_export_hex_2.setGeometry(QtCore.QRect(20, 70, 180, 51))
-        self.btn_export_hex_2.setStyleSheet("QPushButton\n"
+        self.tools.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
+        self.tools.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
+        self.tools.setObjectName("tools")
+        self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.tools)
+        self.verticalLayout_6.setContentsMargins(15, 15, 15, 15)
+        self.verticalLayout_6.setSpacing(15)
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.tools_title = QtWidgets.QLabel(self.tools)
+        self.tools_title.setObjectName("tools_title")
+        self.verticalLayout_6.addWidget(self.tools_title)
+        self.reg_merge_lt = QtWidgets.QGridLayout()
+        self.reg_merge_lt.setObjectName("reg_merge_lt")
+        self.btn_merge = QtWidgets.QToolButton(self.tools)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_merge.sizePolicy().hasHeightForWidth())
+        self.btn_merge.setSizePolicy(sizePolicy)
+        self.btn_merge.setMinimumSize(QtCore.QSize(150, 150))
+        self.btn_merge.setMaximumSize(QtCore.QSize(150, 150))
+        self.btn_merge.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.btn_merge.setStyleSheet("QToolButton\n"
+"{\n"
+"    padding: 0;\n"
+"    font-family: \'Inter\';\n"
+"    font-weight: 400;\n"
+"    font-size: 20px;\n"
+"    color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 255), stop:1 rgba(121, 201, 202, 255));\n"
+"    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 35), stop:1 rgba(121, 201, 202, 35));\n"
+"    border: 1px solid #C4C4C4;\n"
+"    border-radius: 16px;\n"
+"}\n"
+"\n"
+"QToolButton::hover\n"
+"{\n"
+"    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 50), stop:1 rgba(121, 201, 202, 50));\n"
+"    border: 1px solid #C4C4C4;\n"
+"}\n"
+"\n"
+"QToolButton::pressed\n"
+"{\n"
+"    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 70), stop:1 rgba(121, 201, 202, 70));\n"
+"}")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/icons/icons/merge.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_merge.setIcon(icon1)
+        self.btn_merge.setIconSize(QtCore.QSize(100, 100))
+        self.btn_merge.setChecked(False)
+        self.btn_merge.setToolButtonStyle(QtCore.Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+        self.btn_merge.setObjectName("btn_merge")
+        self.reg_merge_lt.addWidget(self.btn_merge, 1, 1, 1, 1)
+        self.reg_title = QtWidgets.QLabel(self.tools)
+        self.reg_title.setStyleSheet("QLabel \n"
+"{\n"
+"    font-family: \'Inter\';\n"
+"    font-weight: 400;\n"
+"    font-size: 20px;\n"
+"    color: #000000;\n"
+"    border: 0;\n"
+"    text-align: left;\n"
+"}")
+        self.reg_title.setObjectName("reg_title")
+        self.reg_merge_lt.addWidget(self.reg_title, 0, 0, 1, 1)
+        self.reg_list = QtWidgets.QListWidget(self.tools)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.reg_list.sizePolicy().hasHeightForWidth())
+        self.reg_list.setSizePolicy(sizePolicy)
+        self.reg_list.setMinimumSize(QtCore.QSize(0, 150))
+        self.reg_list.setMaximumSize(QtCore.QSize(16777215, 150))
+        self.reg_list.setStyleSheet("QListWidget\n"
+"{\n"
+"    padding: 5px;\n"
+"    font-family: \'JetBrains Mono\';\n"
+"    font-size: 16px;\n"
+"    border: 1px solid #C4C4C4;\n"
+"    border-radius: 16px;\n"
+"}\n"
+"\n"
+"QListWidget::item\n"
+"{\n"
+"    border-bottom: 1px solid #C4C4C4;\n"
+"    selection-color: rgb(7, 119, 164);\n"
+"    selection-background-color: rgb(0, 0, 0);\n"
+"}")
+        self.reg_list.setDragDropMode(QtWidgets.QAbstractItemView.DragDropMode.InternalMove)
+        self.reg_list.setObjectName("reg_list")
+        item = QtWidgets.QListWidgetItem()
+        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
+        brush.setStyle(QtCore.Qt.BrushStyle.NoBrush)
+        item.setForeground(brush)
+        item.setCheckState(QtCore.Qt.CheckState.Unchecked)
+        self.reg_list.addItem(item)
+        item = QtWidgets.QListWidgetItem()
+        item.setCheckState(QtCore.Qt.CheckState.Unchecked)
+        self.reg_list.addItem(item)
+        item = QtWidgets.QListWidgetItem()
+        item.setCheckState(QtCore.Qt.CheckState.Unchecked)
+        self.reg_list.addItem(item)
+        self.reg_merge_lt.addWidget(self.reg_list, 1, 0, 1, 1)
+        self.verticalLayout_6.addLayout(self.reg_merge_lt)
+        self.exp_new_lt = QtWidgets.QGridLayout()
+        self.exp_new_lt.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetDefaultConstraint)
+        self.exp_new_lt.setSpacing(15)
+        self.exp_new_lt.setObjectName("exp_new_lt")
+        self.btn_exp_hex = QtWidgets.QPushButton(self.tools)
+        self.btn_exp_hex.setMinimumSize(QtCore.QSize(0, 50))
+        self.btn_exp_hex.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.btn_exp_hex.setStyleSheet("QPushButton\n"
 "{\n"
 "    font-family: \'Inter\';\n"
 "    font-weight: 400;\n"
 "    font-size: 18px;\n"
-"    background-color: #fff;\n"
+"    color: #77A4D3;\n"
+"    background-color: rgba(119, 164, 211, 0.1);\n"
 "    border: 1px solid #C4C4C4;\n"
 "    border-radius: 16px;\n"
+"    padding: 0 15px 0 15px;\n"
+"}\n"
+"\n"
+"QPushButton::hover\n"
+"{\n"
+"    background-color: rgba(119, 164, 211, 0.2);\n"
+"    border: 1px solid #C4C4C4;\n"
+"}\n"
+"\n"
+"QPushButton::pressed\n"
+"{\n"
+"    background-color: rgba(119, 164, 211, 0.3);\n"
+"}")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/icons/icons/0x0.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_exp_hex.setIcon(icon2)
+        self.btn_exp_hex.setIconSize(QtCore.QSize(48, 48))
+        self.btn_exp_hex.setObjectName("btn_exp_hex")
+        self.exp_new_lt.addWidget(self.btn_exp_hex, 1, 1, 1, 1)
+        self.btn_exp_bin = QtWidgets.QPushButton(self.tools)
+        self.btn_exp_bin.setMinimumSize(QtCore.QSize(0, 50))
+        self.btn_exp_bin.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.btn_exp_bin.setStyleSheet("QPushButton\n"
+"{\n"
+"    font-family: \'Inter\';\n"
+"    font-weight: 400;\n"
+"    font-size: 18px;\n"
+"    color: #79C9CA;\n"
+"    background-color: rgba(121, 201, 202, 0.1);\n"
+"    border: 1px solid #C4C4C4;\n"
+"    border-radius: 16px;\n"
+"    padding: 0 15px 0 15px;\n"
 "}\n"
 "\n"
 "QPushButton::hover\n"
@@ -367,11 +383,189 @@ class Ui_Main(object):
 "{\n"
 "    background-color: rgba(121, 201, 202, 0.3);\n"
 "}")
-        self.btn_export_hex_2.setIconSize(QtCore.QSize(50, 50))
-        self.btn_export_hex_2.setObjectName("btn_export_hex_2")
-        self.btn_export_hex_3 = QtWidgets.QPushButton(self.editor)
-        self.btn_export_hex_3.setGeometry(QtCore.QRect(220, 70, 180, 51))
-        self.btn_export_hex_3.setStyleSheet("QPushButton\n"
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(":/icons/icons/101.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btn_exp_bin.setIcon(icon3)
+        self.btn_exp_bin.setIconSize(QtCore.QSize(48, 48))
+        self.btn_exp_bin.setObjectName("btn_exp_bin")
+        self.exp_new_lt.addWidget(self.btn_exp_bin, 1, 2, 1, 1)
+        self.export_title = QtWidgets.QLabel(self.tools)
+        self.export_title.setStyleSheet("QLabel \n"
+"{\n"
+"    font-family: \'Inter\';\n"
+"    font-weight: 400;\n"
+"    font-size: 20px;\n"
+"    color: #000000;\n"
+"    border: 0;\n"
+"    text-align: left;\n"
+"}")
+        self.export_title.setObjectName("export_title")
+        self.exp_new_lt.addWidget(self.export_title, 0, 1, 1, 1)
+        self.btn_new_reg = QtWidgets.QPushButton(self.tools)
+        self.btn_new_reg.setMinimumSize(QtCore.QSize(0, 50))
+        self.btn_new_reg.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.btn_new_reg.setStyleSheet("QPushButton\n"
+"{\n"
+"    font-family: \'Inter\';\n"
+"    font-weight: 400;\n"
+"    font-size: 18px;\n"
+"    background-color: #fff;\n"
+"    border: 1px solid #C4C4C4;\n"
+"    border-radius: 16px;\n"
+"}\n"
+"\n"
+"QPushButton::hover\n"
+"{\n"
+"    background-color: rgba(196, 196, 196, 0.125);\n"
+"}\n"
+"\n"
+"QPushButton::pressed\n"
+"{\n"
+"    background-color: rgba(196, 196, 196, 0.25);\n"
+"}")
+        self.btn_new_reg.setIconSize(QtCore.QSize(50, 50))
+        self.btn_new_reg.setObjectName("btn_new_reg")
+        self.exp_new_lt.addWidget(self.btn_new_reg, 1, 3, 1, 1)
+        self.new_reg_title = QtWidgets.QLabel(self.tools)
+        self.new_reg_title.setStyleSheet("QLabel \n"
+"{\n"
+"    font-family: \'Inter\';\n"
+"    font-weight: 400;\n"
+"    font-size: 20px;\n"
+"    color: #000000;\n"
+"    border: 0;\n"
+"    text-align: left;\n"
+"}")
+        self.new_reg_title.setObjectName("new_reg_title")
+        self.exp_new_lt.addWidget(self.new_reg_title, 0, 3, 1, 1)
+        self.verticalLayout_6.addLayout(self.exp_new_lt)
+        self.left_lt.addWidget(self.tools)
+        self.message = QtWidgets.QFrame(self.main_frame_lt)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.message.sizePolicy().hasHeightForWidth())
+        self.message.setSizePolicy(sizePolicy)
+        self.message.setStyleSheet("QFrame\n"
+"{\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    border: 0;\n"
+"}")
+        self.message.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
+        self.message.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
+        self.message.setObjectName("message")
+        self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.message)
+        self.verticalLayout_7.setObjectName("verticalLayout_7")
+        self.message_title = QtWidgets.QLabel(self.message)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.message_title.sizePolicy().hasHeightForWidth())
+        self.message_title.setSizePolicy(sizePolicy)
+        self.message_title.setStyleSheet("QLabel \n"
+"{\n"
+"    font-family: \'Inter\';\n"
+"    font-weight: 700;\n"
+"    font-size: 32px;\n"
+"    color: #000000;\n"
+"    border: 0;\n"
+"    text-align: left;\n"
+"}")
+        self.message_title.setObjectName("message_title")
+        self.verticalLayout_7.addWidget(self.message_title)
+        self.message_label = QtWidgets.QLabel(self.message)
+        self.message_label.setStyleSheet("QLabel \n"
+"{\n"
+"    font-family: \'Inter\';\n"
+"    font-weight: 400;\n"
+"    font-size: 20px;\n"
+"    color: #000000;\n"
+"    border: 0;\n"
+"    text-align: left;\n"
+"}")
+        self.message_label.setObjectName("message_label")
+        self.verticalLayout_7.addWidget(self.message_label)
+        self.left_lt.addWidget(self.message)
+        self.horizontalLayout_3.addLayout(self.left_lt)
+        self.right_lt = QtWidgets.QVBoxLayout()
+        self.right_lt.setContentsMargins(0, 0, -1, -1)
+        self.right_lt.setSpacing(15)
+        self.right_lt.setObjectName("right_lt")
+        self.editor = QtWidgets.QFrame(self.main_frame_lt)
+        self.editor.setStyleSheet("QFrame\n"
+"{\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    border: 0;\n"
+"}")
+        self.editor.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
+        self.editor.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
+        self.editor.setObjectName("editor")
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.editor)
+        self.verticalLayout_4.setContentsMargins(15, 15, 15, 15)
+        self.verticalLayout_4.setSpacing(15)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.editor_title = QtWidgets.QLabel(self.editor)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.editor_title.sizePolicy().hasHeightForWidth())
+        self.editor_title.setSizePolicy(sizePolicy)
+        self.editor_title.setStyleSheet("QLabel \n"
+"{\n"
+"    font-family: \'Inter\';\n"
+"    font-weight: 700;\n"
+"    font-size: 32px;\n"
+"    color: #000000;\n"
+"    border: 0;\n"
+"    text-align: left;\n"
+"}")
+        self.editor_title.setObjectName("editor_title")
+        self.verticalLayout_4.addWidget(self.editor_title)
+        self.save_del_lt = QtWidgets.QHBoxLayout()
+        self.save_del_lt.setSpacing(15)
+        self.save_del_lt.setObjectName("save_del_lt")
+        self.btn_save = QtWidgets.QPushButton(self.editor)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_save.sizePolicy().hasHeightForWidth())
+        self.btn_save.setSizePolicy(sizePolicy)
+        self.btn_save.setMinimumSize(QtCore.QSize(200, 50))
+        self.btn_save.setMaximumSize(QtCore.QSize(16777215, 50))
+        self.btn_save.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.btn_save.setStyleSheet("QPushButton\n"
+"{\n"
+"    font-family: \'Inter\';\n"
+"    font-weight: 400;\n"
+"    font-size: 18px;\n"
+"    background-color: #fff;\n"
+"    border: 1px solid #C4C4C4;\n"
+"    border-radius: 16px;\n"
+"}\n"
+"\n"
+"QPushButton::hover\n"
+"{\n"
+"    background-color: rgba(196, 196, 196, 0.125);\n"
+"}\n"
+"\n"
+"QPushButton::pressed\n"
+"{\n"
+"    background-color: rgba(196, 196, 196, 0.25);\n"
+"}")
+        self.btn_save.setIconSize(QtCore.QSize(50, 50))
+        self.btn_save.setObjectName("btn_save")
+        self.save_del_lt.addWidget(self.btn_save)
+        self.btn_del = QtWidgets.QPushButton(self.editor)
+        self.btn_del.setEnabled(True)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_del.sizePolicy().hasHeightForWidth())
+        self.btn_del.setSizePolicy(sizePolicy)
+        self.btn_del.setMinimumSize(QtCore.QSize(200, 50))
+        self.btn_del.setMaximumSize(QtCore.QSize(16777215, 50))
+        self.btn_del.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.btn_del.setStyleSheet("QPushButton\n"
 "{\n"
 "    font-family: \'Inter\';\n"
 "    font-weight: 400;\n"
@@ -394,73 +588,202 @@ class Ui_Main(object):
 "    color: rgb(229, 46, 46);\n"
 "    background-color: rgba(229, 46, 46, 0.15);\n"
 "}")
-        self.btn_export_hex_3.setIconSize(QtCore.QSize(50, 50))
-        self.btn_export_hex_3.setObjectName("btn_export_hex_3")
-        self.frame = QtWidgets.QFrame(self.editor)
-        self.frame.setGeometry(QtCore.QRect(30, 180, 421, 271))
-        self.frame.setStyleSheet("QFrame {\n"
-"    background-color: #FAFAFA;\n"
+        self.btn_del.setIconSize(QtCore.QSize(50, 50))
+        self.btn_del.setObjectName("btn_del")
+        self.save_del_lt.addWidget(self.btn_del)
+        self.verticalLayout_4.addLayout(self.save_del_lt)
+        self.tabWidget = QtWidgets.QTabWidget(self.editor)
+        self.tabWidget.setMinimumSize(QtCore.QSize(500, 0))
+        self.tabWidget.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.tabWidget.setStyleSheet("QTabWiget\n"
+"{\n"
+"    font-family: \'Inter\';\n"
+"}\n"
+"\n"
+"QTabWidget::tab-bar\n"
+"{\n"
+"    min-width: 1000;\n"
+"}\n"
+"\n"
+"QTabBar::tab\n"
+"{\n"
+"    font-family: \'Inter\';\n"
+"    font-size: 16px;\n"
+"    color: rgb(7, 119, 164);\n"
+"    height: 30px;\n"
+"    border-radius: 16px;\n"
+"    border: 1px solid #C4C4C4;\n"
+"}\n"
+"\n"
+"QTabBar::tab:hover\n"
+"{\n"
+"    background-color: rgba(7, 119, 164, 0.1);\n"
+"}\n"
+"\n"
+"QTabBar::tab:selected\n"
+"{\n"
+"    background-color: rgba(7, 119, 164, 0.15);\n"
+"}\n"
+"\n"
+"QTabWidget::pane\n"
+"{ \n"
 "    border: 0;\n"
+"}\n"
+"\n"
+"")
+        self.tabWidget.setObjectName("tabWidget")
+        self.tab_hex = QtWidgets.QWidget()
+        self.tab_hex.setStyleSheet("")
+        self.tab_hex.setObjectName("tab_hex")
+        self.gridLayout = QtWidgets.QGridLayout(self.tab_hex)
+        self.gridLayout.setContentsMargins(0, 15, 0, 0)
+        self.gridLayout.setSpacing(5)
+        self.gridLayout.setObjectName("gridLayout")
+        self.text_ofs_reg = QtWidgets.QPlainTextEdit(self.tab_hex)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.text_ofs_reg.sizePolicy().hasHeightForWidth())
+        self.text_ofs_reg.setSizePolicy(sizePolicy)
+        self.text_ofs_reg.setMaximumSize(QtCore.QSize(65, 35))
+        self.text_ofs_reg.setStyleSheet("QPlainTextEdit\n"
+"{\n"
+"    font-family: \'JetBrains Mono\';\n"
+"    font-weight: 400;\n"
+"    font-size: 18px;\n"
+"    color: #77A4D3;\n"
+"    border: 1px solid #C4C4C4;\n"
+"    border-radius: 16px;\n"
+"    background-color: rgba(119, 164, 211, 0.25);\n"
+"    padding: 5px;\n"
 "}")
-        self.frame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
-        self.frame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
-        self.frame.setObjectName("frame")
-        self.textEdit = QtWidgets.QTextEdit(self.frame)
-        self.textEdit.setGeometry(QtCore.QRect(0, 0, 111, 271))
-        self.textEdit.setStyleSheet("QTextEdit {\n"
+        self.text_ofs_reg.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.text_ofs_reg.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.text_ofs_reg.setOverwriteMode(False)
+        self.text_ofs_reg.setObjectName("text_ofs_reg")
+        self.gridLayout.addWidget(self.text_ofs_reg, 0, 0, 1, 1)
+        self.hex_data_plainTextEdit = QtWidgets.QPlainTextEdit(self.tab_hex)
+        self.hex_data_plainTextEdit.setMinimumSize(QtCore.QSize(400, 0))
+        self.hex_data_plainTextEdit.setStyleSheet("QPlainTextEdit\n"
+"{\n"
+"    font-family: \'JetBrains Mono\';\n"
+"    font-weight: 400;\n"
+"    font-size: 18px;\n"
+"    border: 1px solid #C4C4C4;\n"
+"    border-radius: 16px;\n"
+"    padding: 5px;\n"
+"    background-color: #FAFAFA;\n"
+"}")
+        self.hex_data_plainTextEdit.setObjectName("hex_data_plainTextEdit")
+        self.gridLayout.addWidget(self.hex_data_plainTextEdit, 1, 1, 1, 1)
+        self.lable_ofs_and_file = QtWidgets.QLabel(self.tab_hex)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.lable_ofs_and_file.sizePolicy().hasHeightForWidth())
+        self.lable_ofs_and_file.setSizePolicy(sizePolicy)
+        self.lable_ofs_and_file.setStyleSheet("QLabel \n"
+"{\n"
+"    font-family: \'Inter\';\n"
+"    font-weight: 500;\n"
+"    font-size: 16px;\n"
+"    color: rgba(0, 0, 0, 50%);\n"
+"    border: 0;\n"
+"    text-align: left;\n"
+"}")
+        self.lable_ofs_and_file.setObjectName("lable_ofs_and_file")
+        self.gridLayout.addWidget(self.lable_ofs_and_file, 0, 1, 1, 1)
+        self.hex_adr_plainTextEdit = QtWidgets.QPlainTextEdit(self.tab_hex)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Maximum, QtWidgets.QSizePolicy.Policy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.hex_adr_plainTextEdit.sizePolicy().hasHeightForWidth())
+        self.hex_adr_plainTextEdit.setSizePolicy(sizePolicy)
+        self.hex_adr_plainTextEdit.setMinimumSize(QtCore.QSize(65, 0))
+        self.hex_adr_plainTextEdit.setMaximumSize(QtCore.QSize(65, 16777215))
+        self.hex_adr_plainTextEdit.setStyleSheet("QPlainTextEdit\n"
+"{\n"
 "    font-family: \'JetBrains Mono\';\n"
 "    font-weight: 400;\n"
 "    font-size: 18px;\n"
 "    color: #009C93;\n"
-"\n"
 "    border: 1px solid #C4C4C4;\n"
 "    border-radius: 16px;\n"
 "    background-color: rgba(0, 156, 147, 0.1);\n"
-"\n"
 "    padding: 5px;\n"
 "}")
-        self.textEdit.setObjectName("textEdit")
-        self.mes = QtWidgets.QFrame(self.main_frame)
-        self.mes.setGeometry(QtCore.QRect(20, 600, 680, 51))
-        self.mes.setStyleSheet("QFrame\n"
+        self.hex_adr_plainTextEdit.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.hex_adr_plainTextEdit.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.hex_adr_plainTextEdit.setObjectName("hex_adr_plainTextEdit")
+        self.gridLayout.addWidget(self.hex_adr_plainTextEdit, 1, 0, 1, 1)
+        self.tabWidget.addTab(self.tab_hex, "")
+        self.tab_bin = QtWidgets.QWidget()
+        self.tab_bin.setStyleSheet("")
+        self.tab_bin.setObjectName("tab_bin")
+        self.gridLayout_2 = QtWidgets.QGridLayout(self.tab_bin)
+        self.gridLayout_2.setContentsMargins(0, 15, 0, 0)
+        self.gridLayout_2.setSpacing(0)
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.bin_plainTextEdit = QtWidgets.QPlainTextEdit(self.tab_bin)
+        self.bin_plainTextEdit.setStyleSheet("QPlainTextEdit\n"
 "{\n"
-"    background-color: rgb(255, 255, 255);\n"
-"    border: 0;\n"
+"    font-family: \'JetBrains Mono\';\n"
+"    font-weight: 400;\n"
+"    font-size: 18px;\n"
+"    border: 1px solid #C4C4C4;\n"
+"    border-radius: 16px;\n"
+"    padding: 5px;\n"
+"    background-color: #FAFAFA;\n"
 "}")
-        self.mes.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
-        self.mes.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
-        self.mes.setObjectName("mes")
-        self.name_prj = QtWidgets.QLabel(self.centralwidget)
-        self.name_prj.setGeometry(QtCore.QRect(20, 10, 1031, 45))
-        self.name_prj.setStyleSheet("font-family: \'Inter\';\n"
-"font-style: normal;\n"
-"font-weight: 700;\n"
-"font-size: 40px;\n"
-"color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(7, 119, 164, 206));")
-        self.name_prj.setObjectName("name_prj")
+        self.bin_plainTextEdit.setObjectName("bin_plainTextEdit")
+        self.gridLayout_2.addWidget(self.bin_plainTextEdit, 0, 0, 1, 1)
+        self.tabWidget.addTab(self.tab_bin, "")
+        self.verticalLayout_4.addWidget(self.tabWidget)
+        self.right_lt.addWidget(self.editor)
+        self.horizontalLayout_3.addLayout(self.right_lt)
+        self.main_lt.addWidget(self.main_frame_lt)
         Main.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(Main)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Main)
 
     def retranslateUi(self, Main):
         _translate = QtCore.QCoreApplication.translate
         Main.setWindowTitle(_translate("Main", "HEX files tools"))
-        self.tools_title.setText(_translate("Main", "Инструменты"))
-        self.export_min_title.setText(_translate("Main", "Экспорт"))
-        self.btn_export_hex.setText(_translate("Main", "        в bin"))
-        self.btn_export_bin.setText(_translate("Main", "        в hex"))
-        self.btn_merge.setText(_translate("Main", "Объединить"))
-        self.export_min_title_2.setText(_translate("Main", "Добавить"))
-        self.btn_export_hex_5.setText(_translate("Main", "Добавить"))
-        self.export_min_title_3.setText(_translate("Main", "Регионы hex-файлов"))
-        self.files_title.setText(_translate("Main", "Файлы"))
-        self.btn_files_1.setText(_translate("Main", "Добавить"))
-        self.btn_files_2.setText(_translate("Main", "Добавить"))
-        self.btn_files_3.setText(_translate("Main", "Добавить"))
-        self.btn_files_4.setText(_translate("Main", "Добавить"))
-        self.btn_files_5.setText(_translate("Main", "Добавить"))
-        self.tools_title_2.setText(_translate("Main", "Редактор"))
-        self.btn_export_hex_2.setText(_translate("Main", "Сохранить"))
-        self.btn_export_hex_3.setText(_translate("Main", "Удалить"))
         self.name_prj.setText(_translate("Main", "Инструментарий для работы с HEX-файлами"))
+        self.files_title.setText(_translate("Main", "Файлы"))
+        self.btn_file_1.setText(_translate("Main", "Добавить"))
+        self.btn_file_2.setText(_translate("Main", "Добавить"))
+        self.btn_file_3.setText(_translate("Main", "Добавить"))
+        self.btn_file_4.setText(_translate("Main", "Добавить"))
+        self.btn_file_4.setShortcut(_translate("Main", "Ctrl+S"))
+        self.btn_file_5.setText(_translate("Main", "Добавить"))
+        self.tools_title.setText(_translate("Main", "Инструменты"))
+        self.btn_merge.setText(_translate("Main", "Объединить"))
+        self.btn_merge.setShortcut(_translate("Main", "Ctrl+M"))
+        self.reg_title.setText(_translate("Main", "Регионы hex-файлов"))
+        __sortingEnabled = self.reg_list.isSortingEnabled()
+        self.reg_list.setSortingEnabled(False)
+        item = self.reg_list.item(0)
+        item.setText(_translate("Main", "0x0800 | code.hex"))
+        item = self.reg_list.item(1)
+        item.setText(_translate("Main", "0x0801 | code.hex"))
+        item = self.reg_list.item(2)
+        item.setText(_translate("Main", "0x0810 | code.hex"))
+        self.reg_list.setSortingEnabled(__sortingEnabled)
+        self.btn_exp_hex.setText(_translate("Main", "в hex"))
+        self.btn_exp_bin.setText(_translate("Main", "в bin"))
+        self.export_title.setText(_translate("Main", "Экспорт"))
+        self.btn_new_reg.setText(_translate("Main", "Добавить"))
+        self.new_reg_title.setText(_translate("Main", "Добавить новый регион"))
+        self.message_title.setText(_translate("Main", "Сообщения"))
+        self.message_label.setText(_translate("Main", "Тут будут результаты работы"))
+        self.editor_title.setText(_translate("Main", "Редактор"))
+        self.btn_save.setText(_translate("Main", "Сохранить"))
+        self.btn_save.setShortcut(_translate("Main", "Ctrl+S"))
+        self.btn_del.setText(_translate("Main", "Удалить"))
+        self.btn_del.setShortcut(_translate("Main", "Ctrl+D"))
+        self.lable_ofs_and_file.setText(_translate("Main", "Смещение региона, файла code.hex"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_hex), _translate("Main", "hex"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_bin), _translate("Main", "bin"))

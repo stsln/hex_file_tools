@@ -346,9 +346,6 @@ QToolButton::pressed
                   <height>60</height>
                  </size>
                 </property>
-                <property name="shortcut">
-                 <string>Ctrl+S</string>
-                </property>
                 <property name="checked">
                  <bool>false</bool>
                 </property>
