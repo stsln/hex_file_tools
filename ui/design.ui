@@ -1104,7 +1104,7 @@ QTabWidget::tab-bar
 QTabBar::tab
 {
 	font-family: 'Inter';
-	font-size: 15px;
+	font-size: 16px;
 	color: rgb(7, 119, 164);
 	height: 30px;
     border-radius: 16px;
@@ -1129,7 +1129,7 @@ QTabWidget::pane
 </string>
               </property>
               <property name="currentIndex">
-               <number>1</number>
+               <number>0</number>
               </property>
               <widget class="QWidget" name="tab_hex">
                <property name="styleSheet">
@@ -1193,7 +1193,7 @@ QTabWidget::pane
                  </widget>
                 </item>
                 <item row="1" column="1">
-                 <widget class="QPlainTextEdit" name="plainTextEdit_2">
+                 <widget class="QPlainTextEdit" name="hex_data_plainTextEdit">
                   <property name="minimumSize">
                    <size>
                     <width>400</width>
@@ -1215,7 +1215,7 @@ QTabWidget::pane
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QLabel" name="label">
+                 <widget class="QLabel" name="lable_ofs_and_file">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -1239,7 +1239,7 @@ QTabWidget::pane
                  </widget>
                 </item>
                 <item row="1" column="0">
-                 <widget class="QPlainTextEdit" name="plainTextEdit">
+                 <widget class="QPlainTextEdit" name="hex_adr_plainTextEdit">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -1288,17 +1288,26 @@ QTabWidget::pane
                <attribute name="title">
                 <string>bin</string>
                </attribute>
-               <widget class="QPlainTextEdit" name="plainTextEdit_3">
-                <property name="geometry">
-                 <rect>
-                  <x>10</x>
-                  <y>10</y>
-                  <width>471</width>
-                  <height>471</height>
-                 </rect>
+               <layout class="QGridLayout" name="gridLayout_2">
+                <property name="leftMargin">
+                 <number>0</number>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">QPlainTextEdit
+                <property name="topMargin">
+                 <number>15</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QPlainTextEdit" name="bin_plainTextEdit">
+                  <property name="styleSheet">
+                   <string notr="true">QPlainTextEdit
 {
 	font-family: 'JetBrains Mono';
 	font-weight: 400;
@@ -1308,8 +1317,10 @@ QTabWidget::pane
 	padding: 5px;
 	background-color: #FAFAFA;
 }</string>
-                </property>
-               </widget>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </widget>
             </item>
