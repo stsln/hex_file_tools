@@ -757,7 +757,6 @@ class Ui_Main(object):
         self.btn_file_2.setText(_translate("Main", "Добавить"))
         self.btn_file_3.setText(_translate("Main", "Добавить"))
         self.btn_file_4.setText(_translate("Main", "Добавить"))
-        self.btn_file_4.setShortcut(_translate("Main", "Ctrl+S"))
         self.btn_file_5.setText(_translate("Main", "Добавить"))
         self.tools_title.setText(_translate("Main", "Инструменты"))
         self.btn_merge.setText(_translate("Main", "Объединить"))
