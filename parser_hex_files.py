@@ -53,28 +53,31 @@ class ParserHex:
     def __init__(self):
         self.data_hex_list = {}
 
-    def processing(self, list_name_hex_files: list):
+    def processing(self, hex_files_list: dict) -> tuple[bool, str]:
         """
         Function processing of hex files for availability and
         corruption or upon successful opening parsing data
+        :param hex_files_list: list of files with name and path
+        :return: flag_err: True - files successful, False - saving error
+                 mes_err: error message
         """
         self.data_hex_list.clear()
+        flag_err, mes_err = False, 'Файл обработан'
 
-        for name_hex_file in list_name_hex_files:
-            print('Processing file ' + name_hex_file + '.hex')
+        for file_name, file_path in hex_files_list.items():
             try:
-                data_hex_file = open(name_hex_file + '.hex', 'r')
-                print('File has been successfully opened for processing.')
+                data_hex_file = open(file_path, 'r')
                 regions_hex_file = parser_data_hex_line.RegionsList()
                 if processing_file_line_by_line(data_hex_file, regions_hex_file):
-                    self.data_hex_list[name_hex_file] = regions_hex_file
-                    print('File has been processed successfully.\n')
+                    self.data_hex_list[file_name] = regions_hex_file
                 else:
-                    print('Further processing of the file is impossible - the file is damaged!')
+                    flag_err, mes = True, 'Файл поврежден'
                 data_hex_file.close()
             except FileNotFoundError:
-                print('File not found!\n')
+                flag_err, mes = True, 'Файл не найден'
                 continue
+
+        return flag_err, mes_err
 
     def get_adr_reg(self) -> dict:
         """

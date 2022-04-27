@@ -2,13 +2,13 @@ import os
 import sys
 
 from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog, QListWidgetItem
-from PyQt6 import QtCore
+from PyQt6 import QtCore, uic
 from PyQt6.QtGui import QFontDatabase
 
 import parser_hex_files
 from ui.design import Ui_Main
 
-name_hex_files = []
+hex_files = {}
 data_hex = parser_hex_files.ParserHex()
 
 
@@ -23,11 +23,11 @@ class Main(QMainWindow):
         QFontDatabase.addApplicationFont('ui/fonts/JetBrainsMono-Regular.ttf')
 
         # buttons file
-        self.ui.btn_file_1.clicked.connect(lambda: self.add_file())
-        self.ui.btn_file_2.clicked.connect(lambda: self.add_file())
-        self.ui.btn_file_3.clicked.connect(lambda: self.add_file())
-        self.ui.btn_file_4.clicked.connect(lambda: self.add_file())
-        self.ui.btn_file_5.clicked.connect(lambda: self.add_file())
+        self.ui.btn_file_1.clicked.connect(lambda: self.choose_file())
+        self.ui.btn_file_2.clicked.connect(lambda: self.choose_file())
+        self.ui.btn_file_3.clicked.connect(lambda: self.choose_file())
+        self.ui.btn_file_4.clicked.connect(lambda: self.choose_file())
+        self.ui.btn_file_5.clicked.connect(lambda: self.choose_file())
 
         # button merge
         self.ui.btn_merge.clicked.connect(lambda: self.merge())
@@ -44,40 +44,32 @@ class Main(QMainWindow):
         # regions list
         self.ui.reg_list.clicked.connect(lambda: self.edit_reg())
 
-    def add_file(self):
-        name_btn_file = ['btn_file_1', 'btn_file_2', 'btn_file_3', 'btn_file_4', 'btn_file_5']
+    def choose_file(self):
+        object_name_btn = ['btn_file_1', 'btn_file_2', 'btn_file_3', 'btn_file_4', 'btn_file_5']
         btn_file = self.sender()
 
-        if btn_file.objectName() in name_btn_file:
-            file_name = os.path.basename(QFileDialog.getOpenFileName(filter='*.hex')[0])[0:-4]
-            if file_name in name_hex_files:
-                self.ui.message_label.setText(file_name + ' уже добавлен.')
+        if btn_file.objectName() in object_name_btn:
+            file_path = QFileDialog.getOpenFileName(filter='*.hex')[0]
+            file_name = os.path.basename(file_path)[0:-4]
+            if file_name in hex_files.keys():
+                self.ui.message_label.setText(file_name + ' уже добавлен')
             else:
                 if file_name:
-                    if btn_file.text() != 'Добавить':
-                        name_hex_files.remove(btn_file.text())
-                    name_hex_files.append(file_name)
-                    btn_file.setText(file_name)
-                    self.ui.message_label.setText(file_name + ' успешно добавлен.')
-                else:
-                    self.ui.message_label.setText('Отмена добавления')
+                    hex_files[file_name] = file_path
 
-        data_hex.processing(name_hex_files)
-        reg_lists = data_hex.get_adr_reg()
-        self.ui.reg_list.clear()
-        for key_name, reg_list in reg_lists.items():
-            for item in reg_list:
-                item_list = QListWidgetItem()
-                item_list.setCheckState(QtCore.Qt.CheckState.Unchecked)
-                item_list.setText(item + ' | ' + key_name)
-                self.ui.reg_list.addItem(item_list)
+                    flag_err, mes_err = data_hex.processing(hex_files)
+                    self.ui.message_label.setText(mes_err)
+                    if flag_err:
+                        del hex_files[file_name]
+                    else:
+                        if btn_file.text() != 'Добавить':
+                            del hex_files[btn_file.text()]
+                            del data_hex.data_hex_list[btn_file.text()]
+                        btn_file.setText(file_name)
+                        self.update_list_widget()
 
     def merge(self):
         pass
-
-    @staticmethod
-    def processing(self):
-        data_hex.processing(name_hex_files)
 
     def save(self):
         text = self.ui.hex_data_plainTextEdit.toPlainText()
@@ -100,6 +92,20 @@ class Main(QMainWindow):
             self.ui.hex_adr_plainTextEdit.setPlainText(load_ofs_adr)
             self.ui.hex_data_plainTextEdit.setPlainText(reg_data)
             self.ui.lable_ofs_and_file.setText('Смещение региона, файла ' + hex_name)
+
+    def update_list_widget(self):
+        regs_list = data_hex.get_adr_reg()
+        self.ui.reg_list.clear()
+        for name_file, reg_list in regs_list.items():
+            for reg_adr in reg_list:
+                item_list = QListWidgetItem()
+                item_list.setCheckState(QtCore.Qt.CheckState.Unchecked)
+                item_list.setText(reg_adr + ' | ' + name_file)
+                self.ui.reg_list.addItem(item_list)
+
+    @staticmethod
+    def update_data():
+        return data_hex.processing(hex_files)
 
 
 if __name__ == "__main__":
