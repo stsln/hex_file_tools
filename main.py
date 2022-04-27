@@ -41,6 +41,9 @@ class Main(QMainWindow):
         self.ui.btn_save.clicked.connect(lambda: self.save())
         self.ui.btn_del.clicked.connect(lambda: self.delete())
 
+        # regions list
+        self.ui.reg_list.clicked.connect(lambda: self.edit_reg())
+
     def add_file(self):
         name_btn_file = ['btn_file_1', 'btn_file_2', 'btn_file_3', 'btn_file_4', 'btn_file_5']
         btn_file = self.sender()
@@ -60,10 +63,14 @@ class Main(QMainWindow):
                     self.ui.message_label.setText('Отмена добавления')
 
         data_hex.processing(name_hex_files)
-        reg_list = data_hex.get_adr_reg()
-        for key, list in reg_list.items():
-            for item in list:
-                self.ui.reg_list.addItem(item + ' | ' + key)
+        reg_lists = data_hex.get_adr_reg()
+        self.ui.reg_list.clear()
+        for key_name, reg_list in reg_lists.items():
+            for item in reg_list:
+                item_list = QListWidgetItem()
+                item_list.setCheckState(QtCore.Qt.CheckState.Unchecked)
+                item_list.setText(item + ' | ' + key_name)
+                self.ui.reg_list.addItem(item_list)
 
     def merge(self):
         pass
@@ -83,6 +90,16 @@ class Main(QMainWindow):
 
     def new_reg(self):
         pass
+
+    def edit_reg(self):
+        current_item = self.ui.reg_list.currentItem().text()
+        if current_item:
+            reg_adr, hex_name = current_item.split('|')
+            reg_adr, load_ofs_adr, reg_data = data_hex.data_hex_list[hex_name[1:]].reg_list[reg_adr[:-1]].get_hex_editor()
+            self.ui.text_ofs_reg.setPlainText(reg_adr)
+            self.ui.hex_adr_plainTextEdit.setPlainText(load_ofs_adr)
+            self.ui.hex_data_plainTextEdit.setPlainText(reg_data)
+            self.ui.lable_ofs_and_file.setText('Смещение региона, файла ' + hex_name)
 
 
 if __name__ == "__main__":
