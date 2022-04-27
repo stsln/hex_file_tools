@@ -2,7 +2,7 @@ import os
 import sys
 
 from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog, QListWidgetItem
-from PyQt6 import QtCore, uic
+from PyQt6 import QtCore
 from PyQt6.QtGui import QFontDatabase
 
 import parser_hex_files
@@ -42,7 +42,7 @@ class Main(QMainWindow):
         self.ui.btn_del.clicked.connect(lambda: self.delete())
 
         # regions list
-        self.ui.reg_list.clicked.connect(lambda: self.edit_reg())
+        self.ui.reg_list.clicked.connect(lambda: self.fill_editor())
 
     def choose_file(self):
         object_name_btn = ['btn_file_1', 'btn_file_2', 'btn_file_3', 'btn_file_4', 'btn_file_5']
@@ -56,9 +56,9 @@ class Main(QMainWindow):
             else:
                 if file_name:
                     hex_files[file_name] = file_path
-
                     flag_err, mes_err = data_hex.processing(hex_files)
                     self.ui.message_label.setText(mes_err)
+
                     if flag_err:
                         del hex_files[file_name]
                     else:
@@ -69,13 +69,25 @@ class Main(QMainWindow):
                         self.update_list_widget()
 
     def merge(self):
-        pass
+        # flag_merge, repeat_list = data_hex.merge()
+        reg_list = self.get_data_list_widget()
 
-    def save(self):
-        text = self.ui.hex_data_plainTextEdit.toPlainText()
+        if reg_list:
+            for reg_adr, name_file in reg_list.items():
+                # объеденить полученные регионы
+                pass
 
     def delete(self):
-        pass
+        # предусмотреть что файл может храниться в другой папке
+
+        reg_list = self.get_data_list_widget()
+
+        if reg_list:
+            for reg_adr, name_file in reg_list.items():
+                data_hex.data_hex_list[name_file].delete(reg_adr)
+                data_hex.save_file(name_file)
+                self.update_data()
+                self.update_list_widget()
 
     def export(self):
         pass
@@ -83,11 +95,34 @@ class Main(QMainWindow):
     def new_reg(self):
         pass
 
-    def edit_reg(self):
-        current_item = self.ui.reg_list.currentItem().text()
-        if current_item:
-            reg_adr, hex_name = current_item.split('|')
-            reg_adr, load_ofs_adr, reg_data = data_hex.data_hex_list[hex_name[1:]].reg_list[reg_adr[:-1]].get_hex_editor()
+    def save(self):
+        text = self.ui.hex_data_plainTextEdit.toPlainText()
+
+    def get_data_list_widget(self):
+        reg_list = {}
+        flag_repeat = False
+        for item_num in range(self.ui.reg_list.count()):
+            item = self.ui.reg_list.item(item_num)
+            if item.checkState() == QtCore.Qt.CheckState.Checked:
+                reg_adr, hex_name = self.split_item_list_widget(item)
+                if reg_adr in reg_list.keys():
+                    flag_repeat = True
+                    reg_list.clear()
+                    break
+                reg_list[reg_adr] = hex_name
+
+        if flag_repeat:
+            self.ui.message_label.setText('Выбраны одинаковые адреса регионов: \n'
+                                          'измените выбор или отредактируйте адреса')
+        elif not reg_list:
+            self.ui.message_label.setText('Регионы не выбраны')
+
+        return reg_list
+
+    def fill_editor(self):
+        if self.ui.reg_list.currentItem():
+            reg_adr, hex_name = self.split_item_list_widget(self.ui.reg_list.currentItem())
+            reg_adr, load_ofs_adr, reg_data = data_hex.data_hex_list[hex_name].reg_list[reg_adr].get_hex_editor()
             self.ui.text_ofs_reg.setPlainText(reg_adr)
             self.ui.hex_adr_plainTextEdit.setPlainText(load_ofs_adr)
             self.ui.hex_data_plainTextEdit.setPlainText(reg_data)
@@ -102,6 +137,12 @@ class Main(QMainWindow):
                 item_list.setCheckState(QtCore.Qt.CheckState.Unchecked)
                 item_list.setText(reg_adr + ' | ' + name_file)
                 self.ui.reg_list.addItem(item_list)
+
+    @staticmethod
+    def split_item_list_widget(item):
+        item_text = item.text()
+        reg_adr, hex_name = item_text.split('|')
+        return reg_adr[:-1], hex_name[1:]
 
     @staticmethod
     def update_data():
@@ -125,12 +166,4 @@ data_hex.data_hex_list['name_hex_file_1'].reg_list['0810'].gen_hex()
 
 reg_adr, load_ofs_adr, reg_data = data_hex.data_hex_list['name_hex_file_1'].reg_list['0810'].get_hex_editor()
 data_hex.data_hex_list['name_hex_file_1'].save_hex_region('0810', reg_adr, load_ofs_adr, reg_data)
-
-data_hex.data_hex_list['name_hex_file_1'].delete('0811')
-
-data_hex.save_file('name_hex_file_1')
-
-flag_merge, repeat_list = data_hex.merge()
-
-adr_reg_list = data_hex.get_adr_reg()
 """
