@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1258</width>
-    <height>789</height>
+    <height>805</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -582,39 +582,6 @@ QListWidget::item
                 <property name="dragDropMode">
                  <enum>QAbstractItemView::InternalMove</enum>
                 </property>
-                <item>
-                 <property name="text">
-                  <string>0x0800 | code.hex</string>
-                 </property>
-                 <property name="foreground">
-                  <brush brushstyle="NoBrush">
-                   <color alpha="255">
-                    <red>0</red>
-                    <green>0</green>
-                    <blue>0</blue>
-                   </color>
-                  </brush>
-                 </property>
-                 <property name="checkState">
-                  <enum>Unchecked</enum>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>0x0801 | code.hex</string>
-                 </property>
-                 <property name="checkState">
-                  <enum>Unchecked</enum>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>0x0810 | code.hex</string>
-                 </property>
-                 <property name="checkState">
-                  <enum>Unchecked</enum>
-                 </property>
-                </item>
                </widget>
               </item>
              </layout>
@@ -833,6 +800,21 @@ QPushButton::pressed
             <enum>QFrame::Raised</enum>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_7">
+            <property name="spacing">
+             <number>15</number>
+            </property>
+            <property name="leftMargin">
+             <number>15</number>
+            </property>
+            <property name="topMargin">
+             <number>15</number>
+            </property>
+            <property name="rightMargin">
+             <number>15</number>
+            </property>
+            <property name="bottomMargin">
+             <number>15</number>
+            </property>
             <item>
              <widget class="QLabel" name="message_title">
               <property name="sizePolicy">
@@ -857,7 +839,7 @@ QPushButton::pressed
               </property>
              </widget>
             </item>
-            <item>
+            <item alignment="Qt::AlignTop">
              <widget class="QLabel" name="message_label">
               <property name="styleSheet">
                <string notr="true">QLabel 
@@ -1231,7 +1213,7 @@ QTabWidget::pane
 }</string>
                   </property>
                   <property name="text">
-                   <string>Смещение региона, файла code.hex</string>
+                   <string>Смещение региона, файла ...</string>
                   </property>
                  </widget>
                 </item>
