@@ -504,8 +504,8 @@ QToolButton::pressed
                  <string>Объединить</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>:/icons/icons/merge.svg</normaloff>:/icons/icons/merge.svg</iconset>
+                 <iconset resource="files.qrc">
+                  <normaloff>:/icons/icons/merge.png</normaloff>:/icons/icons/merge.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -735,8 +735,8 @@ QPushButton::pressed
                  <string>в hex</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>:/icons/icons/0x0.svg</normaloff>:/icons/icons/0x0.svg</iconset>
+                 <iconset resource="files.qrc">
+                  <normaloff>:/icons/icons/0x0.png</normaloff>:/icons/icons/0x0.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -785,8 +785,8 @@ QPushButton::pressed
                  <string>в bin</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>:/icons/icons/101.svg</normaloff>:/icons/icons/101.svg</iconset>
+                 <iconset resource="files.qrc">
+                  <normaloff>:/icons/icons/101.png</normaloff>:/icons/icons/101.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>

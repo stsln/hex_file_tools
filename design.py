@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 ################################################################################
 ## Form generated from reading UI file 'design.ui'
 ##
@@ -274,7 +276,7 @@ class Ui_Main(object):
 "	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 70), stop:1 rgba(121, 201, 202, 70));\n"
 "}")
         icon1 = QIcon()
-        icon1.addFile(u":/icons/icons/merge.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon1.addFile(u":/icons/icons/merge.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_merge.setIcon(icon1)
         self.btn_merge.setIconSize(QSize(100, 100))
         self.btn_merge.setChecked(False)
@@ -415,7 +417,7 @@ class Ui_Main(object):
 "	background-color: rgba(119, 164, 211, 0.3);\n"
 "}")
         icon2 = QIcon()
-        icon2.addFile(u":/icons/icons/0x0.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon2.addFile(u":/icons/icons/0x0.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_exp_hex.setIcon(icon2)
         self.btn_exp_hex.setIconSize(QSize(40, 40))
 
@@ -448,7 +450,7 @@ class Ui_Main(object):
 "	background-color: rgba(121, 201, 202, 0.3);\n"
 "}")
         icon3 = QIcon()
-        icon3.addFile(u":/icons/icons/101.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon3.addFile(u":/icons/icons/101.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_exp_bin.setIcon(icon3)
         self.btn_exp_bin.setIconSize(QSize(40, 40))
 

@@ -1,12 +1,12 @@
 import os
 import sys
 
-from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog, QListWidgetItem
-from PyQt6 import QtCore
-from PyQt6.QtGui import QFontDatabase
+from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog, QListWidgetItem
+from PySide6 import QtCore
+from PySide6.QtGui import QFontDatabase
 
 import parser_hex_files
-from ui.design import Ui_Main
+from design import Ui_Main
 
 hex_files = {}
 data_hex = parser_hex_files.ParserHex()
@@ -18,9 +18,9 @@ class Main(QMainWindow):
         self.ui = Ui_Main()
         self.ui.setupUi(self)
 
-        QFontDatabase.addApplicationFont('ui/fonts/Inter-Regular.ttf')
-        QFontDatabase.addApplicationFont('ui/fonts/Inter-Bold.ttf')
-        QFontDatabase.addApplicationFont('ui/fonts/JetBrainsMono-Regular.ttf')
+        QFontDatabase.addApplicationFont('fonts/Inter-Regular.ttf')
+        QFontDatabase.addApplicationFont('fonts/Inter-Bold.ttf')
+        QFontDatabase.addApplicationFont('fonts/JetBrainsMono-Regular.ttf')
 
         # buttons file
         self.ui.btn_file_1.clicked.connect(lambda: self.choose_file())
