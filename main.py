@@ -23,11 +23,11 @@ class Main(QMainWindow):
         QFontDatabase.addApplicationFont('fonts/JetBrainsMono-Regular.ttf')
 
         # buttons file
-        self.ui.btn_file_1.clicked.connect(lambda: self.choose_file())
-        self.ui.btn_file_2.clicked.connect(lambda: self.choose_file())
-        self.ui.btn_file_3.clicked.connect(lambda: self.choose_file())
-        self.ui.btn_file_4.clicked.connect(lambda: self.choose_file())
-        self.ui.btn_file_5.clicked.connect(lambda: self.choose_file())
+        self.ui.btn_file_1.clicked.connect(lambda: self.choose_file(self.ui.btn_file_1))
+        self.ui.btn_file_2.clicked.connect(lambda: self.choose_file(self.ui.btn_file_2))
+        self.ui.btn_file_3.clicked.connect(lambda: self.choose_file(self.ui.btn_file_3))
+        self.ui.btn_file_4.clicked.connect(lambda: self.choose_file(self.ui.btn_file_4))
+        self.ui.btn_file_5.clicked.connect(lambda: self.choose_file(self.ui.btn_file_5))
 
         # button merge
         self.ui.btn_merge.clicked.connect(lambda: self.merge())
@@ -44,29 +44,47 @@ class Main(QMainWindow):
         # regions list
         self.ui.reg_list.clicked.connect(lambda: self.fill_editor())
 
-    def choose_file(self):
-        object_name_btn = ['btn_file_1', 'btn_file_2', 'btn_file_3', 'btn_file_4', 'btn_file_5']
-        btn_file = self.sender()
+    def choose_file(self, btn_file):
+        file_path = QFileDialog.getOpenFileName(self, 'Выберите файл для добавления в список', '',
+                                                'Hex Files (*.hex)')[0]
+        file_name = os.path.basename(file_path)[0:-4]
+        if file_name in hex_files.keys():
+            self.ui.message_label.setText(file_name + ' уже добавлен')
+        else:
+            if file_name:
+                hex_files[file_name] = file_path
+                flag_err, mes_err = data_hex.processing(hex_files)
+                self.ui.message_label.setText(mes_err)
 
-        if btn_file.objectName() in object_name_btn:
-            file_path = QFileDialog.getOpenFileName(filter='*.hex')[0]
-            file_name = os.path.basename(file_path)[0:-4]
-            if file_name in hex_files.keys():
-                self.ui.message_label.setText(file_name + ' уже добавлен')
-            else:
-                if file_name:
-                    hex_files[file_name] = file_path
-                    flag_err, mes_err = data_hex.processing(hex_files)
-                    self.ui.message_label.setText(mes_err)
+                if flag_err:
+                    del hex_files[file_name]
+                else:
+                    if btn_file.text() != 'Добавить':
+                        del hex_files[btn_file.text()]
+                        del data_hex.data_hex_list[btn_file.text()]
+                    btn_file.setText(file_name)
+                    self.update_list_widget()
 
-                    if flag_err:
-                        del hex_files[file_name]
-                    else:
-                        if btn_file.text() != 'Добавить':
-                            del hex_files[btn_file.text()]
-                            del data_hex.data_hex_list[btn_file.text()]
-                        btn_file.setText(file_name)
-                        self.update_list_widget()
+    def get_data_list_widget(self):
+        reg_list = {}
+        flag_repeat = False
+        for item_num in range(self.ui.reg_list.count()):
+            item = self.ui.reg_list.item(item_num)
+            if item.checkState() == QtCore.Qt.CheckState.Checked:
+                reg_adr, hex_name = self.split_item_list_widget(item)
+                if reg_adr in reg_list.keys():
+                    flag_repeat = True
+                    reg_list.clear()
+                    break
+                reg_list[reg_adr] = hex_name
+
+        if flag_repeat:
+            self.ui.message_label.setText('Выбраны одинаковые адреса регионов: \n'
+                                          'измените выбор или отредактируйте адреса')
+        elif not reg_list:
+            self.ui.message_label.setText('Регионы не выбраны')
+
+        return reg_list
 
     def merge(self):
         # flag_merge, repeat_list = data_hex.merge()
@@ -96,28 +114,15 @@ class Main(QMainWindow):
         pass
 
     def save(self):
-        text = self.ui.hex_data_plainTextEdit.toPlainText()
-
-    def get_data_list_widget(self):
-        reg_list = {}
-        flag_repeat = False
-        for item_num in range(self.ui.reg_list.count()):
-            item = self.ui.reg_list.item(item_num)
-            if item.checkState() == QtCore.Qt.CheckState.Checked:
-                reg_adr, hex_name = self.split_item_list_widget(item)
-                if reg_adr in reg_list.keys():
-                    flag_repeat = True
-                    reg_list.clear()
-                    break
-                reg_list[reg_adr] = hex_name
-
-        if flag_repeat:
-            self.ui.message_label.setText('Выбраны одинаковые адреса регионов: \n'
-                                          'измените выбор или отредактируйте адреса')
-        elif not reg_list:
-            self.ui.message_label.setText('Регионы не выбраны')
-
-        return reg_list
+        old_reg_adr, hex_name = self.split_item_list_widget(self.ui.reg_list.currentItem())
+        new_reg_adr = self.ui.text_ofs_reg.toPlainText()
+        load_ofs_adr = self.ui.hex_adr_plainTextEdit.toPlainText()
+        reg_data = self.ui.hex_data_plainTextEdit.toPlainText()
+        data_hex.data_hex_list[hex_name].save_hex_region(old_reg_adr, new_reg_adr, load_ofs_adr, reg_data)
+        data_hex.save_file(hex_name)
+        self.update_data()
+        self.update_list_widget()
+        # сделать провеку на ошибки и сохранение в правильном пути
 
     def fill_editor(self):
         if self.ui.reg_list.currentItem():
@@ -163,7 +168,4 @@ data_hex.data_hex_list['name_hex_file_2'].get_count_regions()
 
 data_hex.data_hex_list['name_hex_file_1'].gen_hex(is_end=True)
 data_hex.data_hex_list['name_hex_file_1'].reg_list['0810'].gen_hex()
-
-reg_adr, load_ofs_adr, reg_data = data_hex.data_hex_list['name_hex_file_1'].reg_list['0810'].get_hex_editor()
-data_hex.data_hex_list['name_hex_file_1'].save_hex_region('0810', reg_adr, load_ofs_adr, reg_data)
 """
