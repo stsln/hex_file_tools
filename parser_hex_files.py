@@ -1,5 +1,4 @@
 import random
-from collections import Counter
 
 import parser_data_hex_line
 
@@ -93,47 +92,38 @@ class ParserHex:
 
         return hex_files_adr_reg_dict
 
-    def save_file(self, name_file: str = 'merge', merge_file: bool = False, hex_file_text: str = ''):
+    def save_file(self, name_file: str = 'merge', file_path: str = '',
+                  merge_file: bool = False, hex_file_text: str = ''):
         """
         Function save modified hex file or hex text to file
         :param name_file: name of the file to be saved
+        :param file_path: file path to save
         :param merge_file: True - hex text of merge files
         :param hex_file_text: hex text
         """
         if name_file in self.data_hex_list.keys():
             hex_file_text = self.data_hex_list[name_file].gen_hex(is_end=True)
         elif merge_file:
-            name_file += str(random.randrange(10000))
+            file_path = name_file + str(random.randrange(10000)) + '.hex'
         else:
-            name_file = 'hex_file' + str(random.randrange(10000))
+            file_path = 'hex_file' + str(random.randrange(10000)) + '.hex'
 
-        hex_file = open(name_file + '.hex', 'w')
+        hex_file = open(file_path, 'w')
         hex_file.write(hex_file_text)
         hex_file.close()
 
-    def merge(self) -> tuple[bool, list]:
+    def merge(self, reg_list: dict) -> bool:
         """
-        Function merge all or part of the hex files data
-        :return: True - merge successful or False - merge not successful,
-                 ofs_adr_repeat_list - list of repeated regions
+        Function merge all or part of the hex files data ------------------------------------------
+        :param reg_list: regions that need to be merged
+        :return: True - merge successful, False - merge not successful
         """
-        ofs_adr_list = []
-        ofs_adr_repeat_list = []
-
-        for _, reg_list in self.data_hex_list.items():
-            for ofs_adr in reg_list.reg_list:
-                ofs_adr_list.append(ofs_adr)
-
-        for ofs_adr, num_identical in Counter(ofs_adr_list).items():
-            if num_identical > 1:
-                ofs_adr_repeat_list.append(ofs_adr)
-
-        if not ofs_adr_repeat_list:
+        try:
             text_hex_file_merge = ''
-            for _, reg_list in self.data_hex_list.items():
-                text_hex_file_merge += reg_list.gen_hex()
+            for reg, name_hex in reg_list.items():
+                text_hex_file_merge += self.data_hex_list[name_hex].reg_list[reg].gen_hex() + '\n'
             text_hex_file_merge += parser_data_hex_line.create_hex_line(0, parser_data_hex_line.TYPE_END_OF_FILE)
             self.save_file(merge_file=True, hex_file_text=text_hex_file_merge)
-            return True, ofs_adr_repeat_list
-        else:
-            return False, ofs_adr_repeat_list
+            return True
+        except FileNotFoundError:
+            return False

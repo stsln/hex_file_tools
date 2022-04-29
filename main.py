@@ -1,9 +1,9 @@
 import os
 import sys
 
-from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog, QListWidgetItem
+from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QFileDialog, QListWidgetItem
 from PySide6 import QtCore
-from PySide6.QtGui import QFontDatabase
+from PySide6.QtGui import QFontDatabase, QIcon
 
 import parser_hex_files
 from design import Ui_Main
@@ -44,12 +44,20 @@ class Main(QMainWindow):
         # regions list
         self.ui.reg_list.clicked.connect(lambda: self.fill_editor())
 
+        self.ui.text_ofs_reg.textChanged.connect(lambda: self.text_changed())
+
     def choose_file(self, btn_file):
         file_path = QFileDialog.getOpenFileName(self, 'Выберите файл для добавления в список', '',
                                                 'Hex Files (*.hex)')[0]
         file_name = os.path.basename(file_path)[0:-4]
         if file_name in hex_files.keys():
-            self.ui.message_label.setText(file_name + ' уже добавлен')
+            msgBox = QMessageBox()
+            msgBox.setWindowTitle('Добавление файла')
+            msgBox.setText('Ошибка добавления файла')
+            msgBox.setIcon(QMessageBox.Critical)
+            msgBox.setInformativeText('Файл ' + file_name + ' уже добавлен')
+            msgBox.setDefaultButton(QMessageBox.Ok)
+            msgBox.exec()
         else:
             if file_name:
                 hex_files[file_name] = file_path
@@ -78,32 +86,37 @@ class Main(QMainWindow):
                     break
                 reg_list[reg_adr] = hex_name
 
+        msgBox = QMessageBox()
+        msgBox.setWindowTitle('Инструменты')
+        msgBox.setText('Данное действие невозможно выполнить')
+        msgBox.setIcon(QMessageBox.Warning)
+
         if flag_repeat:
-            self.ui.message_label.setText('Выбраны одинаковые адреса регионов: \n'
-                                          'измените выбор или отредактируйте адреса')
+            msgBox.setInformativeText('Выбраны одинаковые адреса регионов: \n'
+                                      'измените выбор или отредактируйте адреса')
+            msgBox.setDefaultButton(QMessageBox.Ok)
+            msgBox.exec()
         elif not reg_list:
-            self.ui.message_label.setText('Регионы не выбраны')
+            msgBox.setInformativeText('Не выбраны регионы для работы с ними')
+            msgBox.setDefaultButton(QMessageBox.Ok)
+            msgBox.exec()
 
         return reg_list
 
     def merge(self):
-        # flag_merge, repeat_list = data_hex.merge()
         reg_list = self.get_data_list_widget()
-
         if reg_list:
-            for reg_adr, name_file in reg_list.items():
-                # объеденить полученные регионы
-                pass
+            if data_hex.merge(reg_list):
+                self.ui.message_label.setText('Успешное объединение')
+            else:
+                self.ui.message_label.setText('Ошибка объединения')
 
     def delete(self):
-        # предусмотреть что файл может храниться в другой папке
-
         reg_list = self.get_data_list_widget()
-
         if reg_list:
             for reg_adr, name_file in reg_list.items():
                 data_hex.data_hex_list[name_file].delete(reg_adr)
-                data_hex.save_file(name_file)
+                data_hex.save_file(name_file, file_path=hex_files[name_file])
                 self.update_data()
                 self.update_list_widget()
 
@@ -119,10 +132,10 @@ class Main(QMainWindow):
         load_ofs_adr = self.ui.hex_adr_plainTextEdit.toPlainText()
         reg_data = self.ui.hex_data_plainTextEdit.toPlainText()
         data_hex.data_hex_list[hex_name].save_hex_region(old_reg_adr, new_reg_adr, load_ofs_adr, reg_data)
-        data_hex.save_file(hex_name)
+        data_hex.save_file(hex_name, file_path=hex_files[hex_name])
         self.update_data()
         self.update_list_widget()
-        # сделать провеку на ошибки и сохранение в правильном пути
+        # сделать провеку на ошибки
 
     def fill_editor(self):
         if self.ui.reg_list.currentItem():
@@ -132,6 +145,11 @@ class Main(QMainWindow):
             self.ui.hex_adr_plainTextEdit.setPlainText(load_ofs_adr)
             self.ui.hex_data_plainTextEdit.setPlainText(reg_data)
             self.ui.lable_ofs_and_file.setText('Смещение региона, файла ' + hex_name)
+        else:
+            self.ui.text_ofs_reg.setPlainText('')
+            self.ui.hex_adr_plainTextEdit.setPlainText('')
+            self.ui.hex_data_plainTextEdit.setPlainText('')
+            self.ui.lable_ofs_and_file.setText('Смещение региона, файла ...')
 
     def update_list_widget(self):
         regs_list = data_hex.get_adr_reg()
@@ -142,6 +160,11 @@ class Main(QMainWindow):
                 item_list.setCheckState(QtCore.Qt.CheckState.Unchecked)
                 item_list.setText(reg_adr + ' | ' + name_file)
                 self.ui.reg_list.addItem(item_list)
+        self.fill_editor()
+
+    def text_changed(self):
+        if len(self.ui.text_ofs_reg.toPlainText()) > 4:
+            self.ui.text_ofs_reg.setPlainText(self.ui.text_ofs_reg.toPlainText()[0:4])
 
     @staticmethod
     def split_item_list_widget(item):
