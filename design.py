@@ -146,6 +146,7 @@ class Ui_Main(object):
         self.btn_file_1.setCursor(QCursor(Qt.PointingHandCursor))
         icon = QIcon()
         icon.addFile(u":/icons/icons/file_off.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/icons/icons/file_on.png", QSize(), QIcon.Normal, QIcon.On)
         self.btn_file_1.setIcon(icon)
         self.btn_file_1.setIconSize(QSize(60, 60))
         self.btn_file_1.setChecked(False)

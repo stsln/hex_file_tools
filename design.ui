@@ -221,7 +221,8 @@ QToolButton::pressed
                 </property>
                 <property name="icon">
                  <iconset resource="files.qrc">
-                  <normaloff>:/icons/icons/file_off.png</normaloff>:/icons/icons/file_off.png</iconset>
+                  <normaloff>:/icons/icons/file_off.png</normaloff>
+                  <normalon>:/icons/icons/file_on.png</normalon>:/icons/icons/file_off.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -259,7 +260,8 @@ QToolButton::pressed
                 </property>
                 <property name="icon">
                  <iconset resource="files.qrc">
-                  <normaloff>:/icons/icons/file_off.png</normaloff>:/icons/icons/file_off.png</iconset>
+                  <normaloff>:/icons/icons/file_off.png</normaloff>
+                  <normalon>:/icons/icons/file_on.png</normalon>:/icons/icons/file_off.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -300,7 +302,8 @@ QToolButton::pressed
                 </property>
                 <property name="icon">
                  <iconset resource="files.qrc">
-                  <normaloff>:/icons/icons/file_off.png</normaloff>:/icons/icons/file_off.png</iconset>
+                  <normaloff>:/icons/icons/file_off.png</normaloff>
+                  <normalon>:/icons/icons/file_on.png</normalon>:/icons/icons/file_off.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -338,7 +341,8 @@ QToolButton::pressed
                 </property>
                 <property name="icon">
                  <iconset resource="files.qrc">
-                  <normaloff>:/icons/icons/file_off.png</normaloff>:/icons/icons/file_off.png</iconset>
+                  <normaloff>:/icons/icons/file_off.png</normaloff>
+                  <normalon>:/icons/icons/file_on.png</normalon>:/icons/icons/file_off.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -376,7 +380,8 @@ QToolButton::pressed
                 </property>
                 <property name="icon">
                  <iconset resource="files.qrc">
-                  <normaloff>:/icons/icons/file_off.png</normaloff>:/icons/icons/file_off.png</iconset>
+                  <normaloff>:/icons/icons/file_off.png</normaloff>
+                  <normalon>:/icons/icons/file_on.png</normalon>:/icons/icons/file_off.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
