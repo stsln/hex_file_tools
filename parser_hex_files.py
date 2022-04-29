@@ -1,4 +1,5 @@
 import random
+from collections import Counter
 
 import parser_data_hex_line
 
@@ -112,18 +113,39 @@ class ParserHex:
         hex_file.write(hex_file_text)
         hex_file.close()
 
-    def merge(self, reg_list: dict) -> bool:
+    def merge(self, reg_list: dict = None) -> bool:
         """
-        Function merge all or part of the hex files data ------------------------------------------
+        Function merge all or part of the hex files data
         :param reg_list: regions that need to be merged
         :return: True - merge successful, False - merge not successful
         """
-        try:
+        if reg_list:
+            try:
+                text_hex_file_merge = ''
+                for reg, name_hex in reg_list.items():
+                    text_hex_file_merge += self.data_hex_list[name_hex].reg_list[reg].gen_hex() + '\n'
+                text_hex_file_merge += parser_data_hex_line.create_hex_line(0, parser_data_hex_line.TYPE_END_OF_FILE)
+                self.save_file(merge_file=True, hex_file_text=text_hex_file_merge)
+                return True
+            except FileNotFoundError:
+                return False
+        else:
+            ofs_adr_list = []
+            for _, reg_list in self.data_hex_list.items():
+                for ofs_adr in reg_list.reg_list:
+                    ofs_adr_list.append(ofs_adr)
+            for ofs_adr, num_identical in Counter(ofs_adr_list).items():
+                if num_identical > 1:
+                    return False
             text_hex_file_merge = ''
-            for reg, name_hex in reg_list.items():
-                text_hex_file_merge += self.data_hex_list[name_hex].reg_list[reg].gen_hex() + '\n'
+            for _, reg_list in self.data_hex_list.items():
+                text_hex_file_merge += reg_list.gen_hex()
             text_hex_file_merge += parser_data_hex_line.create_hex_line(0, parser_data_hex_line.TYPE_END_OF_FILE)
             self.save_file(merge_file=True, hex_file_text=text_hex_file_merge)
             return True
-        except FileNotFoundError:
-            return False
+
+        # доработать
+        #есть объеденить то объединяется в один все файлы
+        #если экспорт то толко выделеные
+
+
