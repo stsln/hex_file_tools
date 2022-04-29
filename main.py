@@ -3,7 +3,7 @@ import sys
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QFileDialog, QListWidgetItem
 from PySide6 import QtCore
-from PySide6.QtGui import QFontDatabase, QIcon
+from PySide6.QtGui import QFontDatabase
 
 import parser_hex_files
 from design import Ui_Main
@@ -71,19 +71,24 @@ class Main(QMainWindow):
                         del hex_files[btn_file.text()]
                         del data_hex.data_hex_list[btn_file.text()]
                     btn_file.setText(file_name)
+                    # изменить иконку кнопки
                     self.update_list_widget()
 
-    def get_data_list_widget(self):
+    def get_data_list_widget(self, check: bool = False):
+        """
+        :param check: regions that need to be merged
+        """
         reg_list = {}
         flag_repeat = False
         for item_num in range(self.ui.reg_list.count()):
             item = self.ui.reg_list.item(item_num)
             if item.checkState() == QtCore.Qt.CheckState.Checked:
                 reg_adr, hex_name = self.split_item_list_widget(item)
-                if reg_adr in reg_list.keys():
-                    flag_repeat = True
-                    reg_list.clear()
-                    break
+                if check:
+                    if reg_adr in reg_list.keys():
+                        flag_repeat = True
+                        reg_list.clear()
+                        break
                 reg_list[reg_adr] = hex_name
 
         msgBox = QMessageBox()
@@ -103,13 +108,30 @@ class Main(QMainWindow):
 
         return reg_list
 
-    def merge(self):
-        reg_list = self.get_data_list_widget()
-        if reg_list:
-            if data_hex.merge(reg_list):
-                self.ui.message_label.setText('Успешное объединение')
+    @staticmethod
+    def merge():
+        msgBox = QMessageBox()
+        msgBox.setWindowTitle('Объединение')
+        msgBox.setText('Данное действие невозможно выполнить')
+        msgBox.setIcon(QMessageBox.Warning)
+        if len(data_hex.data_hex_list) > 0:
+            if data_hex.merge():
+                msgBox = QMessageBox()
+                msgBox.setWindowTitle('Инструменты')
+                msgBox.setText('Объединение')
+                msgBox.setIcon(QMessageBox.Information)
+                msgBox.setInformativeText('Успешное объединение')
+                msgBox.setDefaultButton(QMessageBox.Ok)
+                msgBox.exec()
             else:
-                self.ui.message_label.setText('Ошибка объединения')
+                msgBox.setInformativeText('Выбраны одинаковые адреса регионов: \n'
+                                          'измените выбор или отредактируйте адреса')
+                msgBox.setDefaultButton(QMessageBox.Ok)
+                msgBox.exec()
+        else:
+            msgBox.setInformativeText('Добавьте файлы и повторите попытку')
+            msgBox.setDefaultButton(QMessageBox.Ok)
+            msgBox.exec()
 
     def delete(self):
         reg_list = self.get_data_list_widget()
@@ -121,7 +143,12 @@ class Main(QMainWindow):
                 self.update_list_widget()
 
     def export(self):
-        pass
+        reg_list = self.get_data_list_widget()
+        if reg_list:
+            if data_hex.merge(reg_list):
+                self.ui.message_label.setText('Успешное объединение')
+            else:
+                self.ui.message_label.setText('Ошибка объединения')
 
     def new_reg(self):
         pass
@@ -184,11 +211,3 @@ if __name__ == "__main__":
     window.show()
 
     sys.exit(app.exec())
-
-
-"""
-data_hex.data_hex_list['name_hex_file_2'].get_count_regions()
-
-data_hex.data_hex_list['name_hex_file_1'].gen_hex(is_end=True)
-data_hex.data_hex_list['name_hex_file_1'].reg_list['0810'].gen_hex()
-"""
