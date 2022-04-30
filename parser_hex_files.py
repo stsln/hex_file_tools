@@ -93,19 +93,22 @@ class ParserHex:
 
         return hex_files_adr_reg_dict
 
-    def save_file(self, name_file: str = 'merge', file_path: str = '',
-                  merge_file: bool = False, hex_file_text: str = ''):
+    def save_file(self, name_file: str = '', file_path: str = '', hex_file_text: str = '',
+                  merge_file: bool = False, export_file: bool = False):
         """
         Function save modified hex file or hex text to file
         :param name_file: name of the file to be saved
         :param file_path: file path to save
         :param merge_file: True - hex text of merge files
+        :param export_file: True - hex text of export files
         :param hex_file_text: hex text
         """
         if name_file in self.data_hex_list.keys():
             hex_file_text = self.data_hex_list[name_file].gen_hex(is_end=True)
         elif merge_file:
-            file_path = name_file + str(random.randrange(10000)) + '.hex'
+            file_path = 'merge' + str(random.randrange(10000)) + '.hex'
+        elif export_file:
+            file_path = 'export' + str(random.randrange(10000)) + '.hex'
         else:
             file_path = 'hex_file' + str(random.randrange(10000)) + '.hex'
 
@@ -125,7 +128,7 @@ class ParserHex:
                 for reg, name_hex in reg_list.items():
                     text_hex_file_merge += self.data_hex_list[name_hex].reg_list[reg].gen_hex() + '\n'
                 text_hex_file_merge += parser_data_hex_line.create_hex_line(0, parser_data_hex_line.TYPE_END_OF_FILE)
-                self.save_file(merge_file=True, hex_file_text=text_hex_file_merge)
+                self.save_file(export_file=True, hex_file_text=text_hex_file_merge)
                 return True
             except FileNotFoundError:
                 return False
@@ -143,9 +146,3 @@ class ParserHex:
             text_hex_file_merge += parser_data_hex_line.create_hex_line(0, parser_data_hex_line.TYPE_END_OF_FILE)
             self.save_file(merge_file=True, hex_file_text=text_hex_file_merge)
             return True
-
-        # доработать
-        #есть объеденить то объединяется в один все файлы
-        #если экспорт то толко выделеные
-
-

@@ -389,7 +389,7 @@ class RegionsList:
         """
         pass
 
-    def save_hex_region(self, old_reg_adr: str, new_reg_adr: str, load_ofs_adr: str, reg_data: str):
+    def save_hex_region(self, old_reg_adr: str, new_reg_adr: str, load_ofs_adr: str, reg_data: str) -> bool:
         """
         Function saves the hex region if changes have been made to the
         old region in the editor or new data has been added.
@@ -409,10 +409,7 @@ class RegionsList:
         else:
             flag_err = True
 
-        if flag_err:
-            print('There are errors in the edits made or the address of such an offset already exists!')
-        else:
-            print('The edits made have been saved successfully')
+        return flag_err
 
     def delete(self, reg_adr: str):
         """
