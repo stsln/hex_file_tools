@@ -1,9 +1,9 @@
 import os
 import sys
 
-from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QFileDialog, QListWidgetItem
-from PySide6 import QtCore
-from PySide6.QtGui import QFontDatabase
+from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QFileDialog, QListWidgetItem, \
+                                            QWidget, QVBoxLayout, QHBoxLayout, QToolButton, QPushButton
+from PySide6 import QtCore, QtGui
 
 import parser_hex_files
 from design import Ui_Main
@@ -12,15 +12,55 @@ hex_files = {}
 data_hex = parser_hex_files.ParserHex()
 
 
+class ToolButtonFile(QWidget):
+    def __init__(self, obj_name, path_icon, parent=None):
+        super(ToolButtonFile, self).__init__(parent)
+        self.toolButton = QToolButton()
+        self.toolButton.setObjectName(obj_name)
+        self.toolButton.setIcon(QtGui.QIcon(path_icon))
+        self.toolButton.setIconSize(QtCore.QSize(60, 60))
+        self.toolButton.setMinimumSize(QtCore.QSize(120, 120))
+        self.toolButton.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
+        self.toolButton.setText('Добавить')
+
+        lt = QVBoxLayout(self)
+        lt.addWidget(self.toolButton)
+
+
+class WidgetFile(QWidget):
+    def __init__(self, obj_name, parent=None):
+        super(WidgetFile, self).__init__(parent)
+
+        self.btn = ToolButtonFile(obj_name, "icons/file_on.png")
+        self.btn.toolButton.clicked.connect(lambda: print(self.btn.toolButton.objectName()))
+
+        vll = QVBoxLayout(self)
+        vll.addWidget(self.btn)
+        vll.addStretch()
+
+        button = QPushButton('×', self.btn.toolButton)
+        button.setStyleSheet('#buttonClose {font-size: 20px; font-weight: 600; border-radius: 15px; border-color: #fff}'
+                             '#buttonClose:hover {color: white; background: rgba(229, 46, 46, 0.6);}'
+                             '#buttonClose:pressed {color: white; background: rgba(229, 46, 46, 0.8);}')
+        button.setMinimumSize(30, 30)
+        button.setMaximumSize(30, 30)
+        button.setObjectName('buttonClose')
+        button.move(89, 1)
+        button.clicked.connect(lambda: print(button.objectName()))
+
+
 class Main(QMainWindow):
     def __init__(self):
         super(Main, self).__init__()
         self.ui = Ui_Main()
         self.ui.setupUi(self)
 
-        QFontDatabase.addApplicationFont('fonts/Inter-Regular.ttf')
-        QFontDatabase.addApplicationFont('fonts/Inter-Bold.ttf')
-        QFontDatabase.addApplicationFont('fonts/JetBrainsMono-Regular.ttf')
+        QtGui.QFontDatabase.addApplicationFont('fonts/Inter-Regular.ttf')
+        QtGui.QFontDatabase.addApplicationFont('fonts/Inter-Bold.ttf')
+        QtGui.QFontDatabase.addApplicationFont('fonts/JetBrainsMono-Regular.ttf')
+
+        btn_file_10 = WidgetFile('btn_file_10')
+        self.ui.files_lt.addWidget(btn_file_10)
 
         # buttons file
         self.ui.btn_file_1.clicked.connect(lambda: self.choose_file(self.ui.btn_file_1))
@@ -100,7 +140,7 @@ class Main(QMainWindow):
 
         msg_box = QMessageBox()
         msg_box.setWindowTitle('Инструменты')
-        msg_box.setText("Данное действие невозможно выполнить")
+        msg_box.setText('Данное действие невозможно выполнить')
         msg_box.setIcon(QMessageBox.Warning)
 
         if flag_repeat:
@@ -149,6 +189,7 @@ class Main(QMainWindow):
             reg_list = self.get_data_list_widget()
             if reg_list:
                 if data_hex.merge(reg_list):
+                    # переделать в message box
                     self.ui.message_label.setText('Успешное объединение')
                 else:
                     self.ui.message_label.setText('Ошибка объединения')
@@ -165,14 +206,14 @@ class Main(QMainWindow):
             new_reg_adr = self.ui.text_ofs_reg.toPlainText()
             load_ofs_adr = self.ui.hex_adr_plainTextEdit.toPlainText()
             reg_data = self.ui.hex_data_plainTextEdit.toPlainText()
-            flag_err = data_hex.data_hex_list[hex_name].save_hex_region(old_reg_adr, new_reg_adr, load_ofs_adr, reg_data)
+            flag_err = data_hex.data_hex_list[hex_name].save_hex_region(old_reg_adr, new_reg_adr,
+                                                                        load_ofs_adr, reg_data)
             msg_box = QMessageBox()
             msg_box.setWindowTitle('Инструменты')
             msg_box.setText('Сохранение')
             if flag_err:
                 msg_box.setIcon(QMessageBox.Critical)
                 msg_box.setInformativeText('В изменениях есть ошибки или \nадрес такого смещения уже существует')
-
             else:
                 data_hex.save_file(hex_name, file_path=hex_files[hex_name])
                 self.update_data()
