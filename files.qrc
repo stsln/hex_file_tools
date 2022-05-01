@@ -2,9 +2,6 @@
   <qresource prefix="icons">
     <file>icons/0x0.png</file>
     <file>icons/101.png</file>
-    <file>icons/close.png</file>
-    <file>icons/file_off.png</file>
-    <file>icons/file_on.png</file>
     <file>icons/merge.png</file>
   </qresource>
 </RCC>

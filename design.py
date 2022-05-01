@@ -24,7 +24,7 @@ class Ui_Main(object):
     def setupUi(self, Main):
         if not Main.objectName():
             Main.setObjectName(u"Main")
-        Main.resize(1258, 761)
+        Main.resize(1075, 641)
         Main.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         self.centralwidget = QWidget(Main)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -135,78 +135,6 @@ class Ui_Main(object):
         self.files_lt.setSpacing(15)
         self.files_lt.setObjectName(u"files_lt")
         self.files_lt.setSizeConstraint(QLayout.SetDefaultConstraint)
-        self.btn_file_1 = QToolButton(self.files)
-        self.btn_file_1.setObjectName(u"btn_file_1")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.btn_file_1.sizePolicy().hasHeightForWidth())
-        self.btn_file_1.setSizePolicy(sizePolicy1)
-        self.btn_file_1.setMinimumSize(QSize(120, 120))
-        self.btn_file_1.setCursor(QCursor(Qt.PointingHandCursor))
-        icon = QIcon()
-        icon.addFile(u":/icons/icons/file_off.png", QSize(), QIcon.Normal, QIcon.Off)
-        icon.addFile(u":/icons/icons/file_on.png", QSize(), QIcon.Normal, QIcon.On)
-        self.btn_file_1.setIcon(icon)
-        self.btn_file_1.setIconSize(QSize(60, 60))
-        self.btn_file_1.setChecked(False)
-        self.btn_file_1.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
-
-        self.files_lt.addWidget(self.btn_file_1)
-
-        self.btn_file_2 = QToolButton(self.files)
-        self.btn_file_2.setObjectName(u"btn_file_2")
-        sizePolicy1.setHeightForWidth(self.btn_file_2.sizePolicy().hasHeightForWidth())
-        self.btn_file_2.setSizePolicy(sizePolicy1)
-        self.btn_file_2.setMinimumSize(QSize(120, 120))
-        self.btn_file_2.setCursor(QCursor(Qt.PointingHandCursor))
-        self.btn_file_2.setIcon(icon)
-        self.btn_file_2.setIconSize(QSize(60, 60))
-        self.btn_file_2.setChecked(False)
-        self.btn_file_2.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
-
-        self.files_lt.addWidget(self.btn_file_2)
-
-        self.btn_file_3 = QToolButton(self.files)
-        self.btn_file_3.setObjectName(u"btn_file_3")
-        self.btn_file_3.setEnabled(True)
-        sizePolicy1.setHeightForWidth(self.btn_file_3.sizePolicy().hasHeightForWidth())
-        self.btn_file_3.setSizePolicy(sizePolicy1)
-        self.btn_file_3.setMinimumSize(QSize(120, 120))
-        self.btn_file_3.setCursor(QCursor(Qt.PointingHandCursor))
-        self.btn_file_3.setIcon(icon)
-        self.btn_file_3.setIconSize(QSize(60, 60))
-        self.btn_file_3.setChecked(False)
-        self.btn_file_3.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
-
-        self.files_lt.addWidget(self.btn_file_3)
-
-        self.btn_file_4 = QToolButton(self.files)
-        self.btn_file_4.setObjectName(u"btn_file_4")
-        sizePolicy1.setHeightForWidth(self.btn_file_4.sizePolicy().hasHeightForWidth())
-        self.btn_file_4.setSizePolicy(sizePolicy1)
-        self.btn_file_4.setMinimumSize(QSize(120, 120))
-        self.btn_file_4.setCursor(QCursor(Qt.PointingHandCursor))
-        self.btn_file_4.setIcon(icon)
-        self.btn_file_4.setIconSize(QSize(60, 60))
-        self.btn_file_4.setChecked(False)
-        self.btn_file_4.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
-
-        self.files_lt.addWidget(self.btn_file_4)
-
-        self.btn_file_5 = QToolButton(self.files)
-        self.btn_file_5.setObjectName(u"btn_file_5")
-        sizePolicy1.setHeightForWidth(self.btn_file_5.sizePolicy().hasHeightForWidth())
-        self.btn_file_5.setSizePolicy(sizePolicy1)
-        self.btn_file_5.setMinimumSize(QSize(120, 120))
-        self.btn_file_5.setCursor(QCursor(Qt.PointingHandCursor))
-        self.btn_file_5.setIcon(icon)
-        self.btn_file_5.setIconSize(QSize(60, 60))
-        self.btn_file_5.setChecked(False)
-        self.btn_file_5.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
-
-        self.files_lt.addWidget(self.btn_file_5)
-
 
         self.verticalLayout_3.addLayout(self.files_lt)
 
@@ -247,6 +175,9 @@ class Ui_Main(object):
         self.reg_merge_lt.setObjectName(u"reg_merge_lt")
         self.btn_merge = QToolButton(self.tools)
         self.btn_merge.setObjectName(u"btn_merge")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.btn_merge.sizePolicy().hasHeightForWidth())
         self.btn_merge.setSizePolicy(sizePolicy1)
         self.btn_merge.setMinimumSize(QSize(150, 150))
@@ -274,9 +205,9 @@ class Ui_Main(object):
 "{\n"
 "	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(119, 164, 211, 70), stop:1 rgba(121, 201, 202, 70));\n"
 "}")
-        icon1 = QIcon()
-        icon1.addFile(u":/icons/icons/merge.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btn_merge.setIcon(icon1)
+        icon = QIcon()
+        icon.addFile(u":/icons/icons/merge.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_merge.setIcon(icon)
         self.btn_merge.setIconSize(QSize(100, 100))
         self.btn_merge.setChecked(False)
         self.btn_merge.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
@@ -415,9 +346,9 @@ class Ui_Main(object):
 "{\n"
 "	background-color: rgba(119, 164, 211, 0.3);\n"
 "}")
-        icon2 = QIcon()
-        icon2.addFile(u":/icons/icons/0x0.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btn_exp_hex.setIcon(icon2)
+        icon1 = QIcon()
+        icon1.addFile(u":/icons/icons/0x0.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_exp_hex.setIcon(icon1)
         self.btn_exp_hex.setIconSize(QSize(40, 40))
 
         self.horizontalLayout.addWidget(self.btn_exp_hex)
@@ -448,9 +379,9 @@ class Ui_Main(object):
 "{\n"
 "	background-color: rgba(121, 201, 202, 0.3);\n"
 "}")
-        icon3 = QIcon()
-        icon3.addFile(u":/icons/icons/101.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btn_exp_bin.setIcon(icon3)
+        icon2 = QIcon()
+        icon2.addFile(u":/icons/icons/101.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_exp_bin.setIcon(icon2)
         self.btn_exp_bin.setIconSize(QSize(40, 40))
 
         self.horizontalLayout.addWidget(self.btn_exp_bin)
@@ -772,11 +703,6 @@ class Ui_Main(object):
         Main.setWindowTitle(QCoreApplication.translate("Main", u"HEX files tools", None))
         self.name_prj.setText(QCoreApplication.translate("Main", u"\u0418\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439 \u0434\u043b\u044f \u0440\u0430\u0431\u043e\u0442\u044b \u0441 HEX-\u0444\u0430\u0439\u043b\u0430\u043c\u0438", None))
         self.files_title.setText(QCoreApplication.translate("Main", u"\u0424\u0430\u0439\u043b\u044b", None))
-        self.btn_file_1.setText(QCoreApplication.translate("Main", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c", None))
-        self.btn_file_2.setText(QCoreApplication.translate("Main", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c", None))
-        self.btn_file_3.setText(QCoreApplication.translate("Main", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c", None))
-        self.btn_file_4.setText(QCoreApplication.translate("Main", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c", None))
-        self.btn_file_5.setText(QCoreApplication.translate("Main", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c", None))
         self.tools_title.setText(QCoreApplication.translate("Main", u"\u0418\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u044b", None))
         self.btn_merge.setText(QCoreApplication.translate("Main", u"\u041e\u0431\u044a\u0435\u0434\u0438\u043d\u0438\u0442\u044c", None))
 #if QT_CONFIG(shortcut)
