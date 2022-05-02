@@ -62,7 +62,7 @@ class ParserHex:
                  mes_err: error message
         """
         self.data_hex_list.clear()
-        flag_err, mes_err = False, 'Файл обработан'
+        flag_err, mes_err = False, ' обработан'
 
         for file_name, file_path in hex_files_list.items():
             try:
@@ -71,10 +71,10 @@ class ParserHex:
                 if processing_file_line_by_line(data_hex_file, regions_hex_file):
                     self.data_hex_list[file_name] = regions_hex_file
                 else:
-                    flag_err, mes = True, 'Файл поврежден'
+                    flag_err, mes_err = True, ' поврежден'
                 data_hex_file.close()
             except FileNotFoundError:
-                flag_err, mes = True, 'Файл не найден'
+                flag_err, mes_err = True, ' не найден'
                 continue
 
         return flag_err, mes_err
