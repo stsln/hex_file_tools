@@ -9,17 +9,18 @@ from design import Ui_Main
 
 hex_files = {}
 data_hex = parser_hex_files.ParserHex()
+select_file = []
 
 
 class ToolButtonFile(QtWidgets.QWidget):
-    def __init__(self, obj_name, path_icon, files_lt, parent=None):
+    def __init__(self, obj_name, path_icon, parent=None):
         super(ToolButtonFile, self).__init__(parent)
 
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         size_policy.setHorizontalStretch(0)
         size_policy.setVerticalStretch(0)
 
-        self.file_btn = QToolButton(files_lt)
+        self.file_btn = QToolButton(parent)
         self.file_btn.setObjectName(obj_name)
         self.file_btn.setIcon(QtGui.QIcon(path_icon))
         self.file_btn.setIconSize(QtCore.QSize(60, 60))
@@ -29,6 +30,7 @@ class ToolButtonFile(QtWidgets.QWidget):
         self.file_btn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.file_btn.setChecked(False)
         self.file_btn.setSizePolicy(size_policy)
+        self.file_btn.is_select = False
         size_policy.setHeightForWidth(self.file_btn.sizePolicy().hasHeightForWidth())
 
         lt = QtWidgets.QVBoxLayout(self)
@@ -36,12 +38,24 @@ class ToolButtonFile(QtWidgets.QWidget):
         lt.setContentsMargins(0, 0, 0, 0)
         lt.addWidget(self.file_btn)
 
+    def mousePressEvent(self, event):
+        btn = event.button()
+        if btn == QtCore.Qt.RightButton and self.file_btn.text() != 'Добавить':
+            if self.file_btn.is_select:
+                self.setStyleSheet('QToolButton {border: 1px solid #C4C4C4;}')
+                self.file_btn.is_select = False
+                select_file.clear()
+            else:
+                self.setStyleSheet('QToolButton {border: 1px solid #2F8DEC;}')
+                self.file_btn.is_select = True
+                select_file.append(self.file_btn)
+
 
 class WidgetFile(QtWidgets.QWidget):
-    def __init__(self, obj_name, files_lt, parent=None):
+    def __init__(self, obj_name, parent=None):
         super(WidgetFile, self).__init__(parent)
 
-        self.btn = ToolButtonFile(obj_name, 'icons/file_off.png', files_lt)
+        self.btn = ToolButtonFile(obj_name, 'icons/file_off.png', self)
 
         vtv = QtWidgets.QVBoxLayout(self)
         vtv.addWidget(self.btn)
@@ -49,20 +63,16 @@ class WidgetFile(QtWidgets.QWidget):
         vtv.setContentsMargins(0, 0, 0, 0)
         vtv.addStretch()
 
-        btn_cls = QPushButton('r', self.btn.file_btn)
-        btn_cls.setMinimumSize(30, 30)
-        btn_cls.setMaximumSize(30, 30)
-        btn_cls.setObjectName('btn_cls')
-        btn_cls.move(1, 1)
-        btn_cls.hide()
-        btn_cls.setStyleSheet('#btn_cls {font-family: "Webdings"; font-weight: 400;'
-                              'border-radius: 15px; border-color: #fff}'
-                              '#btn_cls:hover {color: white; background: rgba(229, 46, 46, 0.6);}'
-                              '#btn_cls:pressed {color: white; background: rgba(229, 46, 46, 0.8);}')
-
-        vth = QtWidgets.QHBoxLayout(self)
-        vth.addItem(QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum))
-        vth.addWidget(btn_cls)
+        self.btn_cls = QPushButton('r', self.btn.file_btn)
+        self.btn_cls.setMinimumSize(30, 30)
+        self.btn_cls.setMaximumSize(30, 30)
+        self.btn_cls.move(1, 1)
+        self.btn_cls.hide()
+        self.btn_cls.setObjectName('btn_cls')
+        self.btn_cls.setStyleSheet('#btn_cls {font-family: "Webdings"; font-weight: 400;'
+                                   'border-radius: 15px; border-color: #fff}'
+                                   '#btn_cls:hover   {color: white; background: rgba(229, 46, 46, 0.6);}'
+                                   '#btn_cls:pressed {color: white; background: rgba(229, 46, 46, 0.8);}')
 
 
 class Main(QMainWindow):
@@ -71,25 +81,25 @@ class Main(QMainWindow):
         self.ui = Ui_Main()
         self.ui.setupUi(self)
 
-        wgt_fl_1 = WidgetFile('btn_file_1', self.ui.files)
-        btn_fl_1 = wgt_fl_1.btn
-        btn_fl_1_cls = wgt_fl_1.findChildren(QPushButton)[0]
+        wgt_fl_1 = WidgetFile('btn_file_1')
+        btn_fl_1 = wgt_fl_1.btn.file_btn
+        btn_fl_1_cls = wgt_fl_1.btn_cls
 
-        wgt_fl_2 = WidgetFile('btn_file_2', self.ui.files)
-        btn_fl_2 = wgt_fl_2.btn
-        btn_fl_2_cls = wgt_fl_2.findChildren(QPushButton)[0]
+        wgt_fl_2 = WidgetFile('btn_file_2')
+        btn_fl_2 = wgt_fl_2.btn.file_btn
+        btn_fl_2_cls = wgt_fl_2.btn_cls
 
-        wgt_fl_3 = WidgetFile('btn_file_3', self.ui.files)
-        btn_fl_3 = wgt_fl_3.btn
-        btn_fl_3_cls = wgt_fl_3.findChildren(QPushButton)[0]
+        wgt_fl_3 = WidgetFile('btn_file_3')
+        btn_fl_3 = wgt_fl_3.btn.file_btn
+        btn_fl_3_cls = wgt_fl_3.btn_cls
 
-        wgt_fl_4 = WidgetFile('btn_file_4', self.ui.files)
-        btn_fl_4 = wgt_fl_4.btn
-        btn_fl_4_cls = wgt_fl_4.findChildren(QPushButton)[0]
+        wgt_fl_4 = WidgetFile('btn_file_4')
+        btn_fl_4 = wgt_fl_4.btn.file_btn
+        btn_fl_4_cls = wgt_fl_4.btn_cls
 
-        wgt_fl_5 = WidgetFile('btn_file_5', self.ui.files)
-        btn_fl_5 = wgt_fl_5.btn
-        btn_fl_5_cls = wgt_fl_5.findChildren(QPushButton)[0]
+        wgt_fl_5 = WidgetFile('btn_file_5')
+        btn_fl_5 = wgt_fl_5.btn.file_btn
+        btn_fl_5_cls = wgt_fl_5.btn_cls
 
         self.ui.files_lt.addWidget(wgt_fl_1)
         self.ui.files_lt.addWidget(wgt_fl_2)
@@ -102,11 +112,11 @@ class Main(QMainWindow):
         QtGui.QFontDatabase.addApplicationFont('fonts/JetBrainsMono-Regular.ttf')
 
         # buttons file
-        btn_fl_1.findChildren(QToolButton)[0].clicked.connect(lambda: self.choose_file(btn_fl_1, btn_fl_1_cls))
-        btn_fl_2.findChildren(QToolButton)[0].clicked.connect(lambda: self.choose_file(btn_fl_2, btn_fl_2_cls))
-        btn_fl_3.findChildren(QToolButton)[0].clicked.connect(lambda: self.choose_file(btn_fl_3, btn_fl_3_cls))
-        btn_fl_4.findChildren(QToolButton)[0].clicked.connect(lambda: self.choose_file(btn_fl_4, btn_fl_4_cls))
-        btn_fl_5.findChildren(QToolButton)[0].clicked.connect(lambda: self.choose_file(btn_fl_5, btn_fl_5_cls))
+        btn_fl_1.clicked.connect(lambda: self.choose_file(btn_fl_1, btn_fl_1_cls))
+        btn_fl_2.clicked.connect(lambda: self.choose_file(btn_fl_2, btn_fl_2_cls))
+        btn_fl_3.clicked.connect(lambda: self.choose_file(btn_fl_3, btn_fl_3_cls))
+        btn_fl_4.clicked.connect(lambda: self.choose_file(btn_fl_4, btn_fl_4_cls))
+        btn_fl_5.clicked.connect(lambda: self.choose_file(btn_fl_5, btn_fl_5_cls))
 
         # buttons close file
         btn_fl_1_cls.clicked.connect(lambda: self.close_file(btn_fl_1, btn_fl_1_cls))
@@ -155,16 +165,16 @@ class Main(QMainWindow):
             if file_name:
                 hex_files[file_name] = file_path
                 flag_err, mes_err = data_hex.processing(hex_files)
-                self.ui.message_label.setText(mes_err)
+                self.ui.message_label.setText(mes_err)  # переделать в message box
 
                 if flag_err:
                     del hex_files[file_name]
                 else:
-                    if btn_fl.file_btn.text() != 'Добавить':
-                        del hex_files[btn_fl.file_btn.text()]
-                        del data_hex.data_hex_list[btn_fl.file_btn.text()]
-                    btn_fl.file_btn.setText(file_name)
-                    btn_fl.file_btn.setIcon(QtGui.QIcon('icons/file_on.png'))
+                    if btn_fl.text() != 'Добавить':
+                        del hex_files[btn_fl.text()]
+                        del data_hex.data_hex_list[btn_fl.text()]
+                    btn_fl.setText(file_name)
+                    btn_fl.setIcon(QtGui.QIcon('icons/file_on.png'))
                     btn_fl_cls.show()
                     self.update_list_widget()
 
@@ -235,11 +245,17 @@ class Main(QMainWindow):
         if in_hex:
             reg_list = self.get_data_list_widget()
             if reg_list:
+                msg_box = QMessageBox()
+                msg_box.setWindowTitle('Инструменты')
+                msg_box.setText('Экспорт')
                 if data_hex.merge(reg_list):
-                    # переделать в message box
-                    self.ui.message_label.setText('Успешное объединение')
+                    msg_box.setIcon(QMessageBox.Information)
+                    msg_box.setInformativeText('Успешный экспорт')
                 else:
-                    self.ui.message_label.setText('Ошибка объединения')
+                    msg_box.setIcon(QMessageBox.Warning)
+                    msg_box.setInformativeText('Ошибка экспорта')
+                msg_box.setDefaultButton(QMessageBox.Ok)
+                msg_box.exec()
         elif in_bin:
             # реализовать
             pass
@@ -301,13 +317,17 @@ class Main(QMainWindow):
             self.ui.text_ofs_reg.setPlainText(self.ui.text_ofs_reg.toPlainText()[0:4])
 
     def close_file(self, btn_file, btn_close):
-        text = btn_file.file_btn.text()
+        text = btn_file.text()
         del hex_files[text]
         self.update_data()
         self.update_list_widget()
-        btn_file.file_btn.setText('Добавить')
-        btn_file.file_btn.setIcon(QtGui.QIcon('icons/file_off.png'))
+        btn_file.setText('Добавить')
+        btn_file.setIcon(QtGui.QIcon('icons/file_off.png'))
         btn_close.hide()
+        if btn_file.is_select:
+            btn_file.setStyleSheet('QToolButton {border: 1px solid #C4C4C4;}')
+            btn_file.file_btn.is_select = False
+            select_file.clear()
 
     @staticmethod
     def split_item_list_widget(item):
