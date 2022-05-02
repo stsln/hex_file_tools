@@ -9,7 +9,7 @@ from design import Ui_Main
 
 hex_files = {}
 data_hex = parser_hex_files.ParserHex()
-select_file = []
+select_file = {}
 
 
 class ToolButtonFile(QtWidgets.QWidget):
@@ -30,7 +30,6 @@ class ToolButtonFile(QtWidgets.QWidget):
         self.file_btn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.file_btn.setChecked(False)
         self.file_btn.setSizePolicy(size_policy)
-        self.file_btn.is_select = False
         size_policy.setHeightForWidth(self.file_btn.sizePolicy().hasHeightForWidth())
 
         lt = QtWidgets.QVBoxLayout(self)
@@ -41,14 +40,21 @@ class ToolButtonFile(QtWidgets.QWidget):
     def mousePressEvent(self, event):
         btn = event.button()
         if btn == QtCore.Qt.RightButton and self.file_btn.text() != 'Добавить':
-            if self.file_btn.is_select:
+            if self.file_btn.objectName() in select_file.keys():
                 self.setStyleSheet('QToolButton {border: 1px solid #C4C4C4;}')
-                self.file_btn.is_select = False
                 select_file.clear()
             else:
+                if select_file.keys():
+                    select_file_keys = []
+                    for select_ks in select_file.keys():
+                        select_vls = select_file.get(select_ks)
+                        select_vls.setStyleSheet('QToolButton {border: 1px solid #C4C4C4;}')
+                        select_file_keys.append(select_ks)
+                    for _ in select_file_keys:
+                        del select_file[_]
+
                 self.setStyleSheet('QToolButton {border: 1px solid #2F8DEC;}')
-                self.file_btn.is_select = True
-                select_file.append(self.file_btn)
+                select_file[self.file_btn.objectName()] = self
 
 
 class WidgetFile(QtWidgets.QWidget):
@@ -112,18 +118,18 @@ class Main(QMainWindow):
         QtGui.QFontDatabase.addApplicationFont('fonts/JetBrainsMono-Regular.ttf')
 
         # buttons file
-        btn_fl_1.clicked.connect(lambda: self.choose_file(btn_fl_1, btn_fl_1_cls))
-        btn_fl_2.clicked.connect(lambda: self.choose_file(btn_fl_2, btn_fl_2_cls))
-        btn_fl_3.clicked.connect(lambda: self.choose_file(btn_fl_3, btn_fl_3_cls))
-        btn_fl_4.clicked.connect(lambda: self.choose_file(btn_fl_4, btn_fl_4_cls))
-        btn_fl_5.clicked.connect(lambda: self.choose_file(btn_fl_5, btn_fl_5_cls))
+        btn_fl_1.clicked.connect(lambda: self.choose_file(wgt_fl_1, btn_fl_1, btn_fl_1_cls))
+        btn_fl_2.clicked.connect(lambda: self.choose_file(wgt_fl_2, btn_fl_2, btn_fl_2_cls))
+        btn_fl_3.clicked.connect(lambda: self.choose_file(wgt_fl_3, btn_fl_3, btn_fl_3_cls))
+        btn_fl_4.clicked.connect(lambda: self.choose_file(wgt_fl_4, btn_fl_4, btn_fl_4_cls))
+        btn_fl_5.clicked.connect(lambda: self.choose_file(wgt_fl_5, btn_fl_5, btn_fl_5_cls))
 
         # buttons close file
-        btn_fl_1_cls.clicked.connect(lambda: self.close_file(btn_fl_1, btn_fl_1_cls))
-        btn_fl_2_cls.clicked.connect(lambda: self.close_file(btn_fl_2, btn_fl_2_cls))
-        btn_fl_3_cls.clicked.connect(lambda: self.close_file(btn_fl_3, btn_fl_3_cls))
-        btn_fl_4_cls.clicked.connect(lambda: self.close_file(btn_fl_4, btn_fl_4_cls))
-        btn_fl_5_cls.clicked.connect(lambda: self.close_file(btn_fl_5, btn_fl_5_cls))
+        btn_fl_1_cls.clicked.connect(lambda: self.close_file(wgt_fl_1, btn_fl_1, btn_fl_1_cls))
+        btn_fl_2_cls.clicked.connect(lambda: self.close_file(wgt_fl_2, btn_fl_2, btn_fl_2_cls))
+        btn_fl_3_cls.clicked.connect(lambda: self.close_file(wgt_fl_3, btn_fl_3, btn_fl_3_cls))
+        btn_fl_4_cls.clicked.connect(lambda: self.close_file(wgt_fl_4, btn_fl_4, btn_fl_4_cls))
+        btn_fl_5_cls.clicked.connect(lambda: self.close_file(wgt_fl_5, btn_fl_5, btn_fl_5_cls))
 
         # button merge
         self.ui.btn_merge.clicked.connect(lambda: self.merge())
@@ -149,15 +155,15 @@ class Main(QMainWindow):
         vs_adr.valueChanged.connect(lambda: self.change_scroll(vs_adr, vs_data))
         vs_data.valueChanged.connect(lambda: self.change_scroll(vs_data, vs_adr))
 
-    def choose_file(self, btn_fl, btn_fl_cls):
+    def choose_file(self, wgt_fl, btn_fl, btn_fl_cls):
         file_path = QtWidgets.QFileDialog.getOpenFileName(self, 'Выберите файл для добавления в список', '',
                                                           'Hex Files (*.hex)')[0]
         file_name = os.path.basename(file_path)[0:-4]
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle('Добавление файла')
+        msg_box.setText('Ошибка добавления файла')
+        msg_box.setIcon(QMessageBox.Critical)
         if file_name in hex_files.keys():
-            msg_box = QMessageBox()
-            msg_box.setWindowTitle('Добавление файла')
-            msg_box.setText('Ошибка добавления файла')
-            msg_box.setIcon(QMessageBox.Critical)
             msg_box.setInformativeText('Файл ' + file_name + ' уже добавлен')
             msg_box.setDefaultButton(QMessageBox.Ok)
             msg_box.exec()
@@ -165,14 +171,18 @@ class Main(QMainWindow):
             if file_name:
                 hex_files[file_name] = file_path
                 flag_err, mes_err = data_hex.processing(hex_files)
-                self.ui.message_label.setText(mes_err)  # переделать в message box
-
                 if flag_err:
                     del hex_files[file_name]
+                    msg_box.setInformativeText('Файл ' + file_name + mes_err)
+                    msg_box.setDefaultButton(QMessageBox.Ok)
+                    msg_box.exec()
                 else:
                     if btn_fl.text() != 'Добавить':
                         del hex_files[btn_fl.text()]
                         del data_hex.data_hex_list[btn_fl.text()]
+                        if btn_fl.objectName() in select_file.keys():
+                            wgt_fl.btn.setStyleSheet('QToolButton {border: 1px solid #C4C4C4;}')
+                            select_file.clear()
                     btn_fl.setText(file_name)
                     btn_fl.setIcon(QtGui.QIcon('icons/file_on.png'))
                     btn_fl_cls.show()
@@ -316,7 +326,7 @@ class Main(QMainWindow):
         if len(self.ui.text_ofs_reg.toPlainText()) > 4:
             self.ui.text_ofs_reg.setPlainText(self.ui.text_ofs_reg.toPlainText()[0:4])
 
-    def close_file(self, btn_file, btn_close):
+    def close_file(self, wgt_fl, btn_file, btn_close):
         text = btn_file.text()
         del hex_files[text]
         self.update_data()
@@ -324,9 +334,8 @@ class Main(QMainWindow):
         btn_file.setText('Добавить')
         btn_file.setIcon(QtGui.QIcon('icons/file_off.png'))
         btn_close.hide()
-        if btn_file.is_select:
-            btn_file.setStyleSheet('QToolButton {border: 1px solid #C4C4C4;}')
-            btn_file.file_btn.is_select = False
+        if btn_file.objectName() in select_file.keys():
+            wgt_fl.btn.setStyleSheet('QToolButton {border: 1px solid #C4C4C4;}')
             select_file.clear()
 
     @staticmethod
