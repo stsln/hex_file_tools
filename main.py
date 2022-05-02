@@ -61,15 +61,15 @@ class WidgetFile(QtWidgets.QWidget):
     def __init__(self, obj_name, parent=None):
         super(WidgetFile, self).__init__(parent)
 
-        self.btn = ToolButtonFile(obj_name, 'icons/file_off.png', self)
+        self.btn_override = ToolButtonFile(obj_name, 'icons/file_off.png', self)
 
         vtv = QtWidgets.QVBoxLayout(self)
-        vtv.addWidget(self.btn)
+        vtv.addWidget(self.btn_override)
         vtv.setSpacing(0)
         vtv.setContentsMargins(0, 0, 0, 0)
         vtv.addStretch()
 
-        self.btn_cls = QPushButton('r', self.btn.file_btn)
+        self.btn_cls = QPushButton('r', self.btn_override.file_btn)
         self.btn_cls.setMinimumSize(30, 30)
         self.btn_cls.setMaximumSize(30, 30)
         self.btn_cls.move(1, 1)
@@ -88,23 +88,23 @@ class Main(QMainWindow):
         self.ui.setupUi(self)
 
         wgt_fl_1 = WidgetFile('btn_file_1')
-        btn_fl_1 = wgt_fl_1.btn.file_btn
+        btn_fl_1 = wgt_fl_1.btn_override.file_btn
         btn_fl_1_cls = wgt_fl_1.btn_cls
 
         wgt_fl_2 = WidgetFile('btn_file_2')
-        btn_fl_2 = wgt_fl_2.btn.file_btn
+        btn_fl_2 = wgt_fl_2.btn_override.file_btn
         btn_fl_2_cls = wgt_fl_2.btn_cls
 
         wgt_fl_3 = WidgetFile('btn_file_3')
-        btn_fl_3 = wgt_fl_3.btn.file_btn
+        btn_fl_3 = wgt_fl_3.btn_override.file_btn
         btn_fl_3_cls = wgt_fl_3.btn_cls
 
         wgt_fl_4 = WidgetFile('btn_file_4')
-        btn_fl_4 = wgt_fl_4.btn.file_btn
+        btn_fl_4 = wgt_fl_4.btn_override.file_btn
         btn_fl_4_cls = wgt_fl_4.btn_cls
 
         wgt_fl_5 = WidgetFile('btn_file_5')
-        btn_fl_5 = wgt_fl_5.btn.file_btn
+        btn_fl_5 = wgt_fl_5.btn_override.file_btn
         btn_fl_5_cls = wgt_fl_5.btn_cls
 
         self.ui.files_lt.addWidget(wgt_fl_1)
@@ -181,7 +181,7 @@ class Main(QMainWindow):
                         del hex_files[btn_fl.text()]
                         del data_hex.data_hex_list[btn_fl.text()]
                         if btn_fl.objectName() in select_file.keys():
-                            wgt_fl.btn.setStyleSheet('QToolButton {border: 1px solid #C4C4C4;}')
+                            wgt_fl.btn_override.setStyleSheet('QToolButton {border: 1px solid #C4C4C4;}')
                             select_file.clear()
                     btn_fl.setText(file_name)
                     btn_fl.setIcon(QtGui.QIcon('icons/file_on.png'))
@@ -335,7 +335,7 @@ class Main(QMainWindow):
         btn_file.setIcon(QtGui.QIcon('icons/file_off.png'))
         btn_close.hide()
         if btn_file.objectName() in select_file.keys():
-            wgt_fl.btn.setStyleSheet('QToolButton {border: 1px solid #C4C4C4;}')
+            wgt_fl.btn_override.setStyleSheet('QToolButton {border: 1px solid #C4C4C4;}')
             select_file.clear()
 
     @staticmethod
