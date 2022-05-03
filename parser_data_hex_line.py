@@ -389,19 +389,28 @@ class RegionsList:
         """
         pass
 
-    def save_hex_region(self, old_reg_adr: str, new_reg_adr: str, load_ofs_adr: str, reg_data: str) -> bool:
+    def save_hex_region(self, old_reg_adr: str, new_reg_adr: str, load_ofs_adr: str, reg_data: str,
+                        is_new_data: bool = False) -> bool:
         """
-        Function saves the hex region if changes have been made to the
-        old region in the editor or new data has been added.
-        Описать параметры!
+        Function saves the hex region if changes have been made to the old region in the editor
+        or new data has been added
+        :param old_reg_adr: old region address
+        :param new_reg_adr: new region address
+        :param load_ofs_adr: load offset addresses
+        :param reg_data: region data
+        :param is_new_data: new data region is being added
+        :return: True - successful saving,
+                 False - saving error
         """
         reg_list_copy = copy.deepcopy(self.reg_list)
         new_reg_adr = new_reg_adr.rjust(4, '0')
         flag_err = False
 
         if new_reg_adr not in self.reg_list.keys() and len(new_reg_adr) <= 4 or new_reg_adr == old_reg_adr:
+            if is_new_data:
+                self.create_new_reg(new_reg_adr)
             if self.reg_list[old_reg_adr].save_hex_region(new_reg_adr, load_ofs_adr, reg_data):
-                if new_reg_adr != old_reg_adr:
+                if new_reg_adr != old_reg_adr and not is_new_data:
                     self.reg_list[new_reg_adr] = self.reg_list.pop(old_reg_adr)
             else:
                 self.reg_list = copy.deepcopy(reg_list_copy)
