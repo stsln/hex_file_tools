@@ -295,7 +295,7 @@ class Main(QMainWindow):
             if self.check_void_editor():
                 flag_err = True
             else:
-                if self.ui.reg_list.currentItem():
+                if self.ui.reg_list.currentItem() and not self.ui.lable_ofs_and_file.is_new:
                     old_reg_adr, hex_name = self.split_item_list_widget(self.ui.reg_list.currentItem())
                 else:
                     old_reg_adr = new_reg_adr
@@ -331,6 +331,7 @@ class Main(QMainWindow):
         self.clear_editor()
         if fl_nm:
             self.ui.lable_ofs_and_file.setText('Смещение региона, файла ' + fl_nm)
+            self.ui.lable_ofs_and_file.is_new = True
         elif self.ui.reg_list.currentItem():
             reg_adr, hex_name = self.split_item_list_widget(self.ui.reg_list.currentItem())
             reg_adr, load_ofs_adr, reg_data = data_hex.data_hex_list[hex_name].reg_list[reg_adr].get_hex_editor()
@@ -344,6 +345,7 @@ class Main(QMainWindow):
         self.ui.hex_adr_plainTextEdit.clear()
         self.ui.hex_data_plainTextEdit.clear()
         self.ui.lable_ofs_and_file.setText('Смещение региона, файла ...')
+        self.ui.lable_ofs_and_file.is_new = False
 
     def ofs_reg_changed(self):
         if len(self.ui.text_ofs_reg.toPlainText()) > 4:
