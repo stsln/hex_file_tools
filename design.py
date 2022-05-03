@@ -625,6 +625,7 @@ class Ui_Main(object):
 "	border: 0;\n"
 "	text-align: left;\n"
 "}")
+        self.lable_ofs_and_file.setProperty("is_new", False)
 
         self.gridLayout.addWidget(self.lable_ofs_and_file, 0, 1, 1, 1)
 

@@ -980,6 +980,9 @@ QTabWidget::pane
                   <property name="text">
                    <string>Смещение региона, файла ...</string>
                   </property>
+                  <property name="is_new" stdset="0">
+                   <bool>false</bool>
+                  </property>
                  </widget>
                 </item>
                 <item row="1" column="0">
