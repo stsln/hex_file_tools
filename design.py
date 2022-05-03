@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 ################################################################################
 ## Form generated from reading UI file 'design.ui'
 ##
@@ -31,6 +33,7 @@ class Ui_Main(object):
         self.centralwidget.setStyleSheet(u"QWidget\n"
 "{\n"
 "	background-color: #fff;\n"
+"	color: #000;\n"
 "}")
         self.main_lt = QVBoxLayout(self.centralwidget)
         self.main_lt.setSpacing(15)
@@ -60,7 +63,6 @@ class Ui_Main(object):
 "{\n"
 "	background-color: #FAFAFA;\n"
 "	border: 1px solid #C4C4C4;\n"
-"	box-sizing: border-box;\n"
 "	border-radius: 16px;\n"
 "}")
         self.main_frame_lt.setFrameShape(QFrame.StyledPanel)
