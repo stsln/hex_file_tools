@@ -139,15 +139,15 @@ class Main(QMainWindow):
         self.ui.btn_exp_bin.clicked.connect(lambda: self.export(in_bin=True))
 
         # button add, save, delete region
-        self.ui.btn_new_reg.clicked.connect(lambda: self.add_new_reg())
-        self.ui.btn_save.clicked.connect(lambda: self.save())
+        self.ui.btn_new_reg.clicked.connect(lambda: self.create_new_reg())
+        self.ui.btn_save.clicked.connect(lambda: self.save_editor())
         self.ui.btn_del.clicked.connect(lambda: self.delete())
 
         # regions list
         self.ui.reg_list.clicked.connect(lambda: self.fill_editor())
 
         # checking for overflow text
-        self.ui.text_ofs_reg.textChanged.connect(lambda: self.text_changed())
+        self.ui.text_ofs_reg.textChanged.connect(lambda: self.ofs_reg_changed())
 
         # synchronized scrolling
         vs_adr = self.ui.hex_adr_plainTextEdit.verticalScrollBar()
@@ -270,17 +270,39 @@ class Main(QMainWindow):
             # реализовать
             pass
 
-    def add_new_reg(self):
-        pass
+    def create_new_reg(self):
+        select_nm_btn = list(select_file.keys())
+        if select_nm_btn:
+            self.fill_editor(select_file.get(select_nm_btn[0]).file_btn.text())
+        else:
+            msg_box = QMessageBox()
+            msg_box.setWindowTitle('Инструменты')
+            msg_box.setText('Добавить регион')
+            msg_box.setIcon(QMessageBox.Warning)
+            msg_box.setInformativeText('Не выбран главный файл, чтобы это сделать нажмите правой кнопкой '
+                                       'мыши по любому из добавленных файлов')
+            msg_box.setDefaultButton(QMessageBox.Ok)
+            msg_box.exec()
 
-    def save(self):
-        if self.has_files():
-            old_reg_adr, hex_name = self.split_item_list_widget(self.ui.reg_list.currentItem())
+    def save_editor(self):
+        hex_name = self.ui.lable_ofs_and_file.text().split()[-1]
+        flag_new_reg = False
+        if hex_name != '...':
             new_reg_adr = self.ui.text_ofs_reg.toPlainText()
             load_ofs_adr = self.ui.hex_adr_plainTextEdit.toPlainText()
             reg_data = self.ui.hex_data_plainTextEdit.toPlainText()
-            flag_err = data_hex.data_hex_list[hex_name].save_hex_region(old_reg_adr, new_reg_adr,
-                                                                        load_ofs_adr, reg_data)
+
+            if self.check_void_editor():
+                flag_err = True
+            else:
+                if self.ui.reg_list.currentItem():
+                    old_reg_adr, hex_name = self.split_item_list_widget(self.ui.reg_list.currentItem())
+                else:
+                    old_reg_adr = new_reg_adr
+                    flag_new_reg = True
+
+                flag_err = data_hex.data_hex_list[hex_name].save_hex_region(old_reg_adr, new_reg_adr, load_ofs_adr,
+                                                                            reg_data, flag_new_reg)
             msg_box = QMessageBox()
             msg_box.setWindowTitle('Инструменты')
             msg_box.setText('Сохранение')
@@ -291,25 +313,41 @@ class Main(QMainWindow):
                 data_hex.save_file(hex_name, file_path=hex_files[hex_name])
                 self.update_data()
                 self.update_list_widget()
+                self.clear_editor()
                 msg_box.setIcon(QMessageBox.Information)
                 msg_box.setInformativeText('Изменения были успешно сохранены')
 
             msg_box.setDefaultButton(QMessageBox.Ok)
             msg_box.exec()
 
-    def fill_editor(self):
-        if self.ui.reg_list.currentItem():
+    def check_void_editor(self):
+        if self.ui.text_ofs_reg.toPlainText() == '' or self.ui.hex_adr_plainTextEdit.toPlainText() == '' or \
+                self.ui.hex_data_plainTextEdit.toPlainText() == '':
+            return True
+        else:
+            return False
+
+    def fill_editor(self, fl_nm=None):
+        self.clear_editor()
+        if fl_nm:
+            self.ui.lable_ofs_and_file.setText('Смещение региона, файла ' + fl_nm)
+        elif self.ui.reg_list.currentItem():
             reg_adr, hex_name = self.split_item_list_widget(self.ui.reg_list.currentItem())
             reg_adr, load_ofs_adr, reg_data = data_hex.data_hex_list[hex_name].reg_list[reg_adr].get_hex_editor()
             self.ui.text_ofs_reg.setPlainText(reg_adr)
             self.ui.hex_adr_plainTextEdit.setPlainText(load_ofs_adr)
             self.ui.hex_data_plainTextEdit.setPlainText(reg_data)
             self.ui.lable_ofs_and_file.setText('Смещение региона, файла ' + hex_name)
-        else:
-            self.ui.text_ofs_reg.setPlainText('')
-            self.ui.hex_adr_plainTextEdit.setPlainText('')
-            self.ui.hex_data_plainTextEdit.setPlainText('')
-            self.ui.lable_ofs_and_file.setText('Смещение региона, файла ...')
+
+    def clear_editor(self):
+        self.ui.text_ofs_reg.clear()
+        self.ui.hex_adr_plainTextEdit.clear()
+        self.ui.hex_data_plainTextEdit.clear()
+        self.ui.lable_ofs_and_file.setText('Смещение региона, файла ...')
+
+    def ofs_reg_changed(self):
+        if len(self.ui.text_ofs_reg.toPlainText()) > 4:
+            self.ui.text_ofs_reg.setPlainText(self.ui.text_ofs_reg.toPlainText()[0:4])
 
     def update_list_widget(self):
         regs_list = data_hex.get_adr_reg()
@@ -321,10 +359,6 @@ class Main(QMainWindow):
                 item_list.setText(reg_adr + ' | ' + name_file)
                 self.ui.reg_list.addItem(item_list)
         self.fill_editor()
-
-    def text_changed(self):
-        if len(self.ui.text_ofs_reg.toPlainText()) > 4:
-            self.ui.text_ofs_reg.setPlainText(self.ui.text_ofs_reg.toPlainText()[0:4])
 
     def close_file(self, wgt_fl, btn_file, btn_close):
         text = btn_file.text()
