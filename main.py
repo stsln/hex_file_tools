@@ -335,10 +335,13 @@ class Main(QMainWindow):
         elif self.ui.reg_list.currentItem():
             reg_adr, hex_name = self.split_item_list_widget(self.ui.reg_list.currentItem())
             reg_adr, load_ofs_adr, reg_data = data_hex.data_hex_list[hex_name].reg_list[reg_adr].get_hex_editor()
+            # заполнение 1 вкладки
             self.ui.text_ofs_reg.setPlainText(reg_adr)
             self.ui.hex_adr_plainTextEdit.setPlainText(load_ofs_adr)
             self.ui.hex_data_plainTextEdit.setPlainText(reg_data)
             self.ui.lable_ofs_and_file.setText('Смещение региона, файла ' + hex_name)
+            # заполнение 2 вкладки
+            # hex_text = data_hex.data_hex_list[hex_name].reg_list[reg_adr].get_hex()
 
     def clear_editor(self):
         self.ui.text_ofs_reg.clear()
