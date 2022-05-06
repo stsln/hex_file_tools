@@ -283,6 +283,25 @@ class SegmentList:
 
         return region_adr, load_ofs_adr, region_data
 
+    def get_ascii_editor(self):
+        _, _, hex_text = self.get_hex_editor()
+        ascii_text = ''
+        for hex_line in hex_text.split():
+            n = 2
+            ascii_line = ''
+            for obj_hex in [hex_line[i:i + n] for i in range(0, len(hex_line), n)]:
+                obj_byte = bytes.fromhex(obj_hex)
+                try:
+                    obj_ascii = obj_byte.decode('ascii')
+                except UnicodeDecodeError:
+                    obj_ascii = '.'
+                if obj_ascii in ['\a', '\b', '\f', '\n', '\r', '\t', '\v', '\x00']:
+                    obj_ascii = '.'
+                ascii_line += obj_ascii
+            ascii_text += ascii_line + '\n'
+
+        return ascii_text
+
     def save_hex_region(self, reg_adr: str, load_ofs_adr: str, reg_data: str) -> bool:
         """
         Function saves the hex region if the data is error-free
@@ -387,6 +406,8 @@ class RegionsList:
         """
         Написать описание
         """
+        hex_line = "1a"
+        bin(int(hex_line, 16))[2:].zfill(8)
         pass
 
     def save_hex_region(self, old_reg_adr: str, new_reg_adr: str, load_ofs_adr: str, reg_data: str,

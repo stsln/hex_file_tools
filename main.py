@@ -152,8 +152,9 @@ class Main(QMainWindow):
         # synchronized scrolling
         vs_adr = self.ui.hex_adr_plainTextEdit.verticalScrollBar()
         vs_data = self.ui.hex_data_plainTextEdit.verticalScrollBar()
-        vs_adr.valueChanged.connect(lambda: self.change_scroll(vs_adr, vs_data))
-        vs_data.valueChanged.connect(lambda: self.change_scroll(vs_data, vs_adr))
+        vs_ascii = self.ui.ascii_plainTextEdit.verticalScrollBar()
+        vs_adr.valueChanged.connect(lambda: self.change_scroll(vs_adr, vs_data, vs_ascii))
+        vs_data.valueChanged.connect(lambda: self.change_scroll(vs_data, vs_adr, vs_ascii))
 
     def choose_file(self, wgt_fl, btn_fl, btn_fl_cls):
         file_path = QtWidgets.QFileDialog.getOpenFileName(self, 'Выберите файл для добавления в список', '',
@@ -335,15 +336,17 @@ class Main(QMainWindow):
         elif self.ui.reg_list.currentItem():
             reg_adr, hex_name = self.split_item_list_widget(self.ui.reg_list.currentItem())
             reg_adr, load_ofs_adr, reg_data = data_hex.data_hex_list[hex_name].reg_list[reg_adr].get_hex_editor()
-            # заполнение 1 вкладки
+            # заполнение 1 вкладки (hex)
             self.ui.text_ofs_reg.setPlainText(reg_adr)
             self.ui.hex_adr_plainTextEdit.setPlainText(load_ofs_adr)
             self.ui.hex_data_plainTextEdit.setPlainText(reg_data)
             self.ui.lable_ofs_and_file.setText('Смещение региона, файла ' + hex_name)
-            # заполнение 2 вкладки
-            # hex_text = data_hex.data_hex_list[hex_name].reg_list[reg_adr].get_hex()
+            # заполнение 2 вкладки (ascii)
+            self.ui.ascii_plainTextEdit.setPlainText(data_hex.data_hex_list[hex_name].reg_list[reg_adr].
+                                                     get_ascii_editor())
 
     def clear_editor(self):
+        self.ui.ascii_plainTextEdit.clear()
         self.ui.text_ofs_reg.clear()
         self.ui.hex_adr_plainTextEdit.clear()
         self.ui.hex_data_plainTextEdit.clear()
@@ -389,8 +392,9 @@ class Main(QMainWindow):
         return data_hex.processing(hex_files)
 
     @staticmethod
-    def change_scroll(changed_scroll, change_scroll):
-        change_scroll.setValue(changed_scroll.value())
+    def change_scroll(changed_scroll, change_scroll_1, change_scroll_2):
+        change_scroll_1.setValue(changed_scroll.value())
+        change_scroll_2.setValue(changed_scroll.value())
 
     @staticmethod
     def has_files():
