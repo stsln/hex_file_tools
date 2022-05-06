@@ -87,6 +87,8 @@ class Main(QMainWindow):
         self.ui = Ui_Main()
         self.ui.setupUi(self)
 
+        self.ui.ascii_plainTextEdit.setReadOnly(True)
+
         wgt_fl_1 = WidgetFile('btn_file_1')
         btn_fl_1 = wgt_fl_1.btn_override.file_btn
         btn_fl_1_cls = wgt_fl_1.btn_cls
@@ -155,6 +157,7 @@ class Main(QMainWindow):
         vs_ascii = self.ui.ascii_plainTextEdit.verticalScrollBar()
         vs_adr.valueChanged.connect(lambda: self.change_scroll(vs_adr, vs_data, vs_ascii))
         vs_data.valueChanged.connect(lambda: self.change_scroll(vs_data, vs_adr, vs_ascii))
+        vs_ascii.valueChanged.connect(lambda: self.change_scroll(vs_ascii, vs_data, vs_adr))
 
     def choose_file(self, wgt_fl, btn_fl, btn_fl_cls):
         file_path = QtWidgets.QFileDialog.getOpenFileName(self, 'Выберите файл для добавления в список', '',
