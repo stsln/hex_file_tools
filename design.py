@@ -664,9 +664,9 @@ class Ui_Main(object):
         self.gridLayout_2.setSpacing(0)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout_2.setContentsMargins(0, 15, 0, 0)
-        self.bin_plainTextEdit = QPlainTextEdit(self.tab_bin)
-        self.bin_plainTextEdit.setObjectName(u"bin_plainTextEdit")
-        self.bin_plainTextEdit.setStyleSheet(u"QPlainTextEdit\n"
+        self.ascii_plainTextEdit = QPlainTextEdit(self.tab_bin)
+        self.ascii_plainTextEdit.setObjectName(u"ascii_plainTextEdit")
+        self.ascii_plainTextEdit.setStyleSheet(u"QPlainTextEdit\n"
 "{\n"
 "	font-family: 'JetBrains Mono';\n"
 "	font-weight: 400;\n"
@@ -677,7 +677,7 @@ class Ui_Main(object):
 "	background-color: #FAFAFA;\n"
 "}")
 
-        self.gridLayout_2.addWidget(self.bin_plainTextEdit, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.ascii_plainTextEdit, 0, 0, 1, 1)
 
         self.tabWidget.addTab(self.tab_bin, "")
 
@@ -696,7 +696,7 @@ class Ui_Main(object):
 
         self.retranslateUi(Main)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(Main)
@@ -728,6 +728,6 @@ class Ui_Main(object):
 #endif // QT_CONFIG(shortcut)
         self.lable_ofs_and_file.setText(QCoreApplication.translate("Main", u"\u0421\u043c\u0435\u0449\u0435\u043d\u0438\u0435 \u0440\u0435\u0433\u0438\u043e\u043d\u0430, \u0444\u0430\u0439\u043b\u0430 ...", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_hex), QCoreApplication.translate("Main", u"hex", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_bin), QCoreApplication.translate("Main", u"bin", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_bin), QCoreApplication.translate("Main", u"ascii", None))
     # retranslateUi
 

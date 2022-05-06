@@ -873,7 +873,7 @@ QTabWidget::pane
 </string>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="tab_hex">
                <property name="styleSheet">
@@ -1033,7 +1033,7 @@ QTabWidget::pane
                 <string notr="true"/>
                </property>
                <attribute name="title">
-                <string>bin</string>
+                <string>ascii</string>
                </attribute>
                <layout class="QGridLayout" name="gridLayout_2">
                 <property name="leftMargin">
@@ -1052,7 +1052,7 @@ QTabWidget::pane
                  <number>0</number>
                 </property>
                 <item row="0" column="0">
-                 <widget class="QPlainTextEdit" name="bin_plainTextEdit">
+                 <widget class="QPlainTextEdit" name="ascii_plainTextEdit">
                   <property name="styleSheet">
                    <string notr="true">QPlainTextEdit
 {
