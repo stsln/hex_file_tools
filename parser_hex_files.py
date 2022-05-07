@@ -93,42 +93,47 @@ class ParserHex:
 
         return hex_files_adr_reg_dict
 
-    def save_file(self, name_file: str = '', file_path: str = '', hex_file_text: str = '',
-                  merge_file: bool = False, export_file: bool = False):
+    def save_file(self, name_file: str = '', file_path: str = '', file_text: str = '',
+                  merge_file: bool = False, export_file: bool = False, export_to_bin: bool = False):
         """
-        Function save modified hex file or hex text to file
+        Function save modified hex file or hex or bin text to file
         :param name_file: name of the file to be saved
         :param file_path: file path to save
         :param merge_file: True - hex text of merge files
-        :param export_file: True - hex text of export files
-        :param hex_file_text: hex text
+        :param export_file: True - hex or bin text of export files
+        :param export_to_bin: True - export file to bin
+        :param file_text: hex or bin text
         """
         if name_file in self.data_hex_list.keys():
-            hex_file_text = self.data_hex_list[name_file].gen_hex(is_end=True)
+            file_text = self.data_hex_list[name_file].gen_hex(is_end=True)
         elif merge_file:
             file_path = 'merge' + str(random.randrange(10000)) + '.hex'
         elif export_file:
-            file_path = 'export' + str(random.randrange(10000)) + '.hex'
+            file_path = 'export' + str(random.randrange(10000))
+            if export_to_bin:
+                file_path += '.bin'
+            else:
+                file_path += '.hex'
         else:
             file_path = 'hex_file' + str(random.randrange(10000)) + '.hex'
 
         hex_file = open(file_path, 'w')
-        hex_file.write(hex_file_text)
+        hex_file.write(file_text)
         hex_file.close()
 
-    def merge(self, reg_list: dict = None) -> bool:
+    def merge(self, reg_list: dict = None, in_bin: bool = False) -> bool:
         """
         Function merge all or part of the hex files data
         :param reg_list: regions that need to be merged
+        :param in_bin: means that you need to save to a bin file
         :return: True - merge successful, False - merge not successful
         """
         if reg_list:
             try:
-                text_hex_file_merge = ''
-                for reg, name_hex in reg_list.items():
-                    text_hex_file_merge += self.data_hex_list[name_hex].reg_list[reg].gen_hex() + '\n'
-                text_hex_file_merge += parser_data_hex_line.create_hex_line(0, parser_data_hex_line.TYPE_END_OF_FILE)
-                self.save_file(export_file=True, hex_file_text=text_hex_file_merge)
+                text_file_export = self.gen_hex(reg_list)
+                if in_bin:
+                    text_file_export = self.gen_bin(text_file_export)
+                self.save_file(export_file=True, file_text=text_file_export, export_to_bin=in_bin)
                 return True
             except FileNotFoundError:
                 return False
@@ -144,5 +149,31 @@ class ParserHex:
             for _, reg_list in self.data_hex_list.items():
                 text_hex_file_merge += reg_list.gen_hex()
             text_hex_file_merge += parser_data_hex_line.create_hex_line(0, parser_data_hex_line.TYPE_END_OF_FILE)
-            self.save_file(merge_file=True, hex_file_text=text_hex_file_merge)
+            self.save_file(merge_file=True, file_text=text_hex_file_merge)
             return True
+
+    def gen_hex(self, reg_list: dict) -> str:
+        """
+        The function converts regions from a dictionary to hex
+        :param reg_list: regions to convert to hex
+        :return: hex lines
+        """
+        text_hex = ''
+        for reg, name_hex in reg_list.items():
+            text_hex += self.data_hex_list[name_hex].reg_list[reg].gen_hex() + '\n'
+        text_hex += parser_data_hex_line.create_hex_line(0, parser_data_hex_line.TYPE_END_OF_FILE)
+
+        return text_hex
+
+    @staticmethod
+    def gen_bin(hex_lines: str) -> str:
+        """
+        Function converts the received hex lines into bin text
+        :param hex_lines: hex lines
+        :return: bin text
+        """
+        text_bin = ''
+        for hex_line in hex_lines.split():
+            text_bin += bin(int(hex_line[1:], 16))[2:].zfill(165) + '\n'
+
+        return text_bin
