@@ -26,7 +26,7 @@ class Ui_Main(object):
     def setupUi(self, Main):
         if not Main.objectName():
             Main.setObjectName(u"Main")
-        Main.resize(1075, 641)
+        Main.resize(1035, 641)
         Main.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         self.centralwidget = QWidget(Main)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -525,7 +525,7 @@ class Ui_Main(object):
 
         self.tabWidget = QTabWidget(self.editor)
         self.tabWidget.setObjectName(u"tabWidget")
-        self.tabWidget.setMinimumSize(QSize(500, 0))
+        self.tabWidget.setMinimumSize(QSize(460, 0))
         self.tabWidget.setCursor(QCursor(Qt.PointingHandCursor))
         self.tabWidget.setStyleSheet(u"QTabWiget\n"
 "{\n"
@@ -597,7 +597,7 @@ class Ui_Main(object):
 
         self.hex_data_plainTextEdit = QPlainTextEdit(self.tab_hex)
         self.hex_data_plainTextEdit.setObjectName(u"hex_data_plainTextEdit")
-        self.hex_data_plainTextEdit.setMinimumSize(QSize(400, 0))
+        self.hex_data_plainTextEdit.setMinimumSize(QSize(0, 0))
         self.hex_data_plainTextEdit.setStyleSheet(u"QPlainTextEdit\n"
 "{\n"
 "	font-family: 'JetBrains Mono';\n"
