@@ -389,6 +389,14 @@ class RegionsList:
         """
         return len(self.reg_list)
 
+    def delete(self, reg_adr: str):
+        """
+        Function removes the region from the hex file data
+        :param reg_adr: star offset address, which should be deleted
+        """
+        if reg_adr in self.reg_list.keys():
+            del self.reg_list[reg_adr]
+
     def gen_hex(self, is_end: bool = False, start_ofs_adr: str = '0x0000', end_ofs_adr: str = '0xFFFF') -> str:
         """
         Function generates hex lines of all region memory lists
@@ -407,14 +415,6 @@ class RegionsList:
             hex_lines_seg_list += create_hex_line(0, TYPE_END_OF_FILE)
 
         return hex_lines_seg_list
-
-    def gen_bin(self):
-        """
-        Написать описание
-        """
-        hex_line = "1a"
-        bin(int(hex_line, 16))[2:].zfill(8)
-        pass
 
     def save_hex_region(self, old_reg_adr: str, new_reg_adr: str, load_ofs_adr: str, reg_data: str,
                         is_new_data: bool = False) -> bool:
@@ -446,14 +446,6 @@ class RegionsList:
             flag_err = True
 
         return flag_err
-
-    def delete(self, reg_adr: str):
-        """
-        Function removes the region from the hex file data
-        :param reg_adr: star offset address, which should be deleted
-        """
-        if reg_adr in self.reg_list.keys():
-            del self.reg_list[reg_adr]
 
 
 def create_hex_line(record_len: int, rec_typ: str, data=None, load_ofs: str = '0000') -> str:
