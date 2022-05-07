@@ -283,18 +283,24 @@ class SegmentList:
 
         return region_adr, load_ofs_adr, region_data
 
-    def get_ascii_editor(self):
+    def get_ascii_editor(self) -> str:
+        """
+        Function decodes the hex region content to ascii
+        :return: ascii text from hex region content
+        """
         _, _, hex_text = self.get_hex_editor()
         ascii_text = ''
         for hex_line in hex_text.split():
-            n = 2
             ascii_line = ''
-            for obj_hex in [hex_line[i:i + n] for i in range(0, len(hex_line), n)]:
+            for obj_hex in [hex_line[i:i + 2] for i in range(0, len(hex_line), 2)]:
+                # Convert the hex byte into a normal byte
                 obj_byte = bytes.fromhex(obj_hex)
+                # Convert the byte into ascii
                 try:
                     obj_ascii = obj_byte.decode('ascii')
                 except UnicodeDecodeError:
                     obj_ascii = '.'
+                # Replace the char with a dot if it's a special character
                 if obj_ascii in ['\a', '\b', '\f', '\n', '\r', '\t', '\v', '\x00']:
                     obj_ascii = '.'
                 ascii_line += obj_ascii
