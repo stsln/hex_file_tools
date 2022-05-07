@@ -137,7 +137,7 @@ class Main(QMainWindow):
         self.ui.btn_merge.clicked.connect(lambda: self.merge())
 
         # buttons export
-        self.ui.btn_exp_hex.clicked.connect(lambda: self.export(in_hex=True))
+        self.ui.btn_exp_hex.clicked.connect(lambda: self.export())
         self.ui.btn_exp_bin.clicked.connect(lambda: self.export(in_bin=True))
 
         # button add, save, delete region
@@ -255,24 +255,20 @@ class Main(QMainWindow):
                 self.update_data()
                 self.update_list_widget()
 
-    def export(self, in_hex=False, in_bin=False):
-        if in_hex:
-            reg_list = self.get_data_list_widget()
-            if reg_list:
-                msg_box = QMessageBox()
-                msg_box.setWindowTitle('Инструменты')
-                msg_box.setText('Экспорт')
-                if data_hex.merge(reg_list):
-                    msg_box.setIcon(QMessageBox.Information)
-                    msg_box.setInformativeText('Успешный экспорт')
-                else:
-                    msg_box.setIcon(QMessageBox.Warning)
-                    msg_box.setInformativeText('Ошибка экспорта')
-                msg_box.setDefaultButton(QMessageBox.Ok)
-                msg_box.exec()
-        elif in_bin:
-            # реализовать
-            pass
+    def export(self, in_bin=False):
+        reg_list = self.get_data_list_widget()
+        if reg_list:
+            msg_box = QMessageBox()
+            msg_box.setWindowTitle('Инструменты')
+            msg_box.setText('Экспорт')
+            if data_hex.merge(reg_list, in_bin):
+                msg_box.setIcon(QMessageBox.Information)
+                msg_box.setInformativeText('Успешный экспорт')
+            else:
+                msg_box.setIcon(QMessageBox.Warning)
+                msg_box.setInformativeText('Ошибка экспорта')
+            msg_box.setDefaultButton(QMessageBox.Ok)
+            msg_box.exec()
 
     def create_new_reg(self):
         select_nm_btn = list(select_file.keys())
