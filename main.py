@@ -261,12 +261,13 @@ class Main(QMainWindow):
             msg_box = QMessageBox()
             msg_box.setWindowTitle('Инструменты')
             msg_box.setText('Экспорт')
+            type_file_exp = 'bin' if in_bin else 'hex'
             if data_hex.merge(reg_list, in_bin):
                 msg_box.setIcon(QMessageBox.Information)
-                msg_box.setInformativeText('Успешный экспорт')
+                msg_box.setInformativeText('Успешный экспорт в ' + type_file_exp)
             else:
                 msg_box.setIcon(QMessageBox.Warning)
-                msg_box.setInformativeText('Ошибка экспорта')
+                msg_box.setInformativeText('Ошибка экспорта в ' + type_file_exp)
             msg_box.setDefaultButton(QMessageBox.Ok)
             msg_box.exec()
 
