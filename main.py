@@ -161,7 +161,7 @@ class Main(QMainWindow):
 
     def choose_file(self, wgt_fl, btn_fl, btn_fl_cls):
         file_path = QtWidgets.QFileDialog.getOpenFileName(self, 'Выберите файл для добавления в список', '',
-                                                          'Hex Files (*.hex)')[0]
+                                                          'Hex File (*.hex *.ihex)')[0]
         file_name = os.path.basename(file_path)[0:-4]
         msg_box = QMessageBox()
         msg_box.setWindowTitle('Добавление файла')
@@ -192,9 +192,9 @@ class Main(QMainWindow):
                     btn_fl_cls.show()
                     self.update_list_widget()
 
-    def get_data_list_widget(self, check: bool = False):
+    def get_data_list_widget(self, check_to_merge: bool = False):
         """
-        :param check: regions that need to be merged
+        :param check_to_merge: regions that need to be merged
         """
         reg_list = {}
         flag_repeat = False
@@ -202,7 +202,7 @@ class Main(QMainWindow):
             item = self.ui.reg_list.item(item_num)
             if item.checkState() == QtCore.Qt.CheckState.Checked:
                 reg_adr, hex_name = self.split_item_list_widget(item)
-                if check:
+                if check_to_merge:
                     if reg_adr in reg_list.keys():
                         flag_repeat = True
                         reg_list.clear()
