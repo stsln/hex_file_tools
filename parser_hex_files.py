@@ -1,3 +1,4 @@
+import io
 import random
 from collections import Counter
 
@@ -12,7 +13,7 @@ TYPE_EXTENDED_LINEAR_ADDRESS = 4
 TYPE_STARTING_LINEAR_ADDRESS = 5
 
 
-def processing_file_line_by_line(data_file, reg_hex_file, current_reg=None) -> bool:
+def processing_file_line_by_line(data_file: io.TextIOWrapper or str, reg_hex_file, current_reg=None) -> bool:
     """
     Function hex data processing line by line
     :param data_file: data hex file
