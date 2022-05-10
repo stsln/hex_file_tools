@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1035</width>
-    <height>641</height>
+    <width>1181</width>
+    <height>664</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -609,7 +609,7 @@ QPushButton::pressed
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="message">
+          <widget class="QFrame" name="about">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -645,8 +645,8 @@ QPushButton::pressed
             <property name="bottomMargin">
              <number>15</number>
             </property>
-            <item>
-             <widget class="QLabel" name="message_title">
+            <item alignment="Qt::AlignTop">
+             <widget class="QLabel" name="about_title">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -665,14 +665,19 @@ QPushButton::pressed
 }</string>
               </property>
               <property name="text">
-               <string>Сообщения</string>
+               <string>О программе</string>
               </property>
              </widget>
             </item>
-            <item alignment="Qt::AlignTop">
-             <widget class="QLabel" name="message_label">
-              <property name="styleSheet">
-               <string notr="true">QLabel 
+            <item>
+             <layout class="QHBoxLayout" name="about_btns">
+              <property name="spacing">
+               <number>15</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="about_label">
+                <property name="styleSheet">
+                 <string notr="true">QLabel 
 {
 	font-family: 'Inter';
 	font-weight: 400;
@@ -681,11 +686,81 @@ QPushButton::pressed
 	border: 0;
 	text-align: left;
 }</string>
-              </property>
-              <property name="text">
-               <string>Тут будут результаты работы</string>
-              </property>
-             </widget>
+                </property>
+                <property name="text">
+                 <string>Hex Files Tools, version 0.0.1</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="faq_btn">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>45</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton
+{
+	font-family: 'Inter';
+	font-weight: 400;
+	font-size: 18px;
+	background-color: #fff;
+	border: 1px solid #C4C4C4;
+	border-radius: 16px;
+}
+
+QPushButton::hover
+{
+	background-color: rgba(196, 196, 196, 0.125);
+}
+
+QPushButton::pressed
+{
+	background-color: rgba(196, 196, 196, 0.25);
+}</string>
+                </property>
+                <property name="text">
+                 <string>FAQ</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="code_btn">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>45</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton
+{
+	font-family: 'Inter';
+	font-weight: 400;
+	font-size: 18px;
+	background-color: #fff;
+	border: 1px solid #C4C4C4;
+	border-radius: 16px;
+}
+
+QPushButton::hover
+{
+	background-color: rgba(196, 196, 196, 0.125);
+}
+
+QPushButton::pressed
+{
+	background-color: rgba(196, 196, 196, 0.25);
+}</string>
+                </property>
+                <property name="text">
+                 <string>GitHub</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </widget>

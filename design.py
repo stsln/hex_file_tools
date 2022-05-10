@@ -26,7 +26,7 @@ class Ui_Main(object):
     def setupUi(self, Main):
         if not Main.objectName():
             Main.setObjectName(u"Main")
-        Main.resize(1035, 641)
+        Main.resize(1181, 664)
         Main.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         self.centralwidget = QWidget(Main)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -394,32 +394,32 @@ class Ui_Main(object):
 
         self.left_lt.addWidget(self.tools)
 
-        self.message = QFrame(self.main_frame_lt)
-        self.message.setObjectName(u"message")
+        self.about = QFrame(self.main_frame_lt)
+        self.about.setObjectName(u"about")
         sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.message.sizePolicy().hasHeightForWidth())
-        self.message.setSizePolicy(sizePolicy2)
-        self.message.setStyleSheet(u"QFrame\n"
+        sizePolicy2.setHeightForWidth(self.about.sizePolicy().hasHeightForWidth())
+        self.about.setSizePolicy(sizePolicy2)
+        self.about.setStyleSheet(u"QFrame\n"
 "{\n"
 "	background-color: rgb(255, 255, 255);\n"
 "	border: 0;\n"
 "}")
-        self.message.setFrameShape(QFrame.StyledPanel)
-        self.message.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_7 = QVBoxLayout(self.message)
+        self.about.setFrameShape(QFrame.StyledPanel)
+        self.about.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_7 = QVBoxLayout(self.about)
         self.verticalLayout_7.setSpacing(15)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.verticalLayout_7.setContentsMargins(15, 15, 15, 15)
-        self.message_title = QLabel(self.message)
-        self.message_title.setObjectName(u"message_title")
+        self.about_title = QLabel(self.about)
+        self.about_title.setObjectName(u"about_title")
         sizePolicy3 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.message_title.sizePolicy().hasHeightForWidth())
-        self.message_title.setSizePolicy(sizePolicy3)
-        self.message_title.setStyleSheet(u"QLabel \n"
+        sizePolicy3.setHeightForWidth(self.about_title.sizePolicy().hasHeightForWidth())
+        self.about_title.setSizePolicy(sizePolicy3)
+        self.about_title.setStyleSheet(u"QLabel \n"
 "{\n"
 "	font-family: 'Inter';\n"
 "	font-weight: 700;\n"
@@ -429,11 +429,14 @@ class Ui_Main(object):
 "	text-align: left;\n"
 "}")
 
-        self.verticalLayout_7.addWidget(self.message_title)
+        self.verticalLayout_7.addWidget(self.about_title, 0, Qt.AlignTop)
 
-        self.message_label = QLabel(self.message)
-        self.message_label.setObjectName(u"message_label")
-        self.message_label.setStyleSheet(u"QLabel \n"
+        self.about_btns = QHBoxLayout()
+        self.about_btns.setSpacing(15)
+        self.about_btns.setObjectName(u"about_btns")
+        self.about_label = QLabel(self.about)
+        self.about_label.setObjectName(u"about_label")
+        self.about_label.setStyleSheet(u"QLabel \n"
 "{\n"
 "	font-family: 'Inter';\n"
 "	font-weight: 400;\n"
@@ -443,10 +446,63 @@ class Ui_Main(object):
 "	text-align: left;\n"
 "}")
 
-        self.verticalLayout_7.addWidget(self.message_label, 0, Qt.AlignTop)
+        self.about_btns.addWidget(self.about_label)
+
+        self.faq_btn = QPushButton(self.about)
+        self.faq_btn.setObjectName(u"faq_btn")
+        self.faq_btn.setMinimumSize(QSize(0, 45))
+        self.faq_btn.setStyleSheet(u"QPushButton\n"
+"{\n"
+"	font-family: 'Inter';\n"
+"	font-weight: 400;\n"
+"	font-size: 18px;\n"
+"	background-color: #fff;\n"
+"	border: 1px solid #C4C4C4;\n"
+"	border-radius: 16px;\n"
+"}\n"
+"\n"
+"QPushButton::hover\n"
+"{\n"
+"	background-color: rgba(196, 196, 196, 0.125);\n"
+"}\n"
+"\n"
+"QPushButton::pressed\n"
+"{\n"
+"	background-color: rgba(196, 196, 196, 0.25);\n"
+"}")
+
+        self.about_btns.addWidget(self.faq_btn)
+
+        self.code_btn = QPushButton(self.about)
+        self.code_btn.setObjectName(u"code_btn")
+        self.code_btn.setMinimumSize(QSize(0, 45))
+        self.code_btn.setStyleSheet(u"QPushButton\n"
+"{\n"
+"	font-family: 'Inter';\n"
+"	font-weight: 400;\n"
+"	font-size: 18px;\n"
+"	background-color: #fff;\n"
+"	border: 1px solid #C4C4C4;\n"
+"	border-radius: 16px;\n"
+"}\n"
+"\n"
+"QPushButton::hover\n"
+"{\n"
+"	background-color: rgba(196, 196, 196, 0.125);\n"
+"}\n"
+"\n"
+"QPushButton::pressed\n"
+"{\n"
+"	background-color: rgba(196, 196, 196, 0.25);\n"
+"}")
+
+        self.about_btns.addWidget(self.code_btn)
 
 
-        self.left_lt.addWidget(self.message)
+        self.verticalLayout_7.addLayout(self.about_btns)
+
+
+        self.left_lt.addWidget(self.about)
 
 
         self.horizontalLayout_3.addLayout(self.left_lt)
@@ -719,8 +775,10 @@ class Ui_Main(object):
 #endif // QT_CONFIG(shortcut)
         self.btn_exp_hex.setText(QCoreApplication.translate("Main", u"\u0432 hex", None))
         self.btn_exp_bin.setText(QCoreApplication.translate("Main", u"\u0432 bin", None))
-        self.message_title.setText(QCoreApplication.translate("Main", u"\u0421\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u044f", None))
-        self.message_label.setText(QCoreApplication.translate("Main", u"\u0422\u0443\u0442 \u0431\u0443\u0434\u0443\u0442 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u044b \u0440\u0430\u0431\u043e\u0442\u044b", None))
+        self.about_title.setText(QCoreApplication.translate("Main", u"\u041e \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0435", None))
+        self.about_label.setText(QCoreApplication.translate("Main", u"Hex Files Tools, version 0.0.1", None))
+        self.faq_btn.setText(QCoreApplication.translate("Main", u"FAQ", None))
+        self.code_btn.setText(QCoreApplication.translate("Main", u"GitHub", None))
         self.editor_title.setText(QCoreApplication.translate("Main", u"\u0420\u0435\u0434\u0430\u043a\u0442\u043e\u0440", None))
         self.btn_save.setText(QCoreApplication.translate("Main", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
 #if QT_CONFIG(shortcut)
