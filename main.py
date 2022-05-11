@@ -1,5 +1,6 @@
 import os
 import sys
+import webbrowser
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QListWidgetItem, QPushButton, QToolButton
 from PySide6 import QtCore, QtGui, QtWidgets
@@ -144,6 +145,11 @@ class Main(QMainWindow):
         self.ui.btn_new_reg.clicked.connect(lambda: self.create_new_reg())
         self.ui.btn_save.clicked.connect(lambda: self.save_editor())
         self.ui.btn_del.clicked.connect(lambda: self.delete())
+
+        # about button
+        self.ui.faq_btn.clicked.connect(lambda: webbrowser.open(
+                                        'https://github.com/stsln/hex_file_tools/blob/main/README.md'))
+        self.ui.code_btn.clicked.connect(lambda: webbrowser.open('https://github.com/stsln/hex_file_tools'))
 
         # regions list
         self.ui.reg_list.clicked.connect(lambda: self.fill_editor())
