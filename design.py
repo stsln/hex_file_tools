@@ -396,11 +396,6 @@ class Ui_Main(object):
 
         self.about = QFrame(self.main_frame_lt)
         self.about.setObjectName(u"about")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.about.sizePolicy().hasHeightForWidth())
-        self.about.setSizePolicy(sizePolicy2)
         self.about.setStyleSheet(u"QFrame\n"
 "{\n"
 "	background-color: rgb(255, 255, 255);\n"
@@ -414,11 +409,11 @@ class Ui_Main(object):
         self.verticalLayout_7.setContentsMargins(15, 15, 15, 15)
         self.about_title = QLabel(self.about)
         self.about_title.setObjectName(u"about_title")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.about_title.sizePolicy().hasHeightForWidth())
-        self.about_title.setSizePolicy(sizePolicy3)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.about_title.sizePolicy().hasHeightForWidth())
+        self.about_title.setSizePolicy(sizePolicy2)
         self.about_title.setStyleSheet(u"QLabel \n"
 "{\n"
 "	font-family: 'Inter';\n"
@@ -488,12 +483,14 @@ class Ui_Main(object):
 "\n"
 "QPushButton::hover\n"
 "{\n"
-"	background-color: rgba(196, 196, 196, 0.125);\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: #999999;\n"
 "}\n"
 "\n"
 "QPushButton::pressed\n"
 "{\n"
-"	background-color: rgba(196, 196, 196, 0.25);\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: #666666;\n"
 "}")
 
         self.about_btns.addWidget(self.code_btn)
@@ -502,7 +499,7 @@ class Ui_Main(object):
         self.verticalLayout_7.addLayout(self.about_btns)
 
 
-        self.left_lt.addWidget(self.about)
+        self.left_lt.addWidget(self.about, 0, Qt.AlignTop)
 
 
         self.horizontalLayout_3.addLayout(self.left_lt)
@@ -545,11 +542,11 @@ class Ui_Main(object):
         self.save_del_lt.setObjectName(u"save_del_lt")
         self.btn_save = QPushButton(self.editor)
         self.btn_save.setObjectName(u"btn_save")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.btn_save.sizePolicy().hasHeightForWidth())
-        self.btn_save.setSizePolicy(sizePolicy4)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.btn_save.sizePolicy().hasHeightForWidth())
+        self.btn_save.setSizePolicy(sizePolicy3)
         self.btn_save.setMinimumSize(QSize(200, 45))
         self.btn_save.setMaximumSize(QSize(16777215, 50))
         self.btn_save.setCursor(QCursor(Qt.PointingHandCursor))
@@ -628,11 +625,11 @@ class Ui_Main(object):
         self.gridLayout.setContentsMargins(0, 15, 0, 0)
         self.text_ofs_reg = QPlainTextEdit(self.tab_hex)
         self.text_ofs_reg.setObjectName(u"text_ofs_reg")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.text_ofs_reg.sizePolicy().hasHeightForWidth())
-        self.text_ofs_reg.setSizePolicy(sizePolicy5)
+        sizePolicy4 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.text_ofs_reg.sizePolicy().hasHeightForWidth())
+        self.text_ofs_reg.setSizePolicy(sizePolicy4)
         self.text_ofs_reg.setMaximumSize(QSize(65, 35))
         self.text_ofs_reg.setStyleSheet(u"QPlainTextEdit\n"
 "{\n"
@@ -669,11 +666,11 @@ class Ui_Main(object):
 
         self.lable_ofs_and_file = QLabel(self.tab_hex)
         self.lable_ofs_and_file.setObjectName(u"lable_ofs_and_file")
-        sizePolicy6 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy6.setHorizontalStretch(0)
-        sizePolicy6.setVerticalStretch(0)
-        sizePolicy6.setHeightForWidth(self.lable_ofs_and_file.sizePolicy().hasHeightForWidth())
-        self.lable_ofs_and_file.setSizePolicy(sizePolicy6)
+        sizePolicy5 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.lable_ofs_and_file.sizePolicy().hasHeightForWidth())
+        self.lable_ofs_and_file.setSizePolicy(sizePolicy5)
         self.lable_ofs_and_file.setStyleSheet(u"QLabel \n"
 "{\n"
 "	font-family: 'Inter';\n"
@@ -689,11 +686,11 @@ class Ui_Main(object):
 
         self.hex_adr_plainTextEdit = QPlainTextEdit(self.tab_hex)
         self.hex_adr_plainTextEdit.setObjectName(u"hex_adr_plainTextEdit")
-        sizePolicy7 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Expanding)
-        sizePolicy7.setHorizontalStretch(0)
-        sizePolicy7.setVerticalStretch(0)
-        sizePolicy7.setHeightForWidth(self.hex_adr_plainTextEdit.sizePolicy().hasHeightForWidth())
-        self.hex_adr_plainTextEdit.setSizePolicy(sizePolicy7)
+        sizePolicy6 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Expanding)
+        sizePolicy6.setHorizontalStretch(0)
+        sizePolicy6.setVerticalStretch(0)
+        sizePolicy6.setHeightForWidth(self.hex_adr_plainTextEdit.sizePolicy().hasHeightForWidth())
+        self.hex_adr_plainTextEdit.setSizePolicy(sizePolicy6)
         self.hex_adr_plainTextEdit.setMinimumSize(QSize(65, 0))
         self.hex_adr_plainTextEdit.setMaximumSize(QSize(65, 16777215))
         self.hex_adr_plainTextEdit.setStyleSheet(u"QPlainTextEdit\n"
