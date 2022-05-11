@@ -90,6 +90,8 @@ class Main(QMainWindow):
 
         self.ui.ascii_plainTextEdit.setReadOnly(True)
 
+        self.ui.about_label.setText('Hex Files Tools, version 0.0.1')
+
         wgt_fl_1 = WidgetFile('btn_file_1')
         btn_fl_1 = wgt_fl_1.btn_override.file_btn
         btn_fl_1_cls = wgt_fl_1.btn_cls
