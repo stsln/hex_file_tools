@@ -1,5 +1,7 @@
 *.hex
 *.bin
+*.spec
 .idea/
 garbage/
+build/
 __pycache__/
