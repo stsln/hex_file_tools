@@ -2,6 +2,7 @@
 *.bin
 *.spec
 .idea/
+.pytest_cache/
 garbage/
 build/
 __pycache__/
