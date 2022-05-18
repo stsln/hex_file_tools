@@ -27,7 +27,7 @@ class ProcessingHexLine:
     def get_crc_and_amount_data(self) -> tuple[int, int]:
         """
         Function calculating and returning CRC hex line and amounts of data
-        :return: number_calc_checksum: calculated CRC hex line
+        :return: calc_checksum: calculated CRC hex line
                  amount_data: amount of data hex line
         """
         calc_checksum = 0x0100  # Number calculate CRC
