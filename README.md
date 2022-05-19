@@ -27,7 +27,7 @@ Stepan Burimov
 
 Copyright (c) 2022 Stepan Burimov
 
-# License
+## License
 
 Licensed under the GNU GPLv3.
 
