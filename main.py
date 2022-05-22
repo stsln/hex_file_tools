@@ -258,11 +258,20 @@ class Main(QMainWindow):
     def delete(self):
         reg_list = self.get_data_list_widget()
         if reg_list:
-            for reg_adr, name_file in reg_list.items():
-                data_hex.data_hex_list[name_file].delete(reg_adr)
-                data_hex.save_file(name_file, file_path=hex_files[name_file])
-                self.update_data()
-                self.update_list_widget()
+            msg_box = QMessageBox()
+            msg_box.setWindowTitle('Удаление')
+            msg_box.setText("Регионы будут удалены.")
+            msg_box.setInformativeText("Вы точно хотите удалить?")
+            msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            msg_box.setDefaultButton(QMessageBox.No)
+            ret = msg_box.exec()
+
+            if QMessageBox.Yes == ret:
+                for reg_adr, name_file in reg_list.items():
+                    data_hex.data_hex_list[name_file].delete(reg_adr)
+                    data_hex.save_file(name_file, file_path=hex_files[name_file])
+                    self.update_data()
+                    self.update_list_widget()
 
     def export(self, in_bin=False):
         reg_list = self.get_data_list_widget()
