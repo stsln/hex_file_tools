@@ -88,6 +88,7 @@ class Main(QMainWindow):
         self.ui = Ui_Main()
         self.ui.setupUi(self)
 
+        self.clear_editor()
         self.ui.ascii_plainTextEdit.setReadOnly(True)
 
         self.ui.about_label.setText('Hex Files Tools, version 0.0.1')
@@ -358,7 +359,7 @@ class Main(QMainWindow):
         self.ui.text_ofs_reg.clear()
         self.ui.hex_adr_plainTextEdit.clear()
         self.ui.hex_data_plainTextEdit.clear()
-        self.ui.lable_ofs_and_file.setText('Смещение региона, файла ...')
+        self.ui.lable_ofs_and_file.setText('Выберите регион для его просмотра')
         self.ui.lable_ofs_and_file.is_new = False
 
     def ofs_reg_changed(self):
