@@ -21,6 +21,9 @@ pip install -r requirements.txt
 https://www.figma.com/file/pUv7CKzEWwojVQZW0q51wL/Hex-Files-Tools
 ```
 
+### Help
+If you have any problems or want to offer functionality, write a question in the Issues.
+
 ### Author
 
 Stepan Burimov
@@ -35,3 +38,5 @@ Licensed under the GNU GPLv3.
 
 
 Разработано с любовью ❤️
+
+Made in Russia 🇷🇺
