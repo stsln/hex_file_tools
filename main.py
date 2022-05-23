@@ -70,7 +70,10 @@ class WidgetFile(QtWidgets.QWidget):
         vtv.setContentsMargins(0, 0, 0, 0)
         vtv.addStretch()
 
-        self.btn_cls = QPushButton('r', self.btn_override.file_btn)
+        cls_text = 'r'
+        if sys.platform == 'linux' or sys.platform == 'linux2':
+            cls_text = '×'
+        self.btn_cls = QPushButton(cls_text, self.btn_override.file_btn)
         self.btn_cls.setMinimumSize(30, 30)
         self.btn_cls.setMaximumSize(30, 30)
         self.btn_cls.move(1, 1)
