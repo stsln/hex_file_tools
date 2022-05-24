@@ -12,6 +12,7 @@ Developed with Python 3.10 and PySide6 (Qt6).
 * delete - deletes the selected hex regions
 * in hex - exports the selected regions to a hex file
 * in bin - exports the selected regions to a bin file
+* merge - merges all the added files into one (Start Linear Address Record is not added)
 * save - saves the modified hex region
 
 ### Distribution (.exe)
