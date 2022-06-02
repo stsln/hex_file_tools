@@ -411,7 +411,8 @@ class RegionsList:
                 hex_lines_seg_list += data_item.gen_hex() + '\n'
 
         if is_end:
-            hex_lines_seg_list += create_hex_line(4, TYPE_STARTING_LINEAR_ADDRESS, self.start_liner_adr_data)
+            if self.start_liner_adr_data:
+                hex_lines_seg_list += create_hex_line(4, TYPE_STARTING_LINEAR_ADDRESS, self.start_liner_adr_data)
             hex_lines_seg_list += create_hex_line(0, TYPE_END_OF_FILE)
 
         return hex_lines_seg_list
@@ -468,4 +469,5 @@ def create_hex_line(record_len: int, rec_typ: str, data=None, load_ofs: str = '0
     hex_line = rec_len + load_ofs + rec_typ + data
     chk_sum = str(hex(ProcessingHexLine(hex_line).get_crc_and_amount_data()[0])[2:]).rjust(2, '0')
     hex_line = (RECORD_MARK + hex_line + chk_sum + '\n').upper()
+
     return hex_line
