@@ -20,6 +20,11 @@ Developed with Python 3.10 and PySide6 (Qt6).
 https://github.com/stsln/hex_file_tools/tree/main/dist
 ```
 
+### Creating an executable .exe file
+```
+pyinstaller -F -w main.py
+```
+
 ### Install dependencies
 ```
 pip install -r requirements.txt
