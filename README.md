@@ -25,6 +25,7 @@ pip install -r requirements.txt
 pyside6-rcc files.qrc -o files_rc.py
 pyside6-uic design.ui -o design.py
 ```
+Be sure to change the encoding to UTF-8
 
 ### Creating a distribution .exe file
 ```
