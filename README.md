@@ -2,7 +2,7 @@
 
 Designed to read, edit and combine multiple hex files into one.
 
-Developed with Python 3.10 and PySide6 (Qt6).
+Developed with Python 3.10 and PySide6 (Qt 6).
 
 ### Functional button in UI
 
@@ -15,22 +15,23 @@ Developed with Python 3.10 and PySide6 (Qt6).
 * merge - merges all the added files into one (Start Linear Address Record is not added)
 * save - saves the modified hex region
 
-### Distribution (.exe)
-```
-https://github.com/stsln/hex_file_tools/tree/main/dist
-```
-
-### Creating an executable .exe file
-```
-pyinstaller -F -w main.py
-```
-
 ### Install dependencies
 ```
 pip install -r requirements.txt
 ```
 
-### Design project in Figma
+### Converting UI to Python file
+```
+pyside6-rcc files.qrc -o files_rc.py
+pyside6-uic design.ui -o design.py
+```
+
+### Creating a distribution .exe file
+```
+pyinstaller -F -w main.py
+```
+
+### Design project UI in Figma
 ```
 https://www.figma.com/file/pUv7CKzEWwojVQZW0q51wL/Hex-Files-Tools
 ```
