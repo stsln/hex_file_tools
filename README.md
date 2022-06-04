@@ -37,6 +37,11 @@ pyinstaller -F -w main.py
 https://www.figma.com/file/pUv7CKzEWwojVQZW0q51wL/Hex-Files-Tools
 ```
 
+### Future features
+* Restoring to the original state
+* Support for other types
+* Extension of editing regions (highlighting, etc.)
+
 ### Help
 If you have any problems or want to offer functionality, write a question in the Issues.
 
