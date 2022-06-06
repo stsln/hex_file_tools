@@ -206,6 +206,7 @@ class Main(QMainWindow):
 
     def get_data_list_widget(self, check_to_merge: bool = False):
         """
+        The function returns a list of regions from QListWidget to delete, export and merge
         :param check_to_merge: regions that need to be merged
         """
         reg_list = {}
