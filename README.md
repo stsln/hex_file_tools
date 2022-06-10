@@ -3,6 +3,7 @@
 Designed to read, edit and combine multiple hex files into one.
 
 Developed with Python 3.10 and PySide6 (Qt 6).
+An annotation of types has been made.
 
 ### Functional button in UI
 
